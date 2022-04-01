@@ -464,7 +464,7 @@ const TFEMALE = 'female';
 function tagToPortrayal(tag) {
   switch (tag) {
     case TENERGETIC:
-      return randomArray([`Lizbeth was always an energetic person. She never really knew her limits when it came to staying up late or doing something for the first time, and she didn't care much about the consequences either. She was always in the mood for something new, and she was determined to accomplish those goals no matter how long it might take. She could be found in any number of places, but her favourite was being out in the world. Lizbeth loved going on hikes, attending concerts and festivals, and exploring the unknown. She would be at home in a busy city, taking in all the sights and sounds as though they were fresh and new to her.`,
+      return randomArray([`${p.Sdesc} was always an energetic person. She never really knew her limits when it came to staying up late or doing something for the first time, and she didn't care much about the consequences either. She was always in the mood for something new, and she was determined to accomplish those goals no matter how long it might take. She could be found in any number of places, but her favourite was being out in the world. Lizbeth loved going on hikes, attending concerts and festivals, and exploring the unknown. She would be at home in a busy city, taking in all the sights and sounds as though they were fresh and new to her.`,
         `John is a man who always has a smile on his face. He's always in the middle of a new project, and he greets every day with enthusiasm for living life to the fullest. He can't sleep at night, but he'll try anything once, and he loves to laugh.`,
         `Jill is a bundle of energy. It seems like she's always on the go, and she can't sit still for more than five minutes without bouncing up to grab something out of the pantry to eat. She is an avid lover of yoga and can often be seen in her free time outside on the beach, practicing asanas and meditating on the sun's warmth.`,
         `He's always on the go, it seems. Constantly working and staying busy doing something. It would be exhausting if it didn't look like so much fun. He doesn't really sleep much; but he gets plenty of rest in other ways. He never seems to stop being happy, either. He is always smiling, never too tired for a laugh.`]);
@@ -657,44 +657,57 @@ function tagToPortrayal(tag) {
       return randomArray([`${p.Sdesc} is a cynical person. She sees the world as a dark place full of cruelty and pain, where not everyone is good and not everything has a happy ending. She knows that the world is a cold place with many people hurt by it. ${p.Sdesc}'s thoughts are always running in circles, wondering if there is any point to anything at all, or if she should just give up on life.`,
         `${p.Sdesc} is a cynical person. He doesn't trust anyone and never gives people the benefit of the doubt. He thinks that everyone is out for themselves and will do anything to get ahead. He doesn't bother to make friends, because he knows it will all end in heartbreak.`]);
     case TSTOIC:
-      return randomArray([`${p.Sdesc} shows no reaction to any provocation or humor.`,
-        `${p.She} shows no emotion.`]);
+      return randomArray([`She showed no emotion, even when she was happy or sad. She was like a stone, unfeeling and unresponsive.`,
+        `She never showed her feelings, and she never let anyone see her weak side. She was strong and independent, and she never needed anyone's help.`,
+        `She never showed any emotion, no matter what the situation was. She was always calm and collected, and she never let anything get to her.`
+      ])
     case THOTBLOODED:
-      return randomArray([`${p.She} is extremely passionate about everything ${p.she} does and gives it 110%.`,
-        `${p.She} never does anything half-hearted. Everything ${p.she} does is taken to the extreme.`]);
+      return randomArray([`She was always passionate about everything she did. Her emotions were always close to the surface. She was never afraid to express her feelings, even if it meant getting into arguments with others. She was always fiery and intense, both in her words and her actions.`,
+        `She was always the life of the party - always ready for a good time, and always up for a fight. She was passionate about everything she did, and she didn't hold back when it came to expressing her feelings.`,
+        `She was always on the verge of tears, or laughter, or anger. Her emotions were always close to the surface, and it was impossible for her to hide how she was feeling. She was passionate about everything in her life, and she didn't hesitate to show it.`]);
     case TBERSERKBUTTON:
-      return randomArray([`Certain things trigger ${p.sdesc} into a berserk rage.`,
-        `${p.Sdesc} is insecure about a certain physical trait, and bringing it up will make ${p.him} furious.`]);
+      return randomArray([`She is a calm person, but she can get angry easily over the topic of animal cruelty. She has a strong sense of justice, and she can't stand to see animals being mistreated. She will speak up for them, and she will try to do whatever she can to stop it from happening.`,
+        `She is usually calm, but she can get angry easily over the topic of her job. She works hard and is very dedicated to her career, but she feels like she is constantly being passed over for promotions and recognition. When she gets angry about her job, she vents to her friends and family, and she has been known to lash out at her co-workers.`,
+        `She is usually level-headed, but there are times when she just can't help but to get worked up over something. It doesn't take much to set her off, and when she gets going, it's hard for her to stop.`,
+        `She is normally calm, level-headed and rational. But when the topic of her ex comes up, she can't help but get angry. She can feel the anger bubbling up inside of her, making her face flush and her heart rate increase.`]);
     case TPOLITEANGER:
-      return randomArray([`When angry, ${p.she} will simply vent ${p.his} frustration in polite words.`,
-        `When angry, ${p.she} never shouts or slams ${p.his} fists down, but politely expresses ${p.his} rage.`]);
+      return randomArray([`She is polite when she was angry. She never raised her voice or said anything that might offend someone.`,
+        `Her voice never raised, her words never sharp. But you could see the anger in her eyes, in the set of her jaw. And you knew that she was angry, even though she never said a word.`]);
     case TSNARKY:
-      return randomArray([`${p.Sdesc} is often snarky and bitter.`,
-        `Every response by ${p.sdesc} is snarky and sarcastic.`]);
+      return randomArray([`She was always quick with a cutting remark, never afraid to speak her mind. She often left people feeling bruised and battered by her words. She was clever and quick-witted, but her sharp tongue could also be her downfall.`,
+        `She was always quick with a cutting remark, never missing an opportunity to put someone in their place.  She was the master of the backhanded compliment.`,
+        `She was always quick with a cutting remark, never hesitating to point out the flaws in others. She enjoyed watching them squirm, feeling superior to them in every way. Her sharp tongue was both a blessing and a curse - it made her many enemies, but it also meant that she was never bored.`,
+        `She was always the first one to make a cutting remark, never hesitating to point out the flaws in others. She was quick-witted and sharp-tongued, never afraid to speak her mind. Her biting comments could sometimes be hurtful, but she never seemed to care. She was just as happy to make fun of herself as she was of others. Nothing was sacred to her - she would mock anyone and anything with equal relish.`]);
     case TOBVIOUS:
-      return randomArray([`${p.Sdesc} states the obvious. Sometimes for story exposition purposes.`,
-        `${p.Sdesc} will often say obvious things to make the plot clear.`]);
+      return randomArray([`He's the kind of guy who always points out the obvious, even when no one else is saying anything.`,
+        `He's the kind of guy who would point out the obvious. If you were looking for your keys and couldn't find them, he would say, "Did you check under the couch?"`,
+        `She always said the obvious. It was like she couldn't help it. If there was something that needed to be said, she would say it`]);
     case TCOLD:
-      return randomArray([`${p.She} doesn't get along with people, and finds them annoying.`,
-        `${p.She} is distrustful and avoids being attached to others.`, `${p.She} is unfriendly and says little.`]);
+      return randomArray([`She was always so cold, so distant. She never wanted to be around anyone, and if she was, she would never initiate conversation. She would always be the first one to leave any gathering, and she never looked back.`,
+        `She never seemed to want to talk to anyone, and if she did, she would always find a way to be rude. She always seemed to be in a bad mood, and she would never hesitate to let everyone know it.`, 
+        `He was a cold, unfriendly person. He never smiled, and he always had a mean look on his face. He was always ready to criticize others, and he never had a good word to say about anyone. He was the kind of person who would make you feel uncomfortable, and you never knew what he was thinking.`,
+        `She was always so cold, so unfriendly. She would never smile or say hello, no matter who you were. She would always be looking down, never making eye contact.`]);
     case TWARM:
-      return randomArray([`${p.She} is kind-hearted and loving.`,
-        `${p.She} is cheerful and friendly.`]);
+      return randomArray([`She had a warm smile that made everyone feel welcome. She was always willing to help out, and she always had a kind word to say.`,
+        `She had a warm smile that made everyone feel welcome. Her laughter was infectious and she was always surrounded by friends. She was the life of the party and always had a positive outlook on life.`,
+       `She was always warm and cheerful, no matter what the situation was. She was always quick to comfort others and make them feel better. She was always there for her friends and family, and she always made sure that everyone was happy.`,
+        `She was always friendly, always smiling. She loved meeting new people and hearing their stories. She was the kind of person who would go out of her way to help someone, even if she didn't know them.`]);
     case TSTERN:
-      return randomArray([`${p.She} has an intimidating, stern tone.`,
-        `${p.Sdesc} is strict and gruff.`]);
+      return randomArray([`She was a stern person, always demanding the best from those around her. She was never satisfied with anything less than perfection, and she had a sharp tongue that she wasn't afraid to use.`,
+        `She was always so stern, never cracking a smile. She was the type of person who was always so serious and never wanted to have any fun. She was always so strict with everyone and never wanted to let anyone relax.`]);
     case TEATER:
-      return randomArray([`${p.Sdesc} eats more than the rest of ${p.his} team combined.`,
-        `${p.Sdesc} will finish several plates per meal, chomping it all down quickly.`]);
+      return randomArray([`She always seems to be eating, no matter what time of day it is. She's always got some snacks with her, and she's always picking at something. Her friends have started to call her the human garbage can, because she'll eat anything and everything. She's always saying how she's so hungry, and she's always talking about food. It's like she can't go more than a few hours without eating something. Her metabolism must be through the roof.`,
+        `He was always eating, it seemed like. His friends would make fun of him, calling him a bottomless pit.`]);
     case TNOTMYFAULT:
-      return randomArray([`${p.Sdesc} absolutely refuses to accept responsibility for ${p.his} mistakes.`,
-        `${p.She} will push the blame to others whenever ${p.she} makes a mistake.`]);
+      return randomArray([`She always blamed others for her mistakes, never owning up to them herself. She was never at fault, and she never took responsibility for her own actions.`,
+        `She always finds someone else to blame when things go wrong. It's never her fault. She can't help it if other people are always screwing up. It's not her responsibility to fix their mistakes.`]);
     case TCLUMSY:
-      return randomArray([`${p.She} tends to trip, drop things, and frequently makes mistakes.`,
-        `${p.She} bumbles and fumbles at almost anything ${p.she} does.`]);
+      return randomArray([`She was always tripping over her own feet, and knocking things over. The way she would move about, always in a hurry, and yet never seeming to get anywhere.`,
+        `She was the kind of person who would trip on her own feet, and walk into walls. She was always apologizing for her clumsiness, but it was just a part of who she was.`]);
     case TWALKINGTHEEARTH:
-      return randomArray([`${p.She} seems to be a traveller. Nobody knows ${p.him} and ${p.she} keeps no roots.`,
-        `${p.She} is always out seeking adventure, never staying rooted in any one place for long.`]);
+      return randomArray([`She was a bit of a loner, but she didn't mind. She was content to wander the streets, taking in the sights and sounds of each new place she visited. She was always ready for whatever came her way.`,
+        `She moved from town to town, never staying in one place for long. She was always on the lookout for the next place to go, the next adventure. She didn't have any ties to anywhere or anyone and she liked it that way. She was free to come and go as she pleased.`,
+        `She always moved on when the money ran out, never staying in one place for more than a few weeks. She was a drifter, living off of the kindness of strangers and whatever odd jobs she could find. She never knew where she would sleep each night, or where her next meal would come from. But she was content with her life, preferring to live in the moment and not worry about the future.`]);
     case TFACE:
     case THEEL:
     case TSUPPORT:
@@ -732,6 +745,7 @@ function tagToAppearance(tag) {
     // case TASCETIC:
     //   return randomArray([`${p.She} wears minimalist clothing and ${p.his} home and possessions are similarly simple.`,
     //     `${p.She} wears tattered, cheap clothing. Some appear several years old and have been patched.`]);
+    case TASCETIC:
     case TSEXY:
       return randomArray([`${p.She} has less clothes than is modest, but wears the look well.`,
         `${p.His} clothes show off ${p.his} well-defined body.`]);
