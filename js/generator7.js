@@ -529,7 +529,12 @@ function loadTags() {
     }
     tags.push(gender);
   }
-  generatePronouns(gender);
+  const charName = $('input#name').val();
+  if (charName != "") {
+    generatePronouns(gender, charName);
+  } else {
+    generatePronouns(gender);
+  }
   tags.push(getTeamSize());
   return tags;
 }
