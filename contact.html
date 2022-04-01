@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Random Character Generator - Contact</title>
+<meta name="description" content="Contact us">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="manifest" href="site.webmanifest">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" type="image/png" href="icon.png">
+
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/fonts.css">
+
+<meta name="theme-color" content="#fafafa">
+
+<div class="container-fluid">
+  <header>
+    <div class="row">
+      <div class="col-11 col-md-10 offset-md-2" id="header-navbar">
+        <a href="index.html">Generator</a>
+        <a href="whatisthis.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <hr>
+  </header>
+</div>
+
+<div class="container">
+  <br>
+  <h1 class="text-center">Contact Us</h1>
+  <br>
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-xl-6">
+      <p class="text-justify">Send in anything - feature requests, complaints, feedback. We can't promise we'll reply to all of it, but we'll read it.</p>
+    </div>
+  </div>
+  <br>
+  <!-- Contact Form -->
+  <form id="contact-form" netlify>
+    <div class="form-group row justify-content-center">
+      <label for="form-name" class="col-4 col-md-3 col-xl-2">Name</label>
+      <div class="col-8 col-md-5 col-xl-4">
+        <input type="text" name="form-name" id="form-name" class="form-control" required>
+      </div>
+    </div>
+    <div class="form-group row justify-content-center">
+      <label for="form-email" class="col-4 col-md-3 col-xl-2">E-mail</label>
+      <div class="col-8 col-md-5 col-xl-4">
+        <input type="email" name="form-email" id="form-email" class="form-control">
+      </div>
+    </div>
+    <div class="form-group row justify-content-center">
+      <label for="form-type" class="col-4 col-md-3 col-xl-2">Type</label>
+      <div class="col-8 col-md-5 col-xl-4">
+        <select class="form-control" id="form-type">
+          <option selected value="type-default" id="type-default">Other</option>
+          <option value="type-complaint" id="type-complaint">Complaint</option>
+          <option value="type-suggestion" id="type-suggestion">Suggestion</option>
+          <option value="type-feedback" id="type-feedback">Feedback</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row justify-content-center">
+      <label for="form-message" class="col-4 col-md-3 col-xl-2">Message</label>
+      <div class="col-8 col-md-5 col-xl-4">
+        <textarea name="form-message" id="form-message" class="form-control" required rows="4"></textarea>
+      </div>
+    </div>
+    <button id="submit-feedback" type="submit" class="mx-auto d-block btn btn-primary">Submit</button>
+  </form>
+  <br>
+
+  <!-- Show errors and dialogs -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+  <!-- Dialogs and errors -->
+  <div id="errors-modal">
+    <script>
+      'use strict';
+      $(function(){
+        $('#errors-modal').load('segment-modal-errors.html');
+      });
+    </script>
+  </div>
+</div>
+
+<div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-11 col-md-10 offset-md-2">
+        <a href="blog.html">Blog</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="https://discord.gg/kvC7MGp">Discord</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <span class="float-right">© Random Character Generator 2019-2021</span>
+      </div>
+    </div>
+    <br>
+  </footer>
+</div>
+
+<script src="js/vendor/modernizr-3.7.1.min.js"></script>
+
+
+<script src="js/vendor/bootstrap.bundle.min.js"></script>
+<script src="js/vendor/parse.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
+<script src="js/parse.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-140909040-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-140909040-1');
+</script>
+
+<!-- Hotjar Tracking Code for https://random-character-generator.com -->
+<script>
+  (function(h,o,t,j,a,r){
+    h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+    h._hjSettings={hjid:1345399,hjsv:6};
+    a=o.getElementsByTagName('head')[0];
+    r=o.createElement('script');r.async=1;
+    r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+    a.appendChild(r);
+  })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>

@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Random Character Generator</title>
+<meta name="description"
+      content="We generate random characters, based off popular tropes. Characters are designed to fit in plots and provide plot hooks to interact with other characters.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="manifest" href="site.webmanifest">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/fonts.css">
+
+<meta name="theme-color" content="#fafafa">
+<div class="container-fluid">
+  <header>
+    <div class="row">
+      <div class="col-11 col-md-10 offset-md-2" id="header-navbar">
+        <a href="index.html">Generator</a>
+        <a href="whatisthis.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <hr>
+  </header>
+</div>
+
+<div class="container">
+  <br>
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+      <h1 class="text-center">Random Character Generator</h1>
+    </div>
+  </div>
+  <div class="row justify-content-center" id="survey">
+    <div class="col-12 col-md-8">
+      <br><p class="text-center small">We're trying to improve the site. <a href="https://forms.gle/rytBfiTH7N8arwgY6" class="small">Please fill in this survey!</a></p>
+    </div>
+  </div>
+  <!-- Generator results -->
+  <div class="row justify-content-center" id="personality-heading">
+    <div class="col-12 col-md-8">
+      <h2>Personality</h2>
+      <p id="results" class="text-justify"></p>
+      <ul id="list-results">
+        <li>Generating character...</li>
+      </ul>
+    </div>
+  </div>
+  <!-- Character description -->
+  <div class="row justify-content-center hidden" id="plot-heading">
+    <div class="col-12 col-md-8">
+      <h2>Plot Hook</h2>
+      <p id="results-plot" class="text-justify"></p>
+    </div>
+  </div>
+  <div class="row justify-content-center hidden" id="appearance-heading">
+    <div class="col-12 col-md-8">
+      <h2>Appearance</h2>
+      <ul id="results-appearance"></ul>
+    </div>
+  </div>
+  <div class="row justify-content-center hidden" id="portrayal-heading">
+    <div class="col-12 col-md-8">
+      <h2>Portrayal</h2>
+      <!--      <p id="results-portrayal" class="text-justify"></p>-->
+      <ul id="results-portrayal"></ul>
+    </div>
+  </div>
+  <div class="row justify-content-center hidden" id="power-heading">
+    <div class="col-12 col-md-8">
+      <h2>Strengths &amp; Weaknesses</h2>
+      <!--      <p id="results-power" class="text-justify"></p>-->
+      <ul id="results-power"></ul>
+    </div>
+  </div>
+  <div class="row justify-content-center hidden" id="personal-heading">
+    <div class="col-12 col-md-8">
+      <h2>Private Details</h2>
+      <!--      <p id="results-personal" class="text-justify"></p>-->
+      <ul id="results-personal"></ul>
+    </div>
+  </div>
+  <div class="row justify-content-center hidden" id="background-heading">
+    <div class="col-12 col-md-8">
+      <h2>Background</h2>
+      <!--      <p id="results-background" class="text-justify"></p>-->
+      <ul id="results-background"></ul>
+    </div>
+  </div>
+  <div class="row justify-content-center hidden" id="wealth-heading">
+    <div class="col-12 col-md-8">
+      <h2>Wealth</h2>
+      <!--      <p id="results-wealth" class="text-justify"></p>-->
+      <ul id="results-wealth"></ul>
+    </div>
+  </div>
+
+
+  <!-- Team results -->
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+      <h2 class="hidden" id="team-heading">Team Structure</h2>
+      <p id="results-team" class="text-justify"></p>
+    </div>
+  </div>
+  <br>
+  <!-- Generator Form -->
+  <div class="form-group row justify-content-center">
+    <label for="role" class="col-4 col-md-3 col-xl-2">Role</label>
+    <div class="col-8 col-md-5 col-xl-4">
+      <select class="form-control" id="role">
+        <option id="role-any">Any</option>
+        <option selected id="role-hero">Heroic</option>
+        <option id="role-villain">Villainous</option>
+        <option id="role-support">Support</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row justify-content-center">
+    <label for="gender" class="col-4 col-md-3 col-xl-2">Gender</label>
+    <div class="col-8 col-md-5 col-xl-4">
+      <select class="form-control" id="gender">
+        <option selected id="gender-any">Any</option>
+        <option id="gender-male">Male</option>
+        <option id="gender-female">Female</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row justify-content-center">
+    <label for="detail" class="col-4 col-md-3 col-xl-2">Detail level</label>
+    <div class="col-8 col-md-5 col-xl-4">
+      <select class="form-control" id="detail">
+        <option id="detail-sparse">Sparse</option>
+        <option selected id="detail-moderate">Moderate</option>
+        <option id="detail-high">High</option>
+        <option id="detail-very-high">Very high</option>
+      </select>
+    </div>
+  </div>
+  <div class="form-group row justify-content-center">
+    <label for="team-size" class="col-4 col-md-3 col-xl-2">Team Size</label>
+    <div class="col-8 col-md-5 col-xl-4">
+      <select class="form-control" id="team-size">
+        <option selected id="team-na">Not applicable</option>
+        <option id="team-one">One</option>
+      </select>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-4 col-md-3 col-xl-2"></div>
+    <div class="col-8 col-md-5 col-xl-4">
+      <div class="custom-control custom-checkbox">
+        <input type="checkbox" class="custom-control-input" id="no-stereotypes">
+        <label class="custom-control-label" for="no-stereotypes">No gender stereotypes</label>
+        <small id="emailHelp" class="form-text text-muted">Avoid gender cliches like Femme Fatale and Casanova</small>
+      </div>
+    </div>
+  </div>
+  <br>
+  <button id="generate" class="mx-auto d-block btn btn-secondary">Generate</button>
+  <br><br>
+</div>
+
+<div class="container-fluid">
+  <footer>
+    <hr>
+    <div class="row">
+      <div class="col-11 col-md-10 offset-md-2">
+        <a href="blog.html">Blog</a>
+        <a href="roadmap.html">Roadmap</a>
+        <a href="https://discord.gg/kvC7MGp">Discord</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <span class="float-right">© Random Character Generator 2019-2021</span>
+      </div>
+    </div>
+    <br>
+  </footer>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+<script src="js/vendor/modernizr-3.7.1.min.js"></script>
+
+<script src="js/vendor/bootstrap.bundle.min.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
+<script src="js/tag-details.js"></script>
+<script src="js/plot-details.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-140909040-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-140909040-1');
+</script>-->
+<!-- Google Analytics -->
+<script>
+  window.ga = window.ga || function () {
+    (ga.q = ga.q || []).push(arguments)
+  };
+  ga.l = +new Date;
+  ga('create', 'UA-140909040-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+<script src="js/generator7.js"></script>
+
+
+<!-- Hotjar Tracking Code for https://random-character-generator.com -->
+<script>
+  (function (h, o, t, j, a, r) {
+    h.hj = h.hj || function () {
+      (h.hj.q = h.hj.q || []).push(arguments)
+    };
+    h._hjSettings = {hjid: 1345399, hjsv: 6};
+    a = o.getElementsByTagName('head')[0];
+    r = o.createElement('script');
+    r.async = 1;
+    r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+    a.appendChild(r);
+  })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+</script>

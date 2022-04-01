@@ -1,0 +1,96 @@
+/*@font-face {
+  font-family: "Gotham Rounded";
+  src: url("../fonts/GothamRounded-Book.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Gotham Rounded";
+  src: url("../fonts/GothamRounded-BookItalic.otf") format("opentype");
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Gotham Rounded";
+  src: url("../fonts/GothamRounded-Medium.otf") format("opentype");
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/OpenSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/OpenSans-Bold.ttf") format("truetype");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/OpenSans-BoldItalic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("../fonts/OpenSans-Italic.ttf") format("truetype");
+  font-style: italic;
+}*/
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+
+* {
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.7em;
+}
+
+header a {
+  color: #292929;
+  font-size: 15px;
+  margin: auto 1em auto 0;
+}
+
+header span a {
+  color: #292929;
+  font-size: 15px;
+  margin: auto 1em auto 0;
+}
+
+footer a {
+  color: #292929;
+  font-size: 13px;
+  margin: auto 1em auto 0;
+}
+
+footer span {
+  color: #292929;
+  font-size: 12px;
+  margin: 3px 0 auto 0;
+}
+
+.blog a {
+  color: #292929;
+  margin: auto 1em auto 0;
+  text-decoration: underline; 
+}
+
+h1 {
+  font-size: 26px;
+}
+
+h2 {
+  font-size: 20px;
+  margin-top: 24px;
+}
+
+h3 {
+  font-size: 18px;
+}
+
+h4 {
+  font-size: 16px;
+}
