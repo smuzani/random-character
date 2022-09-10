@@ -13,6 +13,7 @@ const BTEAMONE = 'team-one';
 const BSINGLEPLOT = 'single-plot'; // only one plot
 const BTHREEACT = 'three-act'; // three act structure
 const BSEVENBASIC = 'seven-basic'; // seven basic plots
+const BWANT = 'want';
 
 
 class Character {
@@ -61,6 +62,7 @@ let major = [];
 let minor = [];
 let soloTeam = [];
 let drama = [];
+let want = [];
 
 function initMajor() {
   major.push(new Aspect("Team Mom", 3, "Supportive and nurturing. The team will defend them violently if anything happens",
@@ -502,7 +504,7 @@ function loadTags() {
 }
 
 function loadInitialBranches() {
-  return [BSINGLEPLOT,BPERSONALITYMAJOR, BPERSONALITYMINOR];
+  return [BWANT, BSINGLEPLOT, BPERSONALITYMAJOR, BPERSONALITYMINOR];
 }
 
 function getTeamSize() {
@@ -539,6 +541,9 @@ function generateCharacter(c) {
         break;
       case BSINGLEPLOT:
         generateOneShot(c);
+        break;
+      case BWANT:
+        generateWant(c);
         break;
     }
 
@@ -593,7 +598,15 @@ function generateOneShot(c) {
   let filtered = obtainRoot(drama, c);
   let picked = rollRole(filtered);
   if (picked) {
-    // console.log(picked.name);
+    c.aspects.push(picked);
+    addTags(c, picked);
+  }
+}
+
+function generateWant(c) {
+  let filtered = obtainRoot(want, c);
+  let picked = rollRole(filtered);
+  if (picked) {
     c.aspects.push(picked);
     addTags(c, picked);
   }
@@ -684,6 +697,7 @@ function displayCharacter(c) {
     let $background = $('#results-background');
     let $wealth = $('#results-wealth');
     let $plot = $('#results-plot');
+    let $want = $('#results-want');
     let $portrayalHeading = $('#portrayal-heading');
     let $personalityHeading = $('#personality-heading');
     let $appearanceHeading = $('#appearance-heading');
@@ -692,6 +706,7 @@ function displayCharacter(c) {
     let $backgroundHeading = $('#background-heading');
     let $wealthHeading = $('#wealth-heading');
     let $plotHeading = $('#plot-heading');
+    let $wantHeading = $('#want-heading');
     let $headingTeam = $('#team-heading');
     $appearance.html("");
     $portrayal.html("");
@@ -700,6 +715,7 @@ function displayCharacter(c) {
     $background.html("");
     $wealth.html("");
     $plot.html("");
+    $want.html("");
     $personalityHeading.hide();
     $appearanceHeading.hide();
     $portrayalHeading.hide();
@@ -708,6 +724,7 @@ function displayCharacter(c) {
     $backgroundHeading.hide();
     $wealthHeading.hide();
     $plotHeading.hide();
+    $wantHeading.hide();
 
     let appearanceText = $appearance.html();
     let portrayalText = $portrayal.html();
@@ -716,6 +733,7 @@ function displayCharacter(c) {
     let backgroundText = $background.html();
     let wealthText = $wealth.html();
     let plotText = $plot.html();
+    let wantText = $want.html();
     let tags = c.tags;
     tags.forEach(function (t) {
       // console.log(t);
@@ -751,6 +769,10 @@ function displayCharacter(c) {
       let plot = plotToDesc(t);
       if (plot) {
         plotText += plot;
+      }
+      let want = wantToDesc(t);
+      if (want) {
+        wantText += want;
       }
     });
 
@@ -788,6 +810,11 @@ function displayCharacter(c) {
       $plotHeading.removeClass('hidden').show();
       $plot.removeClass('hidden');
       $plot.html(plotText);
+    }
+    if (wantText) {
+      $wantHeading.removeClass('hidden').show();
+      $want.removeClass('hidden');
+      $want.html(wantText);
     }
     if (c.teamType) {
       let teamText = c.teamType.text;
@@ -966,6 +993,8 @@ function init() {
   initMinor();
   initTeams();
   initPlots();
+  initWants();
+
   let starter = loadInitialBranches();
   // let teamSize = getTeamSize();
   // if (teamSize) {
