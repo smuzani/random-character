@@ -465,8 +465,8 @@ function tagToPortrayal(tag) {
   switch (tag) {
     case TENERGETIC:
       return randomArray([`${p.Sdesc} was always an energetic person. ${p.She} never really knew ${p.her} limits when it came to staying up late or doing something for the first time, and ${p.she} didn't care much about the consequences either.`,
-        `${p.She} was always in the mood for something new, and ${p.she} was determined to accomplish those goals no matter how long it might take.`
-        ` ${p.She} could be found in any number of places, but ${p.her} favourite was being out in the world. ${p.Sdesc} loved going on hikes, attending concerts and festivals, and exploring the unknown. ${p.She} would be at home in a busy city, taking in all the sights and sounds as though they were fresh and new to ${p.her}.`
+        `${p.She} was always in the mood for something new, and ${p.she} was determined to accomplish those goals no matter how long it might take.`,
+        `${p.She} could be found in any number of places, but ${p.her} favourite was being out in the world. ${p.Sdesc} loved going on hikes, attending concerts and festivals, and exploring the unknown. ${p.She} would be at home in a busy city, taking in all the sights and sounds as though they were fresh and new to ${p.her}.`,
         `${p.She} is a bundle of energy. It seems like ${p.she}'s always on the go, and ${p.she} can't sit still for more than five minutes. ${p.She} is an avid lover of yoga and can often be seen in ${p.her} free time outside on the beach, practicing asanas and meditating on the sun's warmth.`,
         `${p.Sdesc} is always on the go, it seems. Constantly working and staying busy doing something. ${p.She} doesn't really sleep much; but ${p.she} gets plenty of rest in other ways.`]);
     case TLETHARGIC:
