@@ -68,7 +68,211 @@ function wantToDesc(tag) {
       ]);
     case WPROTECTIVE:
       return randomArray([
-        ``,
+        `protective`,
+      ]);
+    case WMACGUFFIN:
+      return randomArray([
+        `macguffin`,
+      ]);
+    case WGREATPOWER:
+      return randomArray([
+        `greatpower`,
+      ]);
+    case WCRAVELOVE:
+      return randomArray([
+        `cravelove`,
+      ]);
+    case WSTRONGETHICS:
+      return randomArray([
+        `strongethics`,
+      ]);
+    case WBETTERWORLD:
+      return randomArray([
+        `betterworld`,
+      ]);
+    case WPASTMISTAKE:
+      return randomArray([
+        `pastmistake`,
+      ]);
+    case WMONEYPOWER:
+      return randomArray([
+        `moneypower`,
+      ]);
+    case WPARENTAL:
+      return randomArray([
+        `parental`,
+      ]);
+    case WBELOVED:
+      return randomArray([
+        `beloved`,
+      ]);
+    case WPRIDE:
+      return randomArray([
+        `pride`,
+      ]);
+    case WFAVOUR:
+      return randomArray([
+        `favour`,
+      ]);
+    case WFORBIDDEN:
+      return randomArray([
+        `forbidden`,
+      ]);
+    case WBEBADASS:
+      return randomArray([
+        `bebadass`,
+      ]);
+    case WREVENGE:
+      return randomArray([
+        `revenge`,
+      ]);
+    case WBEATFATE:
+      return randomArray([
+        `beatfate`,
+      ]);
+    case WADVENTURE:
+      return randomArray([
+        `adventure`,
+      ]);
+    case WFOOD:
+      return randomArray([
+        `food`,
+      ]);
+    case WLAZY:
+      return randomArray([
+        `lazy`,
+      ]);
+    case WAVOIDSPOTLIGHT:
+      return randomArray([
+        `avoidspotlight`,
+      ]);
+    case WDEBT:
+      return randomArray([
+        `debt`,
+      ]);
+    case WBECOMEBEAUTIFUL:
+      return randomArray([
+        `becomebeautiful`,
+      ]);
+    case WBESPECIAL:
+      return randomArray([
+        `bespecial`,
+      ]);
+    case WNOSUFFERING:
+      return randomArray([
+        `nosuffering`,
+      ]);
+    case WPROVEWRONG:
+      return randomArray([
+        `provewrong`,
+      ]);
+    case WUNSTOPPABLERAGE:
+      return randomArray([
+        `unstoppablerage`,
+      ]);
+    case WAMBITION:
+      return randomArray([
+        `ambition`,
+      ]);
+    case WBEHAPPY:
+      return randomArray([
+        `behappy`,
+      ]);
+    case WSPREADHAPPY:
+      return randomArray([
+        `spreadhappy`,
+      ]);
+    case WHOMELAND:
+      return randomArray([
+        `homeland`,
+      ]);
+    case WGETJOBDONE:
+      return randomArray([
+        `getjobdone`,
+      ]);
+    case WRETURNHOME:
+      return randomArray([
+        `returnhome`,
+      ]);
+    case WUPHOLDHONOR:
+      return randomArray([
+        `upholdhonor`,
+      ]);
+    case WENEMIES:
+      return randomArray([
+        `enemies`,
+      ]);
+    case WCOLLECTION:
+      return randomArray([
+        `collection`,
+      ]);
+    case WSMALLTHING:
+      return randomArray([
+        `smallthing`,
+      ]);
+    case WFREEFROMBONDAGE:
+      return randomArray([
+        `freefrombondage`,
+      ]);
+    case WSAVEDLIFE:
+      return randomArray([
+        `savedlife`,
+      ]);
+    case WCHOSENONE:
+      return randomArray([
+        `chosenone`,
+      ]);
+    case WENVY:
+      return randomArray([
+        `envy`,
+      ]);
+    case WLOSTLOVE:
+      return randomArray([
+        `lostlove`,
+      ]);
+    case WSPECIFICWEALTH:
+      return randomArray([
+        `specificwealth`,
+      ]);
+    case WSPECIFICJOB:
+      return randomArray([
+        `specificjob`,
+      ]);
+    case WFAKEHEROISM:
+      return randomArray([
+        `pracgmaticheroism`,
+      ]);
+    case WFEAR:
+      return randomArray([
+        `fear`,
+      ]);
+    case WBULLY:
+      return randomArray([
+        `bully`,
+      ]);
+    case WFORCEDVILLAIN:
+      return randomArray([
+        `forcedvillain`,
+      ]);
+    case WDISABLED:
+      return randomArray([
+        `disabled`,
+      ]);
+    case WBEHUMAN:
+      return randomArray([
+        `behuman`,
+      ]);
+    case WRESURRECT:
+      return randomArray([
+        `resurrect`,
+      ]);
+    case WLUST:
+      return randomArray([
+        `lust`,
+      ]);
+    case WSEERUINED:
+      return randomArray([
+        `seeruined`,
       ]);
     default:
       return "";
@@ -131,7 +335,7 @@ function initWants() {
   want.push(new Aspect("Unstoppable rage", 2, "",
     BWANT, [WUNSTOPPABLERAGE], [], [], [], []));
   want.push(new Aspect("Ambition", 2, "",
-    BWANT, [WAMBITION], [], [], [], []));
+    BWANT, [WAMBITION], [], [PAMBITION], [], []));
   want.push(new Aspect("Be happy", 1, "",
     BWANT, [WBEHAPPY], [], [], [], []));
   want.push(new Aspect("Spread happiness", 1, "",
