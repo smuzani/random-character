@@ -111,7 +111,10 @@ function wantToDesc(tag) {
     case WBETTERWORLD:
       return randomArray([
         `${p.She} uses ${p.his} power to drive back evil forces and save humanity.`,
-        `The might of ${p.sdesc} is what keeps society safe. ${p.She} is willing to risk ${p.his} life and die if it means fighting for justice.`
+        `The might of ${p.sdesc} is what keeps society safe. ${p.She} is willing to risk ${p.his} life and die if it means fighting for justice.`,
+        `${p.His} motivation is to help the world, and to make it a better place in any way ${p.she} can, not just for its people but also for the animals. ${p.She} wants healing, forgiveness and peace.`,
+        `${p.She} is motivated not by ${p.his} own interests but by a love for others. All ${p.his} efforts gravitate towards easing the pain and suffering of others.`,
+        `${p.She} is motivated by a strong sense of love for others. The only thing that seems to make ${p.him} feel better is helping those who need it.`
       ]);
     case WPASTMISTAKE:
       return randomArray([
