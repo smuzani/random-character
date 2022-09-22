@@ -67,7 +67,7 @@ function wantToDesc(tag) {
         `${p.She}'s always looking out for the success of the team because ${p.she} knows there's strength in unity.`,
         `${p.Sdesc} is unquestioningly loyal to ${p.his} organization. ${p.She} will always take the organization's interests as paramount.`,
         `${p.Sdesc} would do anything to make sure ${p.his} younger sister is safe. ${p.She} and ${p.his} sister have always been close, and that bond has only grown after the death of their mother. ${p.His} sister isn't the brightest crayon in the box and ${p.she} gets into more than ${p.his} fair share of trouble. But ${p.Sdesc} has promised ${p.herself} that he'll protect her come hell or high water.`,
-        `${p.She} has sworn to always protect ${p.his} spouse. ${p.She} intends to take care of ${p.his} spouse and cherish them forever.`
+        `${p.She} has sworn to always protect ${p.his} spouse.`
       ]);
     case WMACGUFFIN:
       return randomArray([
@@ -81,8 +81,8 @@ function wantToDesc(tag) {
       ]);
     case WGREATPOWER:
       return randomArray([
-        `${p.Sdesc}'s motivation to help ${p.his} patient was ${p.his} deep rooted need to help live when ${p.she} was learning how to save lives. As ${p.sdesc} grew, ${p.she} realized the seriousness of a healer's role, which drove ${p.him} to help more than just a single life. Helping one person at a time would make all the difference in the world for that individual, but also contribute to bringing change because of people paying it forward.`,
-        `To ${p.sdesc} has a compulsive need to solve every problem because ${p.she} feels if ${p.she} doesn't try to solve it, the problem will grow until it consumes ${p.him} and the ones ${p.she} loves most.`,
+        `As ${p.sdesc} grew, ${p.she} realized the seriousness of a healer's role, which drove ${p.him} to help more than just a single life. Helping one person at a time would make all the difference in the world for that individual, but also contribute to bringing change because of people paying it forward.`,
+        `${p.Sdesc} has a compulsive need to solve every problem because ${p.she} feels if ${p.she} doesn't try to solve it, the problem will grow until it consumes ${p.him} and the ones ${p.she} loves most.`,
         `${p.She} always felt like ${p.she} was put on this planet to fix as many wrongs as possible. It gave ${p.him} a purpose in life. ${p.She} felt like ${p.she} could never find any justice or peace in ${p.his} own life until ${p.she} found a way to give those other things to someone else.`,
         `${p.She} feels the need to right wrongs because ${p.she} feels that ${p.she} has been let down by others. ${p.She} feels like ${p.she} needs to prove ${p.herself}, but to whom? ${p.His} family and friends seem to be on a different path. ${p.She} feels forgotten and alone, but still believes that this hero complex is justified.`,
         `${p.She} was tired of being a hero. There were plenty of others and ${p.she} wants to find a replacement.`,
@@ -91,7 +91,7 @@ function wantToDesc(tag) {
       ]);
     case WCRAVELOVE:
       return randomArray([
-        `${p.She} is not the malevolent antagonist at the center of everything. ${p.She} just wants to be loved and accepted by the people around ${p.him}.`,
+        `${p.She} isn't as bad as everyone thinks. ${p.She} just wants to be loved and accepted by the people around ${p.him}.`,
         `All people want to be loved, but ${p.sdesc} is one of those people who will do anything to feel loved. ${p.She} needs love like most people need air. Without it, ${p.she} feels as though ${p.she} has nothing left.`,
         `${p.She} is lonely. ${p.She} does not have many friends and thinks that ${p.she} would be happier if ${p.she} did.`,
         `${p.Sdesc}'s motives are to gain fame and have many friends who enjoy ${p.his} company. ${p.She} has some friends, but wants to be popular.`,
@@ -103,11 +103,15 @@ function wantToDesc(tag) {
       ]);
     case WSTRONGETHICS:
       return randomArray([
-        `strongethics`,
+        `${p.Sdesc} is a soldier. ${p.She} was bred for duty, forged by flames and fury. Rain or shine, blood or tears, ${p.sdesc} will do ${p.his} duty. ${p.She} always has, ${p.she} always would.`,
+        `${p.Sdesc} will always do the right thing, no matter the consequences.`,
+        `${p.Sdesc} is a deeply moral person. ${p.She} believes in doing what is right and just, even against the odds, even if it means sacrificing ${p.herself} for others.`,
+        `${p.Sdesc} does the right thing. ${p.She} has always had a dim view of pragmatism, believing that tough choices are for tough people.`
       ]);
     case WBETTERWORLD:
       return randomArray([
-        `betterworld`,
+        `${p.She} uses ${p.his} power to drive back evil forces and save humanity.`,
+        `The might of ${p.sdesc} is what keeps society safe. ${p.She} is willing to risk ${p.his} life and die if it means fighting for justice.`
       ]);
     case WPASTMISTAKE:
       return randomArray([
