@@ -58,8 +58,8 @@ function wantToDesc(tag) {
     case WWANTBURN:
       return randomArray([
         `${p.Sdesc} is a very angry person. ${p.She} is angry at the world, and ${p.she} is angry at those who are not like ${p.him}. ${p.She} likes to take ${p.his} anger out on others, using violence and cruelty as ${p.his} weapon of choice. ${p.She} has been this way for most of ${p.his} life, and ${p.she} doesn't see any reason to change now.`,
-        `${p.Sdesc} is life's biggest burden, a plague to drive away any happiness that may try to infect the world. ${p.She} has a goal, and ${p.his} goal is to make everyone miserable.`,
         `${p.Sdescs} abusive childhood led to this. ${p.She} enjoyed seeing people suffer, and developed a sadistic personality.`,
+        `${p.Sdesc} is just fed up with life. ${p.She} just wants to see the world burn down.`,
       ]);
     case WPROTECTIVE:
       return randomArray([
@@ -73,7 +73,7 @@ function wantToDesc(tag) {
       return randomArray([
         `${p.Sdesc} has always been a determined person with aspirations to greater heights. Somewhere deep down ${p.she} can't help but feel that ${p.his} family is being held hostage from the gifts they could have. The next step in achieving this goal is getting ${p.his} hands on the artifact and then finding somone who can teach ${p.him} to wield it.`,
         `${p.Sdesc} wishes to take hold of a powerful artifact in order to use it as leverage against ${p.his} enemies. ${p.She} believes that by obtaining this item and using it as a bargaining chip, ${p.she} will be able to outmaneuver them.`,
-        `An ally is being framed for a crime that they didn't commit, and the people framing ${p.him} have all the evidence necessary to frame ${p.him}, so ${p.she} has to steal it.
+        `An ally is being framed for a crime that they didn't commit. The people framing the ally have all the evidence necessary. ${p.Sdesc} has to get the evidence in time, using legal or illegal means.
         `,
         `${p.She} is in need of some decisive evidence to make sure ${p.she} will have a solid case against the enemy.`,
         `${p.Sdesc} believes that whoever owns a certain relic is the rightful heir, and wants to take possession of it.`,
@@ -87,7 +87,7 @@ function wantToDesc(tag) {
         `${p.She} feels the need to right wrongs because ${p.she} feels that ${p.she} has been let down by others. ${p.She} feels like ${p.she} needs to prove ${p.herself}, but to whom? ${p.His} family and friends seem to be on a different path. ${p.She} feels forgotten and alone, but still believes that this hero complex is justified.`,
         `${p.She} was tired of being a hero. There were plenty of others and ${p.she} wants to find a replacement.`,
         `${p.She} is tired of the constant praise and attention. ${p.She} wants to be like everyone else, instead of the object of admiration. It ruins mundane things like grocery shopping or finding a parking space. Plus ${p.she} would get to put ${p.herself} first for once, instead of thinking of only others.`,
-        `${p.She} just hates how pressure is constantly put on ${p.him}. ${p.His} father had told ${p.him} that ${p.she} needed to be 'The Savior': the one to come home with the W every time. ${p.She} always had to win.`
+        `${p.She} just hates how pressure is constantly put on ${p.him}. ${p.His} father had told ${p.him} that ${p.she} needed to be the savior, to come home with the win even when everyone else wasn't doing their part.`
       ]);
     case WCRAVELOVE:
       return randomArray([
@@ -118,7 +118,13 @@ function wantToDesc(tag) {
       ]);
     case WPASTMISTAKE:
       return randomArray([
-        `pastmistake`,
+        `${p.Sdesc} feels guilty for being the only survivor. ${p.She} knew that ${p.she} should have died with ${p.his} friend. Sometimes ${p.she} still has panic attacks remembering the incident.`,
+        `One of the people under ${p.his} watch passed away--one of many casualties in a crisis. ${p.Sdesc} feels personally responsible. Why couldn't ${p.she} have done more to save her?`,
+        `${p.Sdesc} hates ${p.herself} for not being able to save and protect everyone. There were so many people that ${p.she} couldn't save.`,
+        `${p.Sdesc} feels guilt over the people ${p.she} couldn't save.`,        
+        `${p.Sdesc} screwed up so badly ${p.she} was nearly fired. But ${p.she} was given a second chance and was determined to do well this time.`,
+        `When ${p.sdesc} took the oath, ${p.she} promised ${p.his} patients that ${p.she} would do whatever it took to make them healthy.`,
+        `${p.Sdesc} always been able to protect ${p.his} family from danger, and this has always tormented ${p.him}.`
       ]);
     case WMONEYPOWER:
       return randomArray([
@@ -362,54 +368,54 @@ function initWants() {
     BWANT, [WUNSTOPPABLERAGE], [], [], [], []));
   want.push(new Aspect("Ambition", 2, "",
     BWANT, [WAMBITION], [], [PAMBITION], [], []));
-  want.push(new Aspect("Be happy", 1, "",
-    BWANT, [WBEHAPPY], [], [], [], []));
-  want.push(new Aspect("Spread happiness", 1, "",
-    BWANT, [WSPREADHAPPY], [], [], [], []));
-  want.push(new Aspect("Homeland", 1, "",
-    BWANT, [WHOMELAND], [], [], [], []));
-  want.push(new Aspect("Get the job done and rest at home", 1, "",
-    BWANT, [WGETJOBDONE], [], [], [], []));
-  want.push(new Aspect("Return to their original home", 1, "",
-    BWANT, [WRETURNHOME], [], [], [], []));
-  want.push(new Aspect("Uphold family honor", 1, "",
-    BWANT, [WUPHOLDHONOR], [], [], [], []));
-  want.push(new Aspect("Great people must have lots of enemies", 1, "",
-    BWANT, [WENEMIES], [], [], [], []));
-  want.push(new Aspect("Fill out a collection", 1, "",
-    BWANT, [WCOLLECTION], [], [], [], []));
-  want.push(new Aspect("Small thing", 1, "",
-    BWANT, [WSMALLTHING], [], [], [], []));
-  want.push(new Aspect("Freedom from some bondage", 1, "",
-    BWANT, [WFREEFROMBONDAGE], [], [], [], []));
-  want.push(new Aspect("Saved life", 1, "",
-    BWANT, [WSAVEDLIFE], [], [], [], []));
-  want.push(new Aspect("Chosen one", 1, "",
-    BWANT, [WCHOSENONE], [], [], [], []));
-    want.push(new Aspect("Deeply envy someone", 1, "",
-    BWANT, [WENVY], [], [], [], []));
-  want.push(new Aspect("Find a lost or kidnapped loved one", 1, "",
-    BWANT, [WLOSTLOVE], [], [], [], []));
-  want.push(new Aspect("Specific form of wealth", 1, "",
-    BWANT, [WSPECIFICWEALTH], [], [], [], []));
-  want.push(new Aspect("Specific job", 1, "",
-    BWANT, [WSPECIFICJOB], [], [], [], []));
-  want.push(new Aspect("Heroism is more practical", 1, "",
-    BWANT, [WFAKEHEROISM], [THEEL], [], [], []));
-  want.push(new Aspect("Motivated by fear", 1, "",
-    BWANT, [WFEAR], [], [], [], []));
-  want.push(new Aspect("Bully others out of fear of being bullied", 1, "",
-    BWANT, [WBULLY], [THEEL], [], [], []));
-  want.push(new Aspect("Only perform villainous acts because otherwise they die", 1, "",
-    BWANT, [WFORCEDVILLAIN], [THEEL], [], [], []));
-  want.push(new Aspect("Disabled", 1, "",
-    BWANT, [WDISABLED], [], [], [], []));
-  want.push(new Aspect("Be human", 1, "",
-    BWANT, [WBEHUMAN], [], [], [], []));
-  want.push(new Aspect("Resurrect another dead character", 1, "",
-    BWANT, [WRESURRECT], [], [], [], []));
-  want.push(new Aspect("Really want someone", 1, "",
-    BWANT, [WLUST], [], [], [], []));
-  want.push(new Aspect("See someone else's successes ruined", 1, "",
-    BWANT, [WSEERUINED], [], [], [], []));
+  // want.push(new Aspect("Be happy", 1, "",
+  //   BWANT, [WBEHAPPY], [], [], [], []));
+  // want.push(new Aspect("Spread happiness", 1, "",
+  //   BWANT, [WSPREADHAPPY], [], [], [], []));
+  // want.push(new Aspect("Homeland", 1, "",
+  //   BWANT, [WHOMELAND], [], [], [], []));
+  // want.push(new Aspect("Get the job done and rest at home", 1, "",
+  //   BWANT, [WGETJOBDONE], [], [], [], []));
+  // want.push(new Aspect("Return to their original home", 1, "",
+  //   BWANT, [WRETURNHOME], [], [], [], []));
+  // want.push(new Aspect("Uphold family honor", 1, "",
+  //   BWANT, [WUPHOLDHONOR], [], [], [], []));
+  // want.push(new Aspect("Great people must have lots of enemies", 1, "",
+  //   BWANT, [WENEMIES], [], [], [], []));
+  // want.push(new Aspect("Fill out a collection", 1, "",
+  //   BWANT, [WCOLLECTION], [], [], [], []));
+  // want.push(new Aspect("Small thing", 1, "",
+  //   BWANT, [WSMALLTHING], [], [], [], []));
+  // want.push(new Aspect("Freedom from some bondage", 1, "",
+  //   BWANT, [WFREEFROMBONDAGE], [], [], [], []));
+  // want.push(new Aspect("Saved life", 1, "",
+  //   BWANT, [WSAVEDLIFE], [], [], [], []));
+  // want.push(new Aspect("Chosen one", 1, "",
+  //   BWANT, [WCHOSENONE], [], [], [], []));
+  // want.push(new Aspect("Deeply envy someone", 1, "",
+  //   BWANT, [WENVY], [], [], [], []));
+  // want.push(new Aspect("Find a lost or kidnapped loved one", 1, "",
+  //   BWANT, [WLOSTLOVE], [], [], [], []));
+  // want.push(new Aspect("Specific form of wealth", 1, "",
+  //   BWANT, [WSPECIFICWEALTH], [], [], [], []));
+  // want.push(new Aspect("Specific job", 1, "",
+  //   BWANT, [WSPECIFICJOB], [], [], [], []));
+  // want.push(new Aspect("Heroism is more practical", 1, "",
+  //   BWANT, [WFAKEHEROISM], [THEEL], [], [], []));
+  // want.push(new Aspect("Motivated by fear", 1, "",
+  //   BWANT, [WFEAR], [], [], [], []));
+  // want.push(new Aspect("Bully others out of fear of being bullied", 1, "",
+  //   BWANT, [WBULLY], [THEEL], [], [], []));
+  // want.push(new Aspect("Only perform villainous acts because otherwise they die", 1, "",
+  //   BWANT, [WFORCEDVILLAIN], [THEEL], [], [], []));
+  // want.push(new Aspect("Disabled", 1, "",
+  //   BWANT, [WDISABLED], [], [], [], []));
+  // want.push(new Aspect("Be human", 1, "",
+  //   BWANT, [WBEHUMAN], [], [], [], []));
+  // want.push(new Aspect("Resurrect another dead character", 1, "",
+  //   BWANT, [WRESURRECT], [], [], [], []));
+  // want.push(new Aspect("Really want someone", 1, "",
+  //   BWANT, [WLUST], [], [], [], []));
+  // want.push(new Aspect("See someone else's successes ruined", 1, "",
+  //   BWANT, [WSEERUINED], [], [], [], []));
 }
