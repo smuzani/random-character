@@ -28,7 +28,7 @@ const PINCEST = 'incest';
 const PDISHONOURLOVE = 'dishonourloved';
 const POBSTACLELOVE = 'obstaclestolove';
 const PENEMYLOVE = 'enemyloved';
-const PAMBITION = 'ambition';
+const PAMBITION = 'plot-ambition';
 const PCONFLICTPOWER = 'conflictswithpower';
 const PJEALOUS = 'mistakenjealousy';
 const PERRORJUDGMENT = 'erroneousjudgement';
@@ -505,8 +505,8 @@ function initPlots() {
   //   BSINGLEPLOT, [PREVOLT_WHISTLEBLOWER], [], [], [TBRAVE, TNOBLE], [TCOWARD, TIGNOBLE]));
   drama.push(new Aspect("Daring Enterprise", 10, "It could fail, but what else do we have to lose?",
     BSINGLEPLOT, [PDARING, TBRAVE], [], [TCOWARD], [], []));
-  drama.push(new Aspect("Abduction", 10, "Someone has captured me and does whatever he wants to me.",
-    BSINGLEPLOT, [PABDUCTION, TDISTRESSED], [], [], [], []));
+  // drama.push(new Aspect("Abduction", 10, "Someone has captured me and does whatever he wants to me.",
+  //   BSINGLEPLOT, [PABDUCTION, TDISTRESSED], [TSUPPORT], [], [], []));
   drama.push(new Aspect("The Enigma", 10, "I must know what's going on.",
     BSINGLEPLOT, [PENIGMA], [], [], [], []));
   drama.push(new Aspect("Obtaining", 10, "We just need to get past this obstacle.",

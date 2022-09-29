@@ -25,7 +25,7 @@ const WBESPECIAL = 'bespecial';
 const WNOSUFFERING = 'nosuffering';
 const WPROVEWRONG = 'provewrong';
 const WUNSTOPPABLERAGE = 'unstoppablerage';
-const WAMBITION = 'ambition';
+const WAMBITION = 'want-ambition';
 const WBEHAPPY = 'behappy';
 const WSPREADHAPPY = 'spreadhappy';
 const WHOMELAND = 'homeland';
@@ -66,7 +66,7 @@ function wantToDesc(tag) {
         `${p.Sdesc}'s loyalty is to ${p.his} family. One of the main reasons ${p.she} is so loyal is because of how much everyone else in ${p.his} family works, they all have lives that are more stressful than ${p.his}. ${p.Sdesc} understands the most important thing in ${p.his} life is ${p.his} family and their support, without them ${p.she} is nothing.`,
         `${p.She}'s always looking out for the success of the team because ${p.she} knows there's strength in unity.`,
         `${p.Sdesc} is unquestioningly loyal to ${p.his} organization. ${p.She} will always take the organization's interests as paramount.`,
-        `${p.Sdesc} would do anything to make sure ${p.his} younger sister is safe. ${p.She} and ${p.his} sister have always been close, and that bond has only grown after the death of their mother. ${p.His} sister isn't the brightest crayon in the box and ${p.she} gets into more than ${p.his} fair share of trouble. But ${p.Sdesc} has promised ${p.herself} that he'll protect her come hell or high water.`,
+        `${p.Sdesc} would do anything to make sure ${p.his} younger sister is safe. ${p.She} and ${p.his} sister have always been close, and that bond has only grown after the death of their mother. ${p.His} sister isn't the brightest crayon in the box and ${p.she} gets into more than ${p.his} fair share of trouble. But ${p.sdesc} has promised ${p.herself} that he'll protect her come hell or high water.`,
         `${p.She} has sworn to always protect ${p.his} spouse.`
       ]);
     case WMACGUFFIN:
@@ -172,21 +172,21 @@ function wantToDesc(tag) {
       ]);
     case WBEBADASS:
       return randomArray([
-        `${p.Sdesc} isn't the most attractive person, in fact ${p.she}'s a little nerdy. So ${p.she} wants to prove that looks aren't everything and that ${p.she} can take care of ${p.herself} too`,
+        `${p.Sdesc} isn't the most attractive person, in fact ${p.she}'s a little nerdy. So ${p.she} wants to prove that looks aren't everything and that ${p.she} can take care of ${p.herself} too.`,
         `${p.Sdesc} can't bear to be a nobody. ${p.She} is motivated by the desire to be a great hero, respected by everyone.`,
         `${p.Sdesc} tries to go out on an adventure, to prove to everyone just how talented ${p.she} is.`,
         `${p.Sdesc} wants to be remembered and is willing to commit vile acts to achieve that.`,
       ]);
     case WREVENGE:
       return randomArray([
-        `${p.Sdesc} is avengeful and sad. ${p.She} wants the gods to pay for what they have done to ${p.him}. ${p.She} wants to inflict pain on them for their actions. ${p.She} does not feel sorry for ${p.his} actions, for ${p.she} understands what ${p.she} does will condemn ${p.him} to Hell.`,
+        `${p.Sdesc} is avengeful and sad. ${p.She} wants the gods to pay for what they have done to ${p.him}.`,
         `${p.Sdesc} is intent on getting revenge on a traitor.`,
         `${p.Sdesc} lost a family member to a crime, and will do anything to get them to face justice.`,
       ]);
     case WBEATFATE:
       return randomArray([
         `A soothsayer predicts that ${p.sdesc} will not accomplish anything significant in life. It angers ${p.sdesc}, and ${p.she} wants to prove them wrong.`,
-        `${p.She} is prophesized to be married to someone, when ${p.she} loves someone else. ${p.She} is intent on proving the prophesy wrong.`,
+        `${p.She} is prophesied to be married to someone, when ${p.she} loves someone else. ${p.She} is intent on proving the prophecy wrong.`,
         `${p.Sdesc} doesn't want to go against a prophecy, but ${p.she} hates that they are constantly terrified of one in place ${p.she} sees no merit. ${p.She} just wants to live a normal life and focus on ${p.herself}. ${p.She} plans on proving the prophets wrong.`
       ]);
     case WADVENTURE:

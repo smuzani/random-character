@@ -12,7 +12,7 @@ const BTEAMONE = 'team-one';
 const BSINGLEPLOT = 'single-plot'; // only one plot
 const BTHREEACT = 'three-act'; // three act structure
 const BSEVENBASIC = 'seven-basic'; // seven basic plots
-
+const BWANT = 'want';
 
 class Character {
   constructor(initialTags, initialBranches = [BPERSONALITY, BPERSONALITY]) {
@@ -59,6 +59,7 @@ class Aspect {
 let aspects = [];
 let soloTeam = [];
 let drama = [];
+let want = [];
 
 function initAspects() {
   aspects.push(new Aspect("Team Mom", 3, "Supportive and nurturing. The team will defend them violently if anything happens",
@@ -550,19 +551,19 @@ function loadInitialBranches() {
   let detail = $('select#detail option:selected').attr("id");
   switch (detail) {
     case DETAIL_MODERATE:
-      branches = [BSINGLEPLOT, BPERSONALITY, BPERSONALITY];
+      branches = [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY];
       break;
     case DETAIL_HIGH:
-      branches = [BSINGLEPLOT, BPERSONALITY, BPERSONALITY, BPERSONALITY];
+      branches = [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY, BPERSONALITY];
       break;
     case DETAIL_VHIGH:
-      branches = [BSINGLEPLOT, BPERSONALITY, BPERSONALITY, BPERSONALITY, BPERSONALITY];
+      branches = [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY, BPERSONALITY, BPERSONALITY];
       break;
     case DETAIL_SPARSE:
-      branches = [BSINGLEPLOT, BPERSONALITY];
+      branches = [BWANT, BSINGLEPLOT, BPERSONALITY];
       break;
     default:
-      branches = [BSINGLEPLOT, BPERSONALITY, BPERSONALITY];
+      branches = [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY];
   }
 
   return branches;
@@ -600,6 +601,9 @@ function generateCharacter(c) {
       case BSINGLEPLOT:
         generateOneShot(c);
         break;
+      case BWANT:
+        generateWant(c);
+        break;
     }
 
     c.branches.shift(); // remove the one at the front of the array, not the end
@@ -613,7 +617,6 @@ function generateAspects(c) {
   let filtered = obtainRoot(aspects, c);
   let picked = rollRole(filtered);
   if (picked) {
-    // console.log(picked.name);
     c.aspects.push(picked);
     addTags(c, picked);
   }
@@ -644,6 +647,15 @@ function generateOneShot(c) {
   let picked = rollRole(filtered);
   if (picked) {
     // console.log(picked.name);
+    c.aspects.push(picked);
+    addTags(c, picked);
+  }
+}
+
+function generateWant(c) {
+  let filtered = obtainRoot(want, c);
+  let picked = rollRole(filtered);
+  if (picked) {
     c.aspects.push(picked);
     addTags(c, picked);
   }
@@ -743,6 +755,7 @@ function displayCharacter(c) {
     let $background = $('#results-background');
     let $wealth = $('#results-wealth');
     let $plot = $('#results-plot');
+    let $want = $('#results-want');
     let $portrayalHeading = $('#portrayal-heading');
     let $personalityHeading = $('#personality-heading');
     let $appearanceHeading = $('#appearance-heading');
@@ -751,6 +764,7 @@ function displayCharacter(c) {
     let $backgroundHeading = $('#background-heading');
     let $wealthHeading = $('#wealth-heading');
     let $plotHeading = $('#plot-heading');
+    let $wantHeading = $('#want-heading');
     let $headingTeam = $('#team-heading');
     $appearance.html("");
     $portrayal.html("");
@@ -759,6 +773,7 @@ function displayCharacter(c) {
     $background.html("");
     $wealth.html("");
     $plot.html("");
+    $want.html("");
     $personalityHeading.hide();
     $appearanceHeading.hide();
     $portrayalHeading.hide();
@@ -767,6 +782,7 @@ function displayCharacter(c) {
     $backgroundHeading.hide();
     $wealthHeading.hide();
     $plotHeading.hide();
+    $wantHeading.hide();
 
     let appearanceText = $appearance.html();
     let portrayalText = $portrayal.html();
@@ -775,6 +791,7 @@ function displayCharacter(c) {
     let backgroundText = $background.html();
     let wealthText = $wealth.html();
     let plotText = $plot.html();
+    let wantText = $want.html();  
     let tags = c.tags;
     tags.forEach(function (t) {
       // console.log(t);
@@ -810,6 +827,10 @@ function displayCharacter(c) {
       let plot = plotToDesc(t);
       if (plot) {
         plotText += plot;
+      }
+      let want = wantToDesc(t);
+      if (want) {
+        wantText += want;
       }
     });
 
@@ -847,6 +868,11 @@ function displayCharacter(c) {
       $plotHeading.removeClass('hidden').show();
       $plot.removeClass('hidden');
       $plot.html(plotText);
+    }
+    if (wantText) {
+      $wantHeading.removeClass('hidden').show();
+      $want.removeClass('hidden');
+      $want.html(wantText);
     }
     if (c.teamType) {
       let teamText = c.teamType.text;
@@ -1024,10 +1050,11 @@ function init() {
   initAspects();
   initTeams();
   initPlots();
+  initWants();
   let starter = loadInitialBranches();
   let teamSize = getTeamSize();
   if (teamSize) {
-    starter.shift(); // remove one personality and replace it with the role
+    // starter.shift(); // remove one personality and replace it with the role
     starter.unshift(teamSize);
   }
   createCharacter(loadTags(), starter);
@@ -1035,7 +1062,7 @@ function init() {
     starter = loadInitialBranches();
     teamSize = getTeamSize();
     if (teamSize) {
-      starter.shift(); // remove one personality and replace it with the role
+      // starter.shift(); // remove one personality and replace it with the role
       starter.unshift(teamSize);
     }
     createCharacter(loadTags(), starter);
