@@ -77,7 +77,7 @@ function wantToDesc(tag) {
         `,
         `${p.She} is in need of some decisive evidence to make sure ${p.she} will have a solid case against the enemy.`,
         `${p.Sdesc} believes that whoever owns a certain relic is the rightful heir, and wants to take possession of it.`,
-        `${p.She} doesn't want to make a move for the relic because ${p.she} is worried about one of ${p.her} own family members owning it. However, now ${p.she} needs the relic as means of victory.`
+        `${p.She} doesn't want to make a move for the relic because ${p.she} is worried about one of ${p.his} own family members owning it. However, now ${p.she} needs the relic as means of victory.`
       ]);
     case WGREATPOWER:
       return randomArray([
@@ -99,7 +99,7 @@ function wantToDesc(tag) {
         `${p.She} believes ${p.she} lacks the feeling of love from family. ${p.She} doesn't want to be alone.`,
         `${p.She} has always had a difficult time meeting people. ${p.She} can't seem to find anyone ${p.she} connects with.`,
         `${p.Sdesc} wished for romance, because the forecast of loneliness was looking too gloomy. ${p.She} wanted to find a girl who would love ${p.him} and take care of ${p.him}. ${p.She} wanted someone to date and share the rest of ${p.his} life with.`,
-        `${p.Alex} wants something to love unconditionally, but ${p.he} can't find that with a human. ${p.She} adopted a pet but it died early because of an illness. Getting hurt again feels too familiar.`
+        `${p.Sdesc} wants something to love unconditionally, but ${p.she} can't find that with a human. ${p.She} adopted a pet but it died early because of an illness. Getting hurt again feels too familiar.`
       ]);
     case WSTRONGETHICS:
       return randomArray([
@@ -128,39 +128,66 @@ function wantToDesc(tag) {
       ]);
     case WMONEYPOWER:
       return randomArray([
-        `moneypower`,
+        `${p.Sdesc} never has enough and is always trying to take more.`,
+        `${p.Sdesc} is greedy and wants more. ${p.She} dreams of a better life, being surrounded by luxury and the feeling of power.`,
+        `${p.Sdesc} always wanted to be more famous than ${p.his} cousin. But ${p.she} has reached a plateau. ${p.She} is trying to leverage ${p.his} current fame and get into politics for more money and power.`,
+        `${p.Sdesc} has this idea in ${p.his} head that if ${p.she} made more money and had more power, ${p.his} family would respect ${p.him} more.`,
+        `${p.She} always dreamed of making a better world to live in. ${p.She} thought the government is not doing what they could be doing. Along with some friends, they set a goal to take over the world.`,
+        `${p.Sdesc} doesn’t want to be a statistic. ${p.She} wants a better world and will go to extremes to make sure that it happens. ${p.She} also feels that ${p.she} is the one that must see this through due to what ${p.she} has gone through in life.`
       ]);
     case WPARENTAL:
       return randomArray([
-        `parental`,
+        `${p.Sdesc} feels that if ${p.she} were to work hard enough, ${p.she} might earn the respect of ${p.his} dad.`,
+        `As a child, ${p.sdesc} was desperate for ${p.his} father's approval. As they grow, ${p.sdesc}'s father becomes more distant, and ${p.sdesc} wishes ${p.she} could understand why he doesn't love ${p.him}.`,
+        `${p.Sdesc} is very devoted to ${p.his} mother and puts in lots of effort to get her approval.`,
+        `${p.She} has an intense need to feel needed and loved by ${p.his} mother, who due to Alzheimer's disease, will not likely remember anything ${p.she} says or does.`,
+        `All ${p.she} wants is for ${p.his} mentor to approve of ${p.him}. But ${p.she} can never please ${p.his} mentor, no matter what ${p.she} does.`,
+        `${p.She} has a hard time meeting all the standards that ${p.his} mentor puts before ${p.him}.`,
       ]);
     case WBELOVED:
       return randomArray([
-        `beloved`,
+        `The person that ${p.sdesc} loves, might be happy with someone else, but ${p.she} is willing to let go of ${p.his} own happiness for the sake of their happiness.`,
+        `${p.Sdesc} would do anything for the one ${p.she} loves. ${p.She} has a tendency to let the other person control ${p.him}.`,
+        `${p.She} wants the person ${p.she} loves to be happy. ${p.She} ultimately chooses the person ${p.she} loves over ${p.herself}.`
       ]);
     case WPRIDE:
       return randomArray([
-        `pride`,
+        `${p.She} has a deep, gnawing resentment towards someone more popular than ${p.him}.`,
+        `${p.She} will do what it takes to be the best. ${p.She} is driven not by ${p.his} need to save people, but rather to uphold ${p.his} pride of being a hero for them.`,
+        `${p.Sdesc} values ${p.herself} highly. ${p.She} knows that ${p.his} peers do not always hold ${p.him} in high esteem- ${p.she} is often underestimated and underestimated. ${p.She} feels that if ${p.she} can prove that ${p.she} can survive any challenge, then they will give ${p.him} the respect ${p.she} deserves.`,
+        `${p.She} was tired of being told that ${p.she} wasn't good enough. It was time for ${p.him} to prove ${p.herself}.`,
       ]);
     case WFAVOUR:
       return randomArray([
-        `favour`,
+        `Someone was nice to ${p.sdesc} in the past, back when ${p.she} was a creep. ${p.She} remembers them and tries to repay the favor.`,
+        `Someone treated ${p.sdesc} with respect once, back when nobody else cared about ${p.him}. Because of that, ${p.she} goes out of ${p.his} way to be nice to others.`,
+        `When everyone else treated ${p.sdesc} as an outcast, someone welcomed ${p.him}. ${p.She} will go out of ${p.his} way to help that person.`,
       ]);
     case WFORBIDDEN:
       return randomArray([
-        `forbidden`,
+        `${p.Sdesc} does experiments that does a lot of harm and has no benefits, out of curiosity.`,
+        `${p.Sdesc} seeks forbidden knowledge, for no other purpose than the thrill of seeking something forbidden.`,
+        `${p.Sdesc} wishes to invent devastating weapons to be used for peace.`,
+        `${p.Sdesc} is attempting to create a work of art using a process and materials that could harm others.`
       ]);
     case WBEBADASS:
       return randomArray([
-        `bebadass`,
+        `${p.Sdesc} isn't the most attractive person, in fact ${p.she}'s a little nerdy. So ${p.she} wants to prove that looks aren't everything and that ${p.she} can take care of ${p.herself} too`,
+        `${p.Sdesc} can't bear to be a nobody. ${p.She} is motivated by the desire to be a great hero, respected by everyone.`,
+        `${p.Sdesc} tries to go out on an adventure, to prove to everyone just how talented ${p.she} is.`,
+        `${p.Sdesc} wants to be remembered and is willing to commit vile acts to achieve that.`,
       ]);
     case WREVENGE:
       return randomArray([
-        `revenge`,
+        `${p.Sdesc} is avengeful and sad. ${p.She} wants the gods to pay for what they have done to ${p.him}. ${p.She} wants to inflict pain on them for their actions. ${p.She} does not feel sorry for ${p.his} actions, for ${p.she} understands what ${p.she} does will condemn ${p.him} to Hell.`,
+        `${p.Sdesc} is intent on getting revenge on a traitor.`,
+        `${p.Sdesc} lost a family member to a crime, and will do anything to get them to face justice.`,
       ]);
     case WBEATFATE:
       return randomArray([
-        `beatfate`,
+        `A soothsayer predicts that ${p.sdesc} will not accomplish anything significant in life. It angers ${p.sdesc}, and ${p.she} wants to prove them wrong.`,
+        `${p.She} is prophesized to be married to someone, when ${p.she} loves someone else. ${p.She} is intent on proving the prophesy wrong.`,
+        `${p.Sdesc} doesn't want to go against a prophecy, but ${p.she} hates that they are constantly terrified of one in place ${p.she} sees no merit. ${p.She} just wants to live a normal life and focus on ${p.herself}. ${p.She} plans on proving the prophets wrong.`
       ]);
     case WADVENTURE:
       return randomArray([
@@ -329,9 +356,9 @@ function initWants() {
   want.push(new Aspect("Past mistake", 7, "",
     BWANT, [WPASTMISTAKE], [], [], [], []));
   want.push(new Aspect("More money and power", 6, "",
-    BWANT, [WMONEYPOWER], [], [], [TBADCAUSE], []));
+    BWANT, [WMONEYPOWER], [], [], [TBADMEANS], []));
   want.push(new Aspect("Parental approval", 6, "",
-    BWANT, [WPARENTAL], [], [], [], []));
+    BWANT, [WPARENTAL], [TFACE], [], [], []));
   want.push(new Aspect("Willing to do anything for a beloved", 5, "",
     BWANT, [WBELOVED], [], [], [TGOODCAUSE], []));
   want.push(new Aspect("Better than everyone else", 5, "",
@@ -346,28 +373,28 @@ function initWants() {
     BWANT, [WREVENGE], [], [], [], []));
   want.push(new Aspect("Fated for something", 3, "",
     BWANT, [WBEATFATE], [], [], [], []));
-  want.push(new Aspect("Adventure and danger in their lives", 3, "",
-    BWANT, [WADVENTURE], [], [], [], []));
-  want.push(new Aspect("Just here for the free food", 3, "",
-    BWANT, [WFOOD], [], [], [], []));
-  want.push(new Aspect("Purposely lazy to avoid the pain of failure", 3, "",
-    BWANT, [WLAZY], [], [], [], []));
-  want.push(new Aspect("Avoid the spotlight and high expectations", 2, "",
-    BWANT, [WAVOIDSPOTLIGHT], [], [], [], []));
-  want.push(new Aspect("Debt to pay off", 2, "",
-    BWANT, [WDEBT], [], [], [], []));
-  want.push(new Aspect("Become beautiful", 2, "",
-    BWANT, [WBECOMEBEAUTIFUL], [], [], [], []));
-  want.push(new Aspect("Be special", 2, "",
-    BWANT, [WBESPECIAL], [], [], [], []));
-  want.push(new Aspect("Don't want others to suffer", 2, "",
-    BWANT, [WNOSUFFERING], [], [], [], []));
-  want.push(new Aspect("Prove someone wrong", 2, "",
-    BWANT, [WPROVEWRONG], [], [], [], []));
-  want.push(new Aspect("Unstoppable rage", 2, "",
-    BWANT, [WUNSTOPPABLERAGE], [], [], [], []));
-  want.push(new Aspect("Ambition", 2, "",
-    BWANT, [WAMBITION], [], [PAMBITION], [], []));
+  // want.push(new Aspect("Adventure and danger in their lives", 3, "",
+  //   BWANT, [WADVENTURE], [], [], [], []));
+  // want.push(new Aspect("Just here for the free food", 3, "",
+  //   BWANT, [WFOOD], [], [], [], []));
+  // want.push(new Aspect("Purposely lazy to avoid the pain of failure", 3, "",
+  //   BWANT, [WLAZY], [], [], [], []));
+  // want.push(new Aspect("Avoid the spotlight and high expectations", 2, "",
+  //   BWANT, [WAVOIDSPOTLIGHT], [], [], [], []));
+  // want.push(new Aspect("Debt to pay off", 2, "",
+  //   BWANT, [WDEBT], [], [], [], []));
+  // want.push(new Aspect("Become beautiful", 2, "",
+  //   BWANT, [WBECOMEBEAUTIFUL], [], [], [], []));
+  // want.push(new Aspect("Be special", 2, "",
+  //   BWANT, [WBESPECIAL], [], [], [], []));
+  // want.push(new Aspect("Don't want others to suffer", 2, "",
+  //   BWANT, [WNOSUFFERING], [], [], [], []));
+  // want.push(new Aspect("Prove someone wrong", 2, "",
+  //   BWANT, [WPROVEWRONG], [], [], [], []));
+  // want.push(new Aspect("Unstoppable rage", 2, "",
+  //   BWANT, [WUNSTOPPABLERAGE], [], [], [], []));
+  // want.push(new Aspect("Ambition", 2, "",
+  //   BWANT, [WAMBITION], [], [PAMBITION], [], []));
   // want.push(new Aspect("Be happy", 1, "",
   //   BWANT, [WBEHAPPY], [], [], [], []));
   // want.push(new Aspect("Spread happiness", 1, "",
