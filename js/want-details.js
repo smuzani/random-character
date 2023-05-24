@@ -187,27 +187,50 @@ function wantToDesc(tag) {
       return randomArray([
         `A soothsayer predicts that ${p.sdesc} will not accomplish anything significant in life. It angers ${p.sdesc}, and ${p.she} wants to prove them wrong.`,
         `${p.She} is prophesied to be married to someone, when ${p.she} loves someone else. ${p.She} is intent on proving the prophecy wrong.`,
-        `${p.Sdesc} doesn't want to go against a prophecy, but ${p.she} hates that they are constantly terrified of one in place ${p.she} sees no merit. ${p.She} just wants to live a normal life and focus on ${p.herself}. ${p.She} plans on proving the prophets wrong.`
+        `${p.Sdesc} doesn't want to go against a prophecy, but ${p.she} hates that they are constantly terrified of one. ${p.She} just wants to live a normal life and focus on ${p.herself}. ${p.She} plans on proving the prophets wrong.`
       ]);
     case WADVENTURE:
       return randomArray([
-        `adventure`,
+        `${p.Sdesc} longs for a life full of excitement and danger, feeling that ${p.his} current life is too mundane.`,
+        `${p.Sdesc} constantly dreams of exploring new places and facing down perilous challenges.`,
+        `Despite ${p.his} ordinary surroundings, ${p.she} harbors a deep desire for adventure and danger.`,
+        `${p.Sdesc} feels a restlessness that can only be quenched by the thrill of adventure and risk.`,
+        `${p.Sdesc} is always seeking the next adrenaline rush, willing to risk life and limb for the thrill of adventure.`,
+        `Bored with the monotony of wealth, ${p.sdesc} yearns for a life filled with excitement and peril. ${p.She} believes that the thrill of adventure will give ${p.his} life purpose.`,
+        `Despite ${p.his} privileged upbringing, ${p.sdesc} finds no satisfaction in a life of luxury and ease. ${p.She} dreams of stepping out of ${p.his} comfort zone and plunging into the world of danger and adventure.`,
+        `For ${p.sdesc}, the adrenaline rush of being in danger is what makes life worth living. ${p.She} is constantly putting ${p.him}self in harm's way to feel that thrill.`,
+        `${p.Sdesc} believes that a life without risk is a life not worth living. ${p.She} seeks out dangerous adventures to escape the dullness of ${p.his} everyday life.`,
+        `Born into wealth, ${p.sdesc} is bored with ${p.his} luxurious life and craves excitement. ${p.She} constantly finds ${p.him}self drawn to dangerous situations, seeing them as the ultimate thrill.`,
+        `${p.Sdesc} is a thrill-seeker who craves danger and excitement. Despite the risks, ${p.she} believes that the thrill of adventure is the ultimate freedom.`,
+        `No matter how dangerous the adventure, ${p.sdesc} is always ready to take the risk. ${p.She} believes that the thrill of living on the edge is worth any potential danger.`
       ]);
     case WFOOD:
       return randomArray([
-        `food`,
+        `${p.Sdesc} is always on the hunt for the next great meal, willing to go anywhere and do anything for it.`,
+        `${p.She} has a deep craving for exotic foods and will go to great lengths to satisfy it.`,
+        `${p.Sdesc} attends every event and gathering not for the company, but for the free food.`,
+        `${p.Sdesc} dreams of tasting every cuisine in the world, and doesn't mind being seen as a freeloader.`,
       ]);
     case WLAZY:
       return randomArray([
-        `lazy`,
+        `${p.Sdesc} purposely avoids hard work, afraid of the disappointment that may come with failure.`,
+        `${p.She} adopts a lazy attitude, choosing to stay within ${p.his} comfort zone rather than risk failure.`,
+        `${p.Sdesc} prefers to laze around and do nothing, as it is easier than facing the potential pain of failing.`,
+        `Despite ${p.his} talents, ${p.she} often succumbs to laziness, in order to avoid the potential hurt of not succeeding.`,
       ]);
     case WAVOIDSPOTLIGHT:
       return randomArray([
-        `avoidspotlight`,
+        `${p.Sdesc} constantly shies away from the limelight, wishing to avoid the high expectations it brings.`,
+        `${p.She} prefers a quiet, unassuming life, avoiding the spotlight and the pressures that come with it.`,
+        `${p.Sdesc} consciously avoids recognition and fame, uncomfortable with the high expectations and scrutiny they bring.`,
+        `${p.Sdesc} would rather blend in with the crowd than stand out, as it helps ${p.him} avoid unwanted attention and high expectations.`,
       ]);
     case WDEBT:
       return randomArray([
-        `debt`,
+        `${p.Sdesc} is burdened by a large debt, and is desperate to find a way to pay it off.`,
+        `${p.Sdesc} is constantly haunted by the shadow of debt, and would do anything to be free of it.`,
+        `${p.She} struggles with the weight of a debt that ${p.she} owes, seeking any opportunity to repay it.`,
+        `${p.Sdesc} lives under the cloud of an unpaid debt, constantly looking for ways to settle it.`,
       ]);
     case WBECOMEBEAUTIFUL:
       return randomArray([
@@ -373,16 +396,16 @@ function initWants() {
     BWANT, [WREVENGE], [], [], [], []));
   want.push(new Aspect("Fated for something", 3, "",
     BWANT, [WBEATFATE], [], [], [], []));
-  // want.push(new Aspect("Adventure and danger in their lives", 3, "",
-  //   BWANT, [WADVENTURE], [], [], [], []));
-  // want.push(new Aspect("Just here for the free food", 3, "",
-  //   BWANT, [WFOOD], [], [], [], []));
-  // want.push(new Aspect("Purposely lazy to avoid the pain of failure", 3, "",
-  //   BWANT, [WLAZY], [], [], [], []));
-  // want.push(new Aspect("Avoid the spotlight and high expectations", 2, "",
-  //   BWANT, [WAVOIDSPOTLIGHT], [], [], [], []));
-  // want.push(new Aspect("Debt to pay off", 2, "",
-  //   BWANT, [WDEBT], [], [], [], []));
+  want.push(new Aspect("Adventure and danger in their lives", 3, "",
+    BWANT, [WADVENTURE], [], [], [], []));
+  want.push(new Aspect("Just here for the free food", 3, "",
+    BWANT, [WFOOD], [], [], [], []));
+  want.push(new Aspect("Purposely lazy to avoid the pain of failure", 3, "",
+    BWANT, [WLAZY], [], [], [], []));
+  want.push(new Aspect("Avoid the spotlight and high expectations", 2, "",
+    BWANT, [WAVOIDSPOTLIGHT], [], [], [], []));
+  want.push(new Aspect("Debt to pay off", 2, "",
+    BWANT, [WDEBT], [], [], [], []));
   // want.push(new Aspect("Become beautiful", 2, "",
   //   BWANT, [WBECOMEBEAUTIFUL], [], [], [], []));
   // want.push(new Aspect("Be special", 2, "",

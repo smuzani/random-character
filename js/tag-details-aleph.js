@@ -545,7 +545,7 @@ function tagToPortrayal(tag) {
         `Lindsay is one of the kindest members of the team. She always has a smile on her face and is always so quick with a hug. She stays strong, as she believes that all the good she does outweighs the bad.`,
         `He's always the first one to greet a new teammate, and he never takes his eyes off of them. His empathy for each individual is what keeps him going. He is the person that will protect everyone from the daily horrors and pain.`]);
     case TEVERYMAN:
-      return randomArray([`Eve has never been one for success. She's always felt that hard work is tedious, and she would much rather sit around, read a book or cook. She doesn't really care about being rich or famous.`,
+      return randomArray([`${p.Sdesc} has never been one for success. ${p.She} has always felt that hard work is tedious, and ${p.she} would much rather sit around, read a book or cook. ${p.She} doesn't really care about being rich or famous.`,
         `All that matters to her is the people she loves and food. She spends most of her time with these people she loves. They are what make her life worth living.`,
         `Rizal is not ambitious. He has never been interested in climbing the corporate ladder or being the head of his own company, but he is happy with his life nonetheless. Rizal is content with his work and does not need anything more.`,
         `She's never seen herself as a failure, simply too unambitious to make a lot out of what she had. She's content with her life where she has everything she needs and nothing more.`,
