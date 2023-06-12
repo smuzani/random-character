@@ -234,39 +234,70 @@ function wantToDesc(tag) {
       ]);
     case WBECOMEBEAUTIFUL:
       return randomArray([
-        `becomebeautiful`,
+        `${p.Sdesc} is seeking new ways to enhance ${p.his} beauty, constantly experimenting with different diets, exercises, and beauty routines.`,
+        `${p.Sdesc} feels that ${p.his} current physical appearance doesn't match the beauty ${p.she} sees within ${p.himself}. ${p.She} is determined to change that.`,
+        `${p.Sdesc} is obsessed with the idea of physical perfection and goes to extreme lengths to achieve and maintain it.`,
+        `${p.Sdesc} believes that beauty brings respect and love, and ${p.she} is ready to do anything to achieve it.`
       ]);
     case WBESPECIAL:
       return randomArray([
-        `bespecial`,
+        `${p.Sdesc} feels a deep desire to be unique, to stand out from the crowd in some significant way.`,
+        `${p.Sdesc} craves a purpose, a reason for being that sets ${p.him} apart from everyone else.`,
+        `${p.Sdesc} doesn't want to be just another face in the crowd. ${p.She} wants to be special, to be noticed, to be remembered.`,
+        `${p.Sdesc} fears being ordinary more than anything else. ${p.She} is always seeking ways to be different and unique.`
       ]);
     case WNOSUFFERING:
       return randomArray([
-        `nosuffering`,
+        `${p.Sdesc} is determined to ensure that no one else has to endure the suffering that ${p.she} has faced in ${p.his} life.`,
+        `${p.Sdesc} is driven by a deep-seated desire to eliminate suffering, to create a world where pain and hardship are a thing of the past.`,
+        `${p.Sdesc} has seen the harsh realities of life and is committed to making sure others don't have to experience them.`,
+        `${p.Sdesc} has a heart full of empathy and cannot bear the thought of others suffering. ${p.She} works tirelessly to alleviate pain and hardship.`
       ]);
     case WPROVEWRONG:
       return randomArray([
-        `provewrong`,
+        `${p.Sdesc} is driven by the need to prove ${p.his} doubters wrong. ${p.She} will stop at nothing to show them ${p.his} true potential.`,
+        `${p.Sdesc} has been told ${p.she} couldn't succeed, but ${p.she} is determined to prove them wrong.`,
+        `${p.Sdesc} was laughed at and dismissed. Now, ${p.she} is motivated by a burning desire to prove them all wrong.`,
+        `${p.Sdesc} is fueled by the insults and skepticism of others. ${p.She} is determined to achieve greatness just to prove them wrong.`
       ]);
     case WUNSTOPPABLERAGE:
       return randomArray([
-        `unstoppablerage`,
+        `${p.Sdesc} is driven by a deep-seated anger that seems to have no end. ${p.His} rage fuels ${p.his} actions and decisions.`,
+        `${p.Sdesc}'s fury is like a wildfire, consuming everything in its path. ${p.She} cannot, and will not, be stopped.`,
+        `${p.Sdesc} is consumed by an unstoppable rage. ${p.His} wrath is a force to be reckoned with.`,
+        `${p.Sdesc}'s rage is like a storm, unyielding and relentless. It propels ${p.him} forward in ${p.his} pursuits.`
       ]);
     case WAMBITION:
       return randomArray([
-        `ambition`,
+        `${p.Sdesc} has always dreamed of achieving something significant in ${p.his} field, but this dream seems forever out of reach.`,
+        `${p.Sdesc} holds an ambitious goal, often spending nights without sleep in pursuit of ${p.his} vision.`,
+        `No matter how many times ${p.she} fails, ${p.she} continues to chase ${p.his} ambitious dream, fueled by an unyielding spirit.`,
+        `${p.Sdesc} is on a quest to reach the top of ${p.his} profession, a journey fraught with trials and tribulations.`,
+        `${p.She} has a burning desire to fulfill a personal ambition, an ambition so grand that it's daunting even to ${p.him}.`,
       ]);
     case WBEHAPPY:
       return randomArray([
-        `behappy`,
+        `${p.Sdesc} is seeking genuine happiness, but it always seems just out of ${p.his} reach.`,
+        `Despite the hardships ${p.she} faces, ${p.she} never stops yearning for happiness.`,
+        `In the whirlwind of life, all ${p.she} wants is to find a moment of true happiness.`,
+        `${p.Sdesc} keeps wandering aimlessly in the quest for happiness, wondering when it will finally be ${p.his}.`,
+        `The smile on ${p.his} face often hides the yearning for true happiness in ${p.his} heart.`,
       ]);
     case WSPREADHAPPY:
       return randomArray([
-        `spreadhappy`,
+        `${p.Sdesc} firmly believes in spreading happiness around, despite the darkness ${p.she} often faces.`,
+        `${p.Sdesc} seeks to share ${p.his} joy with others, believing that happiness is multiplied when shared.`,
+        `For ${p.him}, life is about spreading happiness and joy, even when the world seems bleak.`,
+        `${p.She} has dedicated ${p.his} life to bringing smiles to people's faces, believing that true happiness lies in making others happy.`,
+        `${p.Sdesc} lives to spread happiness, constantly working to bring a spark of joy into the lives of those around ${p.him}.`,
       ]);
     case WHOMELAND:
       return randomArray([
-        `homeland`,
+        `${p.Sdesc} yearns to protect ${p.his} homeland, ready to face any hardship that comes ${p.his} way.`,
+        `${p.Sdesc} is willing to sacrifice anything for the sake of ${p.his} homeland.`,
+        `Even though ${p.she} lives far away, ${p.she} still dreams of the days when ${p.she} can return and fight for ${p.his} homeland.`,
+        `${p.Sdesc} can't shake off the memory of ${p.his} homeland, and ${p.she} wishes to return and make it a better place.`,
+        `${p.She} cherishes ${p.his} homeland more than anything, and will do anything to defend it from harm.`,
       ]);
     case WGETJOBDONE:
       return randomArray([
@@ -406,24 +437,24 @@ function initWants() {
     BWANT, [WAVOIDSPOTLIGHT], [], [], [], []));
   want.push(new Aspect("Debt to pay off", 2, "",
     BWANT, [WDEBT], [], [], [], []));
-  // want.push(new Aspect("Become beautiful", 2, "",
-  //   BWANT, [WBECOMEBEAUTIFUL], [], [], [], []));
-  // want.push(new Aspect("Be special", 2, "",
-  //   BWANT, [WBESPECIAL], [], [], [], []));
-  // want.push(new Aspect("Don't want others to suffer", 2, "",
-  //   BWANT, [WNOSUFFERING], [], [], [], []));
-  // want.push(new Aspect("Prove someone wrong", 2, "",
-  //   BWANT, [WPROVEWRONG], [], [], [], []));
-  // want.push(new Aspect("Unstoppable rage", 2, "",
-  //   BWANT, [WUNSTOPPABLERAGE], [], [], [], []));
-  // want.push(new Aspect("Ambition", 2, "",
-  //   BWANT, [WAMBITION], [], [PAMBITION], [], []));
-  // want.push(new Aspect("Be happy", 1, "",
-  //   BWANT, [WBEHAPPY], [], [], [], []));
-  // want.push(new Aspect("Spread happiness", 1, "",
-  //   BWANT, [WSPREADHAPPY], [], [], [], []));
-  // want.push(new Aspect("Homeland", 1, "",
-  //   BWANT, [WHOMELAND], [], [], [], []));
+  want.push(new Aspect("Become beautiful", 2, "",
+    BWANT, [WBECOMEBEAUTIFUL], [], [], [], []));
+  want.push(new Aspect("Be special", 2, "",
+    BWANT, [WBESPECIAL], [], [], [], []));
+  want.push(new Aspect("Don't want others to suffer", 2, "",
+    BWANT, [WNOSUFFERING], [], [], [], []));
+  want.push(new Aspect("Prove someone wrong", 2, "",
+    BWANT, [WPROVEWRONG], [], [], [], []));
+  want.push(new Aspect("Unstoppable rage", 2, "",
+    BWANT, [WUNSTOPPABLERAGE], [], [], [], []));
+  want.push(new Aspect("Ambition", 2, "",
+    BWANT, [WAMBITION], [], [PAMBITION], [], []));
+  want.push(new Aspect("Be happy", 1, "",
+    BWANT, [WBEHAPPY], [], [], [], []));
+  want.push(new Aspect("Spread happiness", 1, "",
+    BWANT, [WSPREADHAPPY], [], [], [], []));
+  want.push(new Aspect("Homeland", 1, "",
+    BWANT, [WHOMELAND], [], [], [], []));
   // want.push(new Aspect("Get the job done and rest at home", 1, "",
   //   BWANT, [WGETJOBDONE], [], [], [], []));
   // want.push(new Aspect("Return to their original home", 1, "",

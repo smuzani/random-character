@@ -632,7 +632,7 @@ function tagToPortrayal(tag) {
       return randomArray([`Everyone considers ${p.sdesc} crazy and nobody takes ${p.him} seriously.`,
         `${p.She} is off the rails crazy, and usually very insistent in what ${p.she} believes.`]);
     case TSANE:
-      return randomArray([`${p.Sdesc} might have a little contempt towards the crazy team ${p.she} find ${p.herself} in.`,
+      return randomArray([`${p.Sdesc} might have a little contempt towards the crazy team ${p.she} finds ${p.herself} in.`,
         `${p.Sdesc} is the one of the few that everyone takes seriously.`]);
     case TACE:
       return randomArray([`${p.Sdesc} is a benchmark for how good a person can get.`,
