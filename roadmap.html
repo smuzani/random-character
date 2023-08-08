@@ -28,21 +28,86 @@
   </header>
 </div>
 
+<style>
+  .focused {
+    font-weight: bold;
+    color: #0077be;
+  }
+
+  h3 {
+    font-family: Arial, sans-serif;
+    font-size: 20px;
+    color: #0077be;
+  }
+
+  h4 {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    font-weight: lighter;
+    color: #0077be;
+  }
+</style>
+
 <div class="container">
   <br>
   <h1 class="text-center">Roadmap</h1>
   <br>
   <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-xl-6">
-      <p class="text-justify"><small>Current Version: V7.3 (30 Sept 2022)</small></p>
-      <p class="text-justify"><strong>Changes</strong></p>
-      <p class="text-justify">Adding a wants to go with the plots. We'll experiment a bit on this, but I expect these two to be the pillars for characterization. They should have a really strong want and a really big obstacle, and you can hang any plot on it. Everything else is just flavor.</p>
-      <p class="text-justify"><strong>Upcoming</strong></p>
-      <p class="text-justify">The next biggest request after wants is character descriptions. This is already mostly drafted, just need a good way of explaining it.</p>
-      <p class="text-justify">Please let us know what you'd like to see in <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a> or <!-- <a href="chat.html">Chat</a> -->!</p>
+      <p class="text-justify"><small>Current Version: V7.4 (8 Aug 2023)</small></p>
+      <h2>Roadmap</h2>
+      <p class="text-justify"><span class="focused">Resources page</span>: I realize there's a lot of resources that can help others, so we'll add a page to link to them. Also a lot of people I'd like to credit.</p>
+      <p class="text-justify"><span class="focused">Name generation</span>: This can really go into depth, but we should be able to generate generic names like "Bob" and "James Baxter". This should ideally be static and hostable offline. It's more the effort of keeping it balanced that takes effort. Also why we want to add a resources page; some tools just do it better.</p>
+      <h2>Survey results</h2>
+      <p class="text-justify">Thanks for those who answered <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a>. After 3 long years, we have finally actually gone through each of them. Here's the results, indexed and ranked by popularity:</p>
+      <img src="img/rcg_requests.png" class="img-fluid" alt="Roadmap"><br><br>
+      <h4>Appearance (100%)</h4>
+      <p class="text-justify">Some examples include: Hair color, eye color, skin color, body type, hair type, clothing</p>
+      <p class="text-justify">There's three challenges here</p>
+      <ul>
+        <li>Consistency. We heavily use tropes here to bias results. Only white people get naturally colorful hair, and things like size is dependent on story trope as well. It's doable, but it's complex and slow because of possible conflicts.</li>
+        <li>Setting: We don't cater for orcs and elves yet, and that would be a whole new expansion. Even natural human bias might be different; if you have something based in Arabian deserts or a desert planet, people would be darker skinned.</li>
+        <li>Palette: We think palette matters more than the actual colors. For example, we could make badass villains brighter or, say, fiery colored hotheaded characters. I'd love to make an alpha orc villain with bright blue tattoos and colors, denoting rank like a mandrill. This would take first priority when we do appearance, but we have to take care that it doesn't conflict with the other things. A lot of people gave feedback that they use this tool for drawing; we'd like to cater for that.</li>
+      </ul>
+      <h4>Name generation (40%)</h4>
+      <p class="text-justify">This is actually easy to do, just a problem with settings and racial bias. But it's the easiest to add, so we'll make it top priority next.</p>
+      <h4>More Depth (33.3%)</h4>
+      <p class="text-justify">Users have shown requested things like: likes/dislikes, birthdays, personality traits, preferred weapons, ethnicity, religion, or sexual orientation</p>
+      <p class="text-justify">This is a bit more difficult, because it's not just a matter of adding more things. We have to make sure that the things we add are actually useful, and that they don't conflict with each other. For example, if we add a birthday, we have to make sure that it doesn't conflict with the age. If we add a personality trait, we have to make sure that it doesn't conflict with the wants. We have to make sure that the things we add actually improve the character, and that they don't conflict with each other.</p>
+      <h4>More Plots (26.7%)</h4>
+      <p class="text-justify">We can expand this and we'll look into ways to make it combo well with ChatGPT.</p>
+      <h4>Back Story (20%)</h4>
+      <p class="text-justify">This is one reason I started this tool. There's been some amazing outcomes doing this with AI, but I'd like to look for a way without paying AI to generate them.</p>
+      <h4>Reduce inconsistencies (20%)</h4>
+      <p class="text-justify">This should be reduced with engine tweaks, but we'll monitor this. Likely we'll have a button so you can flag inconsistencies.</p>
+      <h4>Character Art (13.3%)</h4>
+      <p class="text-justify">Visual stuff. Pre-requisite for this is appearance. A lot of people submitted this in the survey before AI art was a thing; I'm not sure if it's still relevant.</p>
+      <h4>Miscellaneous (6.7%)</h4>
+      <p class="text-justify">Several features like clearer results, relationships, job concepts, nonbinary options, and magic have been highlighted. Please bring things like this up if you feel strongly about them.</p>
+
+      <h3>Things we won't do (yet)</h3>
+      <p class="text-justify">There's some nice suggestions here, but they won't be in version 7 because of the difficulty of implementation with the current engine.</p>
+      <ul>
+        <li>Moddability. This is top of the list because it's easier for us to develop in the future as well. Likely this will be done after Appearances, Back Story, and Palette generation</li>
+        <li>Settings: Should be solvable with moddable content</li>
+        <li>Dialogue</li>
+        <li>World generator: planet, biomes, scifi, towns, shops</li>
+        <li>Fine control: fill in your own details, select traits to lock or reroll</li>
+        <li>Combat</li>
+        <li>Writing prompt for first encounter. I love this idea, but it's not in high demand and challenging without AI.</li>
+        <li>Fictional languages</li>
+        <li>Poetry</li>
+        <li>Fandom generator</li>
+        <li>Using older versions of this generator</li>
+      </ul>
+      <p class="text-justify">Please let us know what you'd like to see in <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a></p>
     </div>
   </div>
 </div>
+
+
+
+<div></div>
 
 <div class="container-fluid">
   <footer>
