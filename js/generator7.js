@@ -534,7 +534,8 @@ function loadTags() {
   if (charName != "") {
     generatePronouns(gender, charName);
   } else {
-    generatePronouns(gender);
+    const rName = randomName(gender);
+    generatePronouns(gender, rName);
   }
   tags.push(getTeamSize());
   return tags;
@@ -937,6 +938,14 @@ function forceGender() {
       return TMALE;
     case 2:
       return TFEMALE;
+  }
+}
+
+function randomName(gender) {
+  if (gender == TMALE) {
+    return randomArray(namesM);
+  } else { // including androgynous
+    return randomArray(namesF);
   }
 }
 
