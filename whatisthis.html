@@ -63,17 +63,25 @@
       <br>
       <h2>Changelog</h2>
       <br>
-      <strong>V1: Based off <a href="http://jamesharris.design/periodic/">The Periodic Table of Storytelling</a></strong>
-      <p class="text-justify">The periodic table was a great idea, but incomplete. A lot of things are omnipresent tropes. For example, "Action Girl" is just an active girl, which doesn't say anything about who she is. It doesn't differentiate between Sarah Connor and Rainbow Dash.</p>
-      <strong>V2: Based off plot formulas from movies and books</strong>
-      <p class="text-justify">I had to start over, but it's foolish to start from scratch. I dug through existing material… Three Act Structure, 20 Master Plots, 36 Dramatic Situations, The Seven Basic Plots, Eureka: 501 Adventure Plots, The Complete Writer's Guide to Heroes and Heroines. People wrote huge books dedicated to what they thought was the definitive model.</p>
-      <p class="text-justify">These were awesome. But they were strong at plot structures, and not building characters. If plots are molecules, characters were atoms. It was tough to work down from the plots to find something that fits it. For example, one Dramatic Situation is Mortal vs Immortal. It's just far too broad.</p>
-      <strong>V3: Weighted from the <a href="https://tvtropes.org/pmwiki/pmwiki.php/Main/OverdosedTropes">Overdosed Tropes</a> list</strong>
-      <p class="text-justify">I tried to follow what the PToS did. Maybe manually scrape the list or use AI. But much of the Overdosed Tropes were anti-patterns. Some were irrelevant, like "explosions" or "sequels". Sometimes it's like looking at "overused ingredients in recipes" and seeing things like bread and chicken. That's something, but it doesn't mean I can make an awesome sandwich by just combining them together.</p>
-      <strong>V4 (21/5/19): Replicating other generators</strong>
-      <p class="text-justify">Started coding, and it didn't really fit notes. I looked at what other people tried to look for in generators.</p>
-      <p class="text-justify">Most people who search for a character generator have parts of their story in mind, and just wanted to fill in the blanks. Like they have a great swordsman and sidekick in mind, but want to flesh out the personality. Or generate the little sister, mayor, one of the mooks they fight early on, etc.</p>
-      <p class="text-justify">They wanted personality, background, description, problem solving approach. Most tropes were either plot development or character development, and not useful for someone at the start of a story. But by breaking them down into major parts, a pattern emerged. Characters had overlapping traits – the emotional fiery redhead, the cute bruiser, the hispanic swashbuckler. As well as fashion preferences that matched personality.</p>
+      <strong>V7.3 (20/9/22): <a href="img/screenshots/v7.3.png">Obstacle and intention</a></strong>
+      <p class="text-justify">After years of soul searching and going into story theory, one of the low hanging fruits we found was Obstacle and Intention. Basically, dramatic characters will have really high intentions and really high obstacles. The higher both of these are, the more interesting the character becomes. It's like umami. More is better. But at some point you get sick of it. Characters don't even have to succeed. Failure is interesting too.</p>
+      <p class="text-justify">In engine terms, it gets mapped to Wants and Plot Hooks. Obstacles tend to be quite story based. Plot hooks aren't a perfect example of this, but it does give the user some ideas.</p>
+      <p class="text-justify">Also, this being 2022, access to AI was a lot more common, and helped with quality.</p>
+      <strong>V7.2 (20/8/20): <a href="img/screenshots/v7.2.png">Plots</a></strong>
+      <p class="text-justify">Plot hooks were generated based on the 36 Dramatic Situations. Quality did not increase. Instead, it seemed more disconnected and random. Perhaps another big change is needed, not to breadth or depth, but tackling it from a different angle.</p>
+      <strong>V7.1 (18/7/20): <a href="img/screenshots/v7.1.png">Portrayal</a></strong>
+      <p class="text-justify">The generator would categorize components of the character. It used to return a blob of information, but now categorizes them in a neater format. Portrayal was a big thing, because it's easier to roleplay that Bob loves intellectual conversations, rather than saying Bob is smart.</p>
+      <p class="text-justify">Another big part was recognizing the strengths of a character. It let people identify how their character would react to things. One character may solve problems with violence, while another may use cunning.</p>
+      <p class="text-justify">The extra details made the characters simpler, and yet added more depth to the same characters.</p>
+      <strong>V7 (11/6/19): <a href="img/screenshots/v7.png">Procedurally generated</a></strong>
+      <p class="text-justify">The generator would roll a root part of the personality. Then from the results of that, flesh out other parts of the personality. This avoided all conflicts, and generated more natural characters.</p>
+      <strong>V6 (26/5/19): <a href="img/screenshots/v6.png">Root personality</a></strong>
+      <p class="text-justify">Design the character against some kind of core or 'root' personality, that spawns other parts of the character. This was basically just roll a dice for a table once, and then based on that result, roll on some other table.</p>
+      <p class="text-justify">Roles didn't really work for single character generators. They're great for adventuring parties, or sitcoms, where you just play on how some characters with a common goal conflict with one another.</p>
+      <p class="text-justify">But I figure this generator would be used more for generating a single character on the fly. You don't need a generator if you have a great concept in mind. This is for the randoms. So, I'll be trying without the role system in the next step.</p>
+      <p class="text-justify">A big part of a character is also the theme. I tried to generate characters like The Terminator or Tony Stark, but it just doesn't work with contemporary themes. I'll probably branch out the generator into different themes - sci-fi, fantasy, contemporary, and so on.</p>
+      <p class="text-justify">Some traits were side effects. For example, some characters are just combat pragmatists - they don't follow a code of honor in combat. But this is often because they're at an extreme combat disadvantage, or simply don't respect enemies enough. </p>
+      <p class="text-justify">This is part of the reason I'm going procedural. The next version will create a lot of "side effects" as part of the character. Procedural will also help to add flaws for characters who are going too Mary Sue. As well as little things like deciding dresses for the femme fatale.</p>
       <strong>V5 (23/5/19): Character archetypes</strong>
       <p class="text-justify">The generator would randomly select a major archetype and then roll personalities that fit them.</p>
       <p class="text-justify">Problems:</p>
@@ -84,22 +92,18 @@
         <li class="text-justify">Some characters don't fit archetypes. For example, Frozen's Elsa and RWBY's Weiss Schnee were the (Defrosting) Ice Queen archetype. These are very uncommon archetypes – how many stories have this? A random generator that utilized archetypes would restrict creativity.</li>
       </ul>
       <p class="text-justify">But I still liked the idea. Archetypes functioned as training wheels for writers.</p>
-      <strong>V6 (26/5/19): <a href="img/screenshots/v6.png">Root personality</a></strong>
-      <p class="text-justify">Design the character against some kind of core or 'root' personality, that spawns other parts of the character. This was basically just roll a dice for a table once, and then based on that result, roll on some other table.</p>
-      <p class="text-justify">Roles didn't really work for single character generators. They're great for adventuring parties, or sitcoms, where you just play on how some characters with a common goal conflict with one another.</p>
-      <p class="text-justify">But I figure this generator would be used more for generating a single character on the fly. You don't need a generator if you have a great concept in mind. This is for the randoms. So, I'll be trying without the role system in the next step.</p>
-      <p class="text-justify">A big part of a character is also the theme. I tried to generate characters like The Terminator or Tony Stark, but it just doesn't work with contemporary themes. I'll probably branch out the generator into different themes - sci-fi, fantasy, contemporary, and so on.</p>
-      <p class="text-justify">Some traits were side effects. For example, some characters are just combat pragmatists - they don't follow a code of honor in combat. But this is often because they're at an extreme combat disadvantage, or simply don't respect enemies enough. </p>
-      <p class="text-justify">This is part of the reason I'm going procedural. The next version will create a lot of "side effects" as part of the cahracter. Procedural will also help to add flaws for characters who are going too Mary Sue. As well as little things like deciding dresses for the femme fatale.</p>
-      <strong>V7 (11/6/19): <a href="img/screenshots/v7.png">Procedurally generated</a></strong>
-      <p class="text-justify">The generator would roll a root part of the personality. Then from the results of that, flesh out other parts of the personality. This avoided all conflicts, and generated more natural characters.</p>
-      <strong>V7.1 (18/7/20): <a href="img/screenshots/v7.1.png">Portrayal</a></strong>
-      <p class="text-justify">The generator would categorize components of the character. It used to return a blob of information, but now categorizes them in a neater format. Portrayal was a big thing, because it's easier to roleplay that Bob loves intellectual conversations, rather than saying Bob is smart.</p>
-      <p class="text-justify">Another big part was recognizing the strengths of a character. It let people identify how their character would react to things. One character may solve problems with violence, while another may use cunning.</p>
-      <p class="text-justify">The extra details made the characters simpler, and yet added more depth to the same characters.</p>
-      <strong>V7.2 (20/8/20): <a href="img/screenshots/v7.2.png">Plots</a></strong>
-      <p class="text-justify">Plot hooks were generated based on the 36 Dramatic Situations. Quality did not increase. Instead, it seemed more disconnected and random. Perhaps another big change is needed, not to breadth or depth, but tackling it from a different angle.</p>
-      <p><a href="roadmap.html">More details on the current version</a></p>
+      <strong>V4 (21/5/19): Replicating other generators</strong>
+      <p class="text-justify">Started coding, and it didn't really fit notes. I looked at what other people tried to look for in generators.</p>
+      <p class="text-justify">Most people who search for a character generator have parts of their story in mind, and just wanted to fill in the blanks. Like they have a great swordsman and sidekick in mind, but want to flesh out the personality. Or generate the little sister, mayor, one of the mooks they fight early on, etc.</p>
+      <p class="text-justify">They wanted personality, background, description, problem solving approach. Most tropes were either plot development or character development, and not useful for someone at the start of a story. But by breaking them down into major parts, a pattern emerged. Characters had overlapping traits – the emotional fiery redhead, the cute bruiser, the hispanic swashbuckler. As well as fashion preferences that matched personality.</p>
+      <strong>V3: Weighted from the <a href="https://tvtropes.org/pmwiki/pmwiki.php/Main/OverdosedTropes">Overdosed Tropes</a> list</strong>
+      <p class="text-justify">I tried to follow what the PToS did. Maybe manually scrape the list or use AI. But much of the Overdosed Tropes were anti-patterns. Some were irrelevant, like "explosions" or "sequels". Sometimes it's like looking at "overused ingredients in recipes" and seeing things like bread and chicken. That's something, but it doesn't mean I can make an awesome sandwich by just combining them together.</p>
+      <strong>V2: Based off plot formulas from movies and books</strong>
+      <p class="text-justify">I had to start over, but it's foolish to start from scratch. I dug through existing material… Three Act Structure, 20 Master Plots, 36 Dramatic Situations, The Seven Basic Plots, Eureka: 501 Adventure Plots, The Complete Writer's Guide to Heroes and Heroines. People wrote huge books dedicated to what they thought was the definitive model.</p>
+      <p class="text-justify">These were awesome. But they were strong at plot structures, and not building characters. If plots are molecules, characters were atoms. It was tough to work down from the plots to find something that fits it. For example, one Dramatic Situation is Mortal vs Immortal. It's just far too broad.</p>
+      <strong>V1: Based off <a href="http://jamesharris.design/periodic/">The Periodic Table of Storytelling</a></strong>
+      <p class="text-justify">The periodic table was a great idea, but incomplete. A lot of things are omnipresent tropes. For example, "Action Girl" is just an active girl, which doesn't say anything about who she is. It doesn't differentiate between Sarah Connor and Rainbow Dash.</p>
+      <p><a href="roadmap.html">What next?</a></p>
     </div>
   </div>
 </div>

@@ -57,7 +57,12 @@
       <p class="text-justify"><small>Current Version: V7.4 (8 Aug 2023)</small></p>
       <h2>Roadmap</h2>
       <p class="text-justify"><span class="focused">Resources page</span>: I realize there's a lot of resources that can help others, so we'll add a page to link to them. Also a lot of people I'd like to credit.</p>
-      <p class="text-justify"><span class="focused">Name generation</span>: This can really go into depth, but we should be able to generate generic names like "Bob" and "James Baxter". This should ideally be static and hostable offline. It's more the effort of keeping it balanced that takes effort. Also why we want to add a resources page; some tools just do it better.</p>
+      <p class="text-justify"><span class="focused">Appearance</span>: This will likely turn out to be another generator in itself, about the same size as the existing one. It'll have to generate hair, skin, size, race, fashion, etc. We'll have to start thinking in what order we want to do this.</p>
+      <p class="text-justify">Are personalities based off appearance or vice versa? Say, you have a kung fu character. They'd bias towards being muscular. But say it's the other way around, where you want a guard, a mook, or a love interest to look a certain way, and then generate their personality.</p>
+      <p class="text-justify"><span class="focused">Palette</span>: I'm actually more excited about this than the appearance. One idea is to generate a primary <a href="https://tvtropes.org/pmwiki/pmwiki.php/Main/ColourCodedForYourConvenience">color around a personality</a>. If a character is short-tempered, they'd bias to red. If they were somber, they'd be purple or gray. And so on.</a></p>
+      <p class="text-justify">Then we'd generate complementary colors and such. There's palette algorithms. Primary <span style="color:#D71C1C">red</span>, secondary <span style="color:#008D11">green</span>, with bands of <span style="color:#009BB2">cyan.</span></p>
+      <p class="text-justify">It's possible to generate skin color against that too, e.g. <span style="color:#BB8377">dark</span>, <span style="background-color: #D71C1C"><span style="color:#FFF5F0">light</span>, or <span style="color:#EDE9D0">yellower</span></span>.</p>
+      <p class="text-justify">We can also use these colors to search for similar palettes from <a href="https://lospec.com/palettes/api">Lospec</a> and such.</p>
       <h2>Survey results</h2>
       <p class="text-justify">Thanks for those who answered <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a>. After 3 long years, we have finally actually gone through each of them. Here's the results, indexed and ranked by popularity:</p>
       <img src="img/rcg_requests.png" class="img-fluid" alt="Roadmap"><br><br>
@@ -70,7 +75,7 @@
         <li>Palette: We think palette matters more than the actual colors. For example, we could make badass villains brighter or, say, fiery colored hotheaded characters. I'd love to make an alpha orc villain with bright blue tattoos and colors, denoting rank like a mandrill. This would take first priority when we do appearance, but we have to take care that it doesn't conflict with the other things. A lot of people gave feedback that they use this tool for drawing; we'd like to cater for that.</li>
       </ul>
       <h4>Name generation (40%)</h4>
-      <p class="text-justify">This is actually easy to do, just a problem with settings and racial bias. But it's the easiest to add, so we'll make it top priority next.</p>
+      <p class="text-justify">DONE. It's basing off the <a href="https://www.gutenberg.org/ebooks/3201">Moby Word List, Grady Ward</a>. It could still be improved, currently heavily biased towards US names. But characters don't have races yet, so we'll revisit this later.</p>
       <h4>More Depth (33.3%)</h4>
       <p class="text-justify">Users have shown requested things like: likes/dislikes, birthdays, personality traits, preferred weapons, ethnicity, religion, or sexual orientation</p>
       <p class="text-justify">This is a bit more difficult, because it's not just a matter of adding more things. We have to make sure that the things we add are actually useful, and that they don't conflict with each other. For example, if we add a birthday, we have to make sure that it doesn't conflict with the age. If we add a personality trait, we have to make sure that it doesn't conflict with the wants. We have to make sure that the things we add actually improve the character, and that they don't conflict with each other.</p>
