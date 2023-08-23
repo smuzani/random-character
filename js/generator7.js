@@ -746,7 +746,7 @@ function displayCharacter(c) {
       headingTeam.addClass('hidden');
     }
   } else {
-    console.log(c.aspects);
+    // console.log(c.aspects);
     let $listTeam = $('#results-team');
     $listTeam.html("");
     let $appearance = $('#results-appearance');
