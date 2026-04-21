@@ -66,7 +66,6 @@ function initAspects() {
     BPERSONALITY, [TNURTURER, TCARING, TLOVED, TDEFENDED, TWISE], [TFACE], [TRUTHLESS, BTEAMONE], [], []));
   aspects.push(new Aspect("Team Mom", 2, "Supportive and nurturing. The team will defend them violently if anything happens",
     BPERSONALITY, [TNURTURER, TCARING, TSTERN, TLOVED, TDEFENDED, TWISE], [TFACE], [TRUTHLESS, BTEAMONE], [], []));
-  // overlaps with jerkass woobie and stoic woobie
   aspects.push(new Aspect("Broken Bird", 4, "The character was once deeply damaged by a tragedy. Perhaps they tried to be a hero and failed, or were abused. They try to cope by being as cynical, stoic, or badass as possible.",
     BPERSONALITY, [TTRAUMA, TCOLD, TANGST, TCYNICAL, TBADASS], [TFACE], [TWARM, TIDEALISTIC, TBUTTMONKEY], [], []));
   aspects.push(new Aspect("All Loving Hero", 4, "The character is extremely idealistic. They love everyone, even those who hate them. They will repay cruelty with kindness, and anger with calm.",
@@ -86,8 +85,8 @@ function initAspects() {
     BPERSONALITY, [TPOWERFUL, TRUTHLESS, TGREEDY, TCOMMANDER, TRICH], [THEEL], [TASCETIC, TBUTTMONKEY, TCARING, TPOOR, TBUTTMONKEY, BTEAMONE], [], []));
   aspects.push(new Aspect("Alpha Bitch", 6, "Character is the alpha bitch of a posse. May have a tough jerk boyfriend, who acts as her muscle. Manipulative. Hard to hurt because she's part of a rich family and a higher social status.",
     BPERSONALITY, [TMANIPULATIVE, TRICH, TBITCH, THATED, TPOSSE], [THEEL, TFEMALE], [TNAIVE, TPOOR, TLOVABLE, TBUTTMONKEY, BTEAMONE], [], []));
-  // aspects.push(new Aspect("Monster of the Week", 6, "Character is a one-shot villain. At the end of the story, the character will either be destroyed, or repent.",
-  //   BPERSONALITY, [TDISPOSABLE, TBOSS], [THEEL], [TNECESSARY], [], []));
+  aspects.push(new Aspect("Monster of the Week", 6, "Character is a one-shot villain. At the end of the story, the character will either be destroyed, or repent.",
+    BPERSONALITY, [TDISPOSABLE, TBOSS], [THEEL], [TNECESSARY], [], []));
   aspects.push(new Aspect("The Man Behind the Man", 6, "The character is the real main villain. More powerful, well connected, and intelligent, they have bigger plans than the lesser villains he bosses around.",
     BPERSONALITY, [TMANIPULATIVE, TMYSTERIOUS, TLAZY, TBOSS], [THEEL], [TNAIVE, TTALKATIVE, TDETERMINED, TBUTTMONKEY, BTEAMONE], [], []));
   aspects.push(new Aspect("Evil Overlord", 4, "Character is an evil overlord. They have an intimidating fortress, and a sizeable army, willing or unwilling. They have plans to take over the world. Can be a king, dictator, CEO. Often the most powerful of his forces, and far more competent than their next in command.",
@@ -110,8 +109,6 @@ function initAspects() {
     BPERSONALITY, [TMANIPULATIVE, TRUTHLESS, TATTRACTIVE, TNURTURER, TNECESSARY], [THEEL, TFEMALE], [TNAIVE, TUGLY], [], []));
   aspects.push(new Aspect("Magnificent Bastard", 8, "Character is very intelligent and doesn't easily fall for tricks and traps set up by their rivals. They're charismatic in a gentlemanly way, to the point where their charisma is like a physical force. They have ambitious goals and often succeed in style.",
     BPERSONALITY, [TSMART, TSTREETSMART, TMANIPULATIVE, TCHARISMATIC, TBADASS, TAMBITIOUS], [THEEL], [TNAIVE, TUNCHARISMATIC, TBUTTMONKEY, TLAZY, TMYOPIC], [], []));
-  // aspects.push(new Aspect("Nice Job Fixing it Villain", 2, "Tries to do an evil thing, but accidentally makes things better.",
-  // 	BPERSONALITY, [TFIXESIT], [THEEL], [TBREAKSIT], [], []));
 
   aspects.push(new Aspect("Butt Monkey", 19, "Character is the butt monkey of the team, the one everyone makes fun of and doesn't expect to save the day.",
     BPERSONALITY, [TBUTTMONKEY, TUNLUCKY], [TSUPPORT], [TBADASS, BTEAMONE, TSTERN], [], []));
@@ -121,10 +118,10 @@ function initAspects() {
     BPERSONALITY, [TDISPOSABLE], [TSUPPORT], [TNECESSARY, BTEAMONE], [], []));
   aspects.push(new Aspect("Red Shirt", 4, "This is a lesser character who's probably going to die and be forgotten.",
     BPERSONALITY, [TDISPOSABLE], [TSUPPORT], [TNECESSARY, BTEAMONE], [], []));
-  // aspects.push(new Aspect("Damsel in Distress", 7, "The character is trapped under their circumstances, kept prisoner, or lost. They await a rescuer, but may rescue themselves if lucky.",
-  //   BPERSONALITY, [TDISTRESSED], [TSUPPORT, TFEMALE], [], [], []));
-  // aspects.push(new Aspect("Distressed Dude", 3, "The character is trapped under their circumstances, kept prisoner, or lost. They await a rescuer, but may rescue themselves if lucky.",
-  //   BPERSONALITY, [TDISTRESSED], [TSUPPORT, TMALE], [], [], []));
+  aspects.push(new Aspect("Damsel in Distress", 7, "The character is trapped under their circumstances, kept prisoner, or lost. They await a rescuer, but may rescue themselves if lucky.",
+    BPERSONALITY, [TDISTRESSED], [TSUPPORT, TFEMALE], [], [], []));
+  aspects.push(new Aspect("Distressed Dude", 3, "The character is trapped under their circumstances, kept prisoner, or lost. They await a rescuer, but may rescue themselves if lucky.",
+    BPERSONALITY, [TDISTRESSED], [TSUPPORT, TMALE], [], [], []));
   aspects.push(new Aspect("The Ace", 6, "Character is extremely good at what they do. They're usually a benchmark that there's always someone better. Might be a mentor, or just a rival that the hero has to overcome.",
     BPERSONALITY, [TBADASS, TACE], [TSUPPORT], [TBUTTMONKEY, TBADFIGHTER], [], []));
   aspects.push(new Aspect("The Chick", 6, "Character is supportive and nurturing to the team. They don't really seem to do much else, though.",
@@ -207,10 +204,6 @@ function initAspects() {
     BPERSONALITY, [TMEAN, TNOBLE], [TFACE], [TWARM, TSWEET, TIGNOBLE, TLOVABLE], [], []));
   aspects.push(new Aspect("What the Hell Hero", 12, "The character is willing to do deeds that violate their moral values every now and then.",
     BPERSONALITY, [TIGNOBLE, TRUTHLESS], [TFACE], [], [], []));
-  // aspects.push(new Aspect("Nice Job Breaking It Hero", 8, "Succeeds in their quest but ends up making things worse. May have been informed beforehand of their consequences by the villains.",
-  // 	BPERSONALITY, [TBREAKSIT], [TMYOPIC], [TFIXESIT], [], []));
-  // aspects.push(new Aspect("Nice Job Breaking It Hero", 5, "Succeeds in their quest but ends up making things worse. May have been informed beforehand of their consequences by the villains.",
-  // 	BPERSONALITY, [TBREAKSIT], [TFACE], [TFIXESIT], [], []));
   aspects.push(new Aspect("Plucky Girl", 3, "This character is determined and optimistic. Often cheerful. You can beat them but not break them.",
     BPERSONALITY, [TDETERMINED, TIDEALISTIC, TWARM], [TFACE], [TLAZY, TCYNICAL, TMEAN, TSNARKY], [], []));
   aspects.push(new Aspect("For Great Justice", 1, "Fights against evil for justice, righteousness, principles and values that depend more on what people deserve than on what they enjoy.",
@@ -1060,6 +1053,7 @@ function init() {
   initTeams();
   initPlots();
   initWants();
+
   let starter = loadInitialBranches();
   let teamSize = getTeamSize();
   if (teamSize) {

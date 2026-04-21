@@ -67,7 +67,7 @@ Based on [roadmap.html](roadmap.html) and survey results. Current version: **V7.
 - [ ] Clearer results presentation
 - [ ] Relationships between characters
 - [ ] Job concepts
-- [x] Nonbinary gender options
+- [ ] Nonbinary gender options
 - [ ] Magic system traits
 
 ---

@@ -11,7 +11,7 @@ Live site: Static HTML/JS served directly (no build step, no framework).
 - **HTML5** — Static pages, no templating engine
 - **CSS** — Bootstrap 4 (bundled `css/bootstrap.min.css`) + custom `css/main.css`
 - **JavaScript** — Vanilla ES6, jQuery 3.3.1, Ramda.js (functional utils)
-- **Backend** — Parse Server on Heroku (for feedback form only, via `js/parse.js`)
+- **Backend** — Currently none
 - **Analytics** — Google Analytics (UA-140909040-1)
 - **Fonts** — Custom fonts via `css/fonts.css`
 
@@ -62,7 +62,6 @@ This prevents conflicts (e.g. a pacifist won't also be a sadist).
 | `js/plot-details.js` | Plot hook constants + `plotToDesc()`, `initPlots()` |
 | `js/want-details.js` | Want/motivation constants + `wantToDesc()`, `initWants()` |
 | `assets/names.js` | Name lists (`namesM`, `namesF`) from Moby Word List |
-| `js/parse.js` | Parse Server integration for feedback form |
 | `js/plugins.js` | Browser console safety shim |
 | `css/main.css` | Custom styles (H5BP-based) |
 | `css/fonts.css` | Font-face declarations |
@@ -74,8 +73,8 @@ This prevents conflicts (e.g. a pacifist won't also be a sadist).
 | `index.html` | Generator (main page) |
 | `whatisthis.html` | About page with changelog (V1-V7.3) |
 | `roadmap.html` | Feature roadmap + survey results |
-| `tags.html` | Tag management CRUD (Vue.js, requires Parse login) |
-| `contact.html` | Feedback form (Parse backend) |
+| `tags.html` | Tag management CRUD (Vue.js) |
+| `contact.html` | Feedback form |
 | `blog.html` | Blog page |
 | `privacy.html` | Privacy policy |
 | `ai-policy.html` | AI usage policy |
@@ -154,6 +153,6 @@ These are commented out in `initWants()` so they don't appear in generation.
 - `js/main.js` is empty
 - `dist/` directory exists but is empty
 - `doc/` contains H5BP boilerplate docs, not project-specific documentation
-- The `tags.html` page uses Vue.js (CDN) for a CRUD interface but requires Parse authentication
+- The `tags.html` page uses Vue.js (CDN) for a CRUD interface
 - Background texture: `img/cream_texture.png`
 - Version comment in code says "Will be deprecated for V8, once content is always from from server"
