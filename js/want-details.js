@@ -301,91 +301,135 @@ function wantToDesc(tag) {
       ]);
     case WGETJOBDONE:
       return randomArray([
-        `getjobdone`,
+        `Nothing pleases ${p.sdesc} more than wrapping up a task cleanly and retreating to a cozy sanctuary where no one can bother ${p.him}.`,
+        `${p.Sdesc} just wants to finish the job and go home. No glory, no fuss — just a clean result and a quiet evening.`,
+        `${p.She} takes pride in efficiency. Get in, get it done, get out. The sooner the task is over, the sooner ${p.she} can rest.`,
       ]);
     case WRETURNHOME:
       return randomArray([
-        `returnhome`,
+        `Every road leads back to the place that shaped ${p.him}; until ${p.she} stands on that familiar doorstep, ${p.his} heart will never settle.`,
+        `${p.Sdesc} has been away from home for far too long. ${p.She} dreams of the day ${p.she} can return.`,
+        `No matter how far ${p.sdesc} travels, ${p.his} thoughts always return to the place ${p.she} once called home.`,
       ]);
     case WUPHOLDHONOR:
       return randomArray([
-        `upholdhonor`,
+        `${p.Sdesc} lives by an unspoken code: ${p.his} family name must shine, even if it costs ${p.him} comfort, love, or life itself.`,
+        `${p.She} carries the weight of ${p.his} family's honor on ${p.his} shoulders. ${p.She} will not allow it to be tarnished.`,
+        `${p.Sdesc} would rather die than bring shame to ${p.his} family name. Honor is everything.`,
       ]);
     case WENEMIES:
       return randomArray([
-        `enemies`,
+        `To be truly mighty is to draw lightning; ${p.sdesc} welcomes rivalry as proof that ${p.his} deeds matter.`,
+        `${p.Sdesc} measures ${p.his} worth by the number and quality of ${p.his} enemies. A person without enemies is a person without purpose.`,
+        `${p.She} almost enjoys making enemies. Great people must have lots of them, after all.`,
       ]);
     case WCOLLECTION:
       return randomArray([
-        `collection`,
+        `A tiny gap on a shelf haunts ${p.sdesc}. ${p.She} will cross oceans, bargain, or steal to secure the missing piece.`,
+        `${p.Sdesc} is obsessed with completing a collection. ${p.She} knows every item by heart and dreams about the ones ${p.she} doesn't yet have.`,
+        `${p.She} has an almost religious devotion to ${p.his} collection. It's never complete, and that drives ${p.him} forward.`,
       ]);
     case WSMALLTHING:
       return randomArray([
-        `smallthing`,
+        `A trinket, a pressed flower, a single bead — its value is invisible to others, but to ${p.sdesc} it is the universe.`,
+        `${p.Sdesc} guards a tiny, seemingly worthless object. To ${p.him}, it holds more meaning than anything else in the world.`,
+        `${p.She} would risk everything for something others would dismiss. The thing ${p.she} treasures most is small enough to fit in a pocket.`,
       ]);
     case WFREEFROMBONDAGE:
       return randomArray([
-        `freefrombondage`,
+        `Chains may be physical, legal, social, or emotional; whichever ${p.sdesc} wears, every breath is spent searching for the key.`,
+        `${p.Sdesc} is trapped — by a contract, a curse, a debt, or a cruel master. ${p.She} will do whatever it takes to break free.`,
+        `Freedom is the only thing ${p.sdesc} truly wants. ${p.She} has been held down for too long and is done asking politely.`,
       ]);
     case WSAVEDLIFE:
       return randomArray([
-        `savedlife`,
+        `Someone once pulled ${p.sdesc} back from death's door. ${p.She} will not rest until the debt is fully honored.`,
+        `${p.Sdesc} owes ${p.his} life to another. That obligation defines every choice ${p.she} makes.`,
+        `${p.She} was saved when no one else would have bothered. ${p.Sdesc} carries that debt like a second heartbeat.`,
       ]);
     case WCHOSENONE:
       return randomArray([
-        `chosenone`,
+        `Prophecy clings to ${p.sdesc} like perfume — exhilarating, suffocating. ${p.She} seeks proof that destiny was no mistake.`,
+        `${p.Sdesc} has been told since childhood that ${p.she} is the chosen one. ${p.She} is desperate to prove it — or disprove it.`,
+        `The weight of a prophecy hangs around ${p.his} neck. ${p.She} doesn't know if ${p.she} believes it, but ${p.she} can't ignore it either.`,
       ]);
     case WENVY:
       return randomArray([
-        `envy`,
+        `Another's success gnaws at ${p.sdesc} nightly; ${p.she} burns to eclipse — or equal — that shining rival.`,
+        `${p.Sdesc} deeply envies someone. It keeps ${p.him} up at night, fueling both ambition and resentment.`,
+        `${p.She} can't stand watching someone else succeed where ${p.she} has failed. The envy is eating ${p.him} alive.`,
       ]);
     case WLOSTLOVE:
       return randomArray([
-        `lostlove`,
+        `Someone beloved vanished. ${p.Sdesc} will tear down kingdoms to bring them home.`,
+        `${p.Sdesc} lost someone — kidnapped, disappeared, or simply walked away. ${p.She} won't stop searching until ${p.she} finds them.`,
+        `Every stranger's face is a potential lead. ${p.Sdesc} is haunted by the disappearance of someone ${p.she} loved.`,
       ]);
     case WSPECIFICWEALTH:
       return randomArray([
-        `specificwealth`,
+        `Gold means little; only that one vein, gem, or deed of land will satisfy the hunger in ${p.his} eyes.`,
+        `${p.Sdesc} doesn't care about wealth in general. ${p.She} wants one specific fortune — a family heirloom, a legendary treasure, a piece of land that was stolen.`,
+        `${p.She} doesn't want to be rich. ${p.She} wants to own one specific thing, and ${p.she} will go to any lengths to claim it.`,
       ]);
     case WSPECIFICJOB:
       return randomArray([
-        `specificjob`,
+        `${p.Sdesc} dreams of a single, razor-focused career or title; life will feel unfinished until the position is ${p.hers}.`,
+        `${p.She} has wanted one specific job since ${p.she} was a child. Nothing else will do, and ${p.she} will sacrifice everything to land it.`,
+        `There is one role ${p.sdesc} was born to fill. ${p.She} will not rest until it is ${p.hers}.`,
       ]);
     case WFAKEHEROISM:
       return randomArray([
-        `pracgmaticheroism`,
+        `${p.Sdesc} will rescue the day only when doing so is practical, profitable, or unavoidable.`,
+        `${p.She} wears the hero's mask, but only because it pays. The moment heroism stops being useful, the mask comes off.`,
+        `${p.Sdesc} is heroic when it serves ${p.him}. ${p.She} has no interest in saving the world for free.`,
       ]);
     case WFEAR:
       return randomArray([
-        `fear`,
+        `Dread is ${p.his} compass. Every plan, every alliance, every betrayal — engineered to keep terror at bay.`,
+        `${p.Sdesc} is driven by a deep, primal fear. Everything ${p.she} does is an attempt to keep that fear from becoming reality.`,
+        `${p.She} doesn't act out of courage or ambition. ${p.She} acts because ${p.she} is terrified of what will happen if ${p.she} doesn't.`,
       ]);
     case WBULLY:
       return randomArray([
-        `bully`,
+        `${p.Sdesc} strikes first, masking deep insecurity behind swagger and sharp elbows.`,
+        `${p.She} bullies others because ${p.she} is terrified of being bullied ${p.herself}. Attack is the only defense ${p.she} knows.`,
+        `${p.Sdesc} learned early that the only way to survive is to be the one swinging. Underneath the cruelty is a scared child.`,
       ]);
     case WFORCEDVILLAIN:
       return randomArray([
-        `forcedvillain`,
+        `A blade at ${p.his} throat or an arcane curse forces dark deeds ${p.she} would never choose on ${p.his} own.`,
+        `${p.Sdesc} performs villainous acts because the alternative is death — ${p.his} own, or someone ${p.she} loves.`,
+        `${p.She} doesn't want to be the villain. But someone holds the leash, and the consequences of disobedience are too terrible.`,
       ]);
     case WDISABLED:
       return randomArray([
-        `disabled`,
+        `${p.Sdescs} body or mind bears limits others overlook. ${p.She} seeks respect, access, and autonomy — not pity.`,
+        `${p.Sdesc} lives with a disability that others either ignore or exaggerate. All ${p.she} wants is to be treated as a person, not a condition.`,
+        `${p.She} refuses to let ${p.his} disability define ${p.him}. ${p.She} fights daily for the autonomy others take for granted.`,
       ]);
     case WBEHUMAN:
       return randomArray([
-        `behuman`,
+        `Cursed, augmented, or otherworldly, ${p.sdesc} aches for the fragile warmth of ordinary humanity.`,
+        `${p.Sdesc} isn't fully human — and ${p.she} wants nothing more than to be. The simple things others take for granted are all ${p.she} craves.`,
+        `${p.She} doesn't want power, glory, or immortality. ${p.She} just wants to be human. To feel what they feel. To belong.`,
       ]);
     case WRESURRECT:
       return randomArray([
-        `resurrect`,
+        `Grief sharpens to purpose: ${p.sdesc} will bend heaven, hell, or science to breathe life back into the lost.`,
+        `${p.Sdesc} lost someone who should not have died. ${p.She} is consumed with finding a way to bring them back.`,
+        `Death took someone from ${p.him}, and ${p.sdesc} refuses to accept it. ${p.She} will find a way, no matter the cost.`,
       ]);
     case WLUST:
       return randomArray([
-        `lust`,
+        `Lust grips ${p.sdesc} like hunger; ${p.she} craves one person with a fierce, unapologetic intensity.`,
+        `${p.Sdesc} is consumed by desire for another. It clouds ${p.his} judgment, fuels ${p.his} ambition, and colors every interaction.`,
+        `${p.She} doesn't call it love — it's rawer than that. ${p.Sdesc} wants someone with a hunger that frightens even ${p.him}.`,
       ]);
     case WSEERUINED:
       return randomArray([
-        `seeruined`,
+        `${p.Sdesc} can't rest until a rival's tower cracks, their reputation crumbles, and every cheer turns to silence.`,
+        `${p.She} doesn't just want to win. ${p.She} wants to watch someone else lose everything. Only then will ${p.she} be satisfied.`,
+        `${p.Sdesc} is consumed with the desire to see a specific person's success utterly destroyed.`,
       ]);
     default:
       return "";
@@ -455,48 +499,48 @@ function initWants() {
     BWANT, [WSPREADHAPPY], [], [], [], []));
   want.push(new Aspect("Homeland", 1, "",
     BWANT, [WHOMELAND], [], [], [], []));
-  // want.push(new Aspect("Get the job done and rest at home", 1, "",
-  //   BWANT, [WGETJOBDONE], [], [], [], []));
-  // want.push(new Aspect("Return to their original home", 1, "",
-  //   BWANT, [WRETURNHOME], [], [], [], []));
-  // want.push(new Aspect("Uphold family honor", 1, "",
-  //   BWANT, [WUPHOLDHONOR], [], [], [], []));
-  // want.push(new Aspect("Great people must have lots of enemies", 1, "",
-  //   BWANT, [WENEMIES], [], [], [], []));
-  // want.push(new Aspect("Fill out a collection", 1, "",
-  //   BWANT, [WCOLLECTION], [], [], [], []));
-  // want.push(new Aspect("Small thing", 1, "",
-  //   BWANT, [WSMALLTHING], [], [], [], []));
-  // want.push(new Aspect("Freedom from some bondage", 1, "",
-  //   BWANT, [WFREEFROMBONDAGE], [], [], [], []));
-  // want.push(new Aspect("Saved life", 1, "",
-  //   BWANT, [WSAVEDLIFE], [], [], [], []));
-  // want.push(new Aspect("Chosen one", 1, "",
-  //   BWANT, [WCHOSENONE], [], [], [], []));
-  // want.push(new Aspect("Deeply envy someone", 1, "",
-  //   BWANT, [WENVY], [], [], [], []));
-  // want.push(new Aspect("Find a lost or kidnapped loved one", 1, "",
-  //   BWANT, [WLOSTLOVE], [], [], [], []));
-  // want.push(new Aspect("Specific form of wealth", 1, "",
-  //   BWANT, [WSPECIFICWEALTH], [], [], [], []));
-  // want.push(new Aspect("Specific job", 1, "",
-  //   BWANT, [WSPECIFICJOB], [], [], [], []));
-  // want.push(new Aspect("Heroism is more practical", 1, "",
-  //   BWANT, [WFAKEHEROISM], [THEEL], [], [], []));
-  // want.push(new Aspect("Motivated by fear", 1, "",
-  //   BWANT, [WFEAR], [], [], [], []));
-  // want.push(new Aspect("Bully others out of fear of being bullied", 1, "",
-  //   BWANT, [WBULLY], [THEEL], [], [], []));
-  // want.push(new Aspect("Only perform villainous acts because otherwise they die", 1, "",
-  //   BWANT, [WFORCEDVILLAIN], [THEEL], [], [], []));
-  // want.push(new Aspect("Disabled", 1, "",
-  //   BWANT, [WDISABLED], [], [], [], []));
-  // want.push(new Aspect("Be human", 1, "",
-  //   BWANT, [WBEHUMAN], [], [], [], []));
-  // want.push(new Aspect("Resurrect another dead character", 1, "",
-  //   BWANT, [WRESURRECT], [], [], [], []));
-  // want.push(new Aspect("Really want someone", 1, "",
-  //   BWANT, [WLUST], [], [], [], []));
-  // want.push(new Aspect("See someone else's successes ruined", 1, "",
-  //   BWANT, [WSEERUINED], [], [], [], []));
+  want.push(new Aspect("Get the job done and rest at home", 1, "",
+    BWANT, [WGETJOBDONE], [], [], [], []));
+  want.push(new Aspect("Return to their original home", 1, "",
+    BWANT, [WRETURNHOME], [], [], [], []));
+  want.push(new Aspect("Uphold family honor", 1, "",
+    BWANT, [WUPHOLDHONOR], [], [], [], []));
+  want.push(new Aspect("Great people must have lots of enemies", 1, "",
+    BWANT, [WENEMIES], [], [], [], []));
+  want.push(new Aspect("Fill out a collection", 1, "",
+    BWANT, [WCOLLECTION], [], [], [], []));
+  want.push(new Aspect("Small thing", 1, "",
+    BWANT, [WSMALLTHING], [], [], [], []));
+  want.push(new Aspect("Freedom from some bondage", 1, "",
+    BWANT, [WFREEFROMBONDAGE], [], [], [], []));
+  want.push(new Aspect("Saved life", 1, "",
+    BWANT, [WSAVEDLIFE], [], [], [], []));
+  want.push(new Aspect("Chosen one", 1, "",
+    BWANT, [WCHOSENONE], [], [], [], []));
+  want.push(new Aspect("Deeply envy someone", 1, "",
+    BWANT, [WENVY], [], [], [], []));
+  want.push(new Aspect("Find a lost or kidnapped loved one", 1, "",
+    BWANT, [WLOSTLOVE], [], [], [], []));
+  want.push(new Aspect("Specific form of wealth", 1, "",
+    BWANT, [WSPECIFICWEALTH], [], [], [], []));
+  want.push(new Aspect("Specific job", 1, "",
+    BWANT, [WSPECIFICJOB], [], [], [], []));
+  want.push(new Aspect("Heroism is more practical", 1, "",
+    BWANT, [WFAKEHEROISM], [THEEL], [], [], []));
+  want.push(new Aspect("Motivated by fear", 1, "",
+    BWANT, [WFEAR], [], [], [], []));
+  want.push(new Aspect("Bully others out of fear of being bullied", 1, "",
+    BWANT, [WBULLY], [THEEL], [], [], []));
+  want.push(new Aspect("Only perform villainous acts because otherwise they die", 1, "",
+    BWANT, [WFORCEDVILLAIN], [THEEL], [], [], []));
+  want.push(new Aspect("Disabled", 1, "",
+    BWANT, [WDISABLED], [], [], [], []));
+  want.push(new Aspect("Be human", 1, "",
+    BWANT, [WBEHUMAN], [], [], [], []));
+  want.push(new Aspect("Resurrect another dead character", 1, "",
+    BWANT, [WRESURRECT], [], [], [], []));
+  want.push(new Aspect("Really want someone", 1, "",
+    BWANT, [WLUST], [], [], [], []));
+  want.push(new Aspect("See someone else's successes ruined", 1, "",
+    BWANT, [WSEERUINED], [], [], [], []));
 }
