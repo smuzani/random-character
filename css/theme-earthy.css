@@ -1,0 +1,14 @@
+/* css/theme-earthy.css - Earthy & Natural Theme Skin */
+
+/* To apply this skin, add a data-theme="earthy" attribute to your <html> or <body> tag, or simply load this file after main.css */
+
+:root[data-theme="earthy"] {
+  --bg-color: #f6f7f6;
+  --panel-bg: #ffffff;
+  --panel-border: #e5e7eb;
+  --text-main: #1c1917;
+  --text-muted: #78716c;
+  --accent-primary: #0f766e; /* Forest / Teal */
+  --accent-secondary: #0d9488;
+  --accent-glow: rgba(15, 118, 110, 0.2);
+}

@@ -1,234 +1,223 @@
 <!doctype html>
 <html lang="en">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title>Random Character Generator</title>
-<meta name="description"
-      content="We generate random characters, based off popular tropes. Characters are designed to fit in plots and provide plot hooks to interact with other characters.">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="manifest" href="site.webmanifest">
-<link rel="apple-touch-icon" href="icon.png">
-<link rel="icon" type="image/png" href="icon.png">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/fonts.css">
 
-<meta name="theme-color" content="#fafafa">
-<div class="container-fluid">
-  <header>
-    <div class="row">
-      <div class="col-11 col-md-10 offset-md-2" id="header-navbar">
-        <a href="index.html">Generator</a>
-        <a href="whatisthis.html">About</a>
-        <!-- <a href="chat.html">Chat</a> -->
-      </div>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Random Character Generator</title>
+  <meta name="description"
+    content="We generate random characters, based off popular tropes. Characters are designed to fit in plots and provide plot hooks to interact with other characters.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="icon" type="image/png" href="icon.png">
+
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+  <!-- Top Header -->
+  <header class="top-header">
+    <div class="header-container">
+      <div class="site-brand">RCG</div>
+      <nav class="main-nav">
+        <a href="index.html" class="active">CREATE</a>
+        <a href="whatisthis.html">ABOUT</a>
+        <a href="roadmap.html">ROADMAP</a>
+      </nav>
     </div>
-    <hr>
   </header>
-</div>
 
-<div class="container">
-  <br>
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8">
-      <h1 class="text-center">Random Character Generator</h1>
-    </div>
-  </div>
-  <div class="row justify-content-center" id="survey">
-    <div class="col-12 col-md-8">
-      <br><p class="text-center">We're trying to improve the site. Please fill in <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a>! We read all responses.</p>
-    </div>
-  </div>
-  <!-- Generator results -->
-  <div class="row justify-content-center" id="personality-heading">
-    <div class="col-12 col-md-8">
-      <h2>Personality</h2>
-      <p id="results" class="text-justify"></p>
-      <ul id="list-results">
-        <li>Generating character...</li>
-      </ul>
-    </div>
-  </div>
-  <!-- Character description -->
-  <div class="row justify-content-center hidden" id="want-heading">
-    <div class="col-12 col-md-8">
-      <h2>Want</h2>
-      <p id="results-want" class="text-justify"></p>
-    </div>
-  </div>
-  <div class="row justify-content-center hidden" id="plot-heading">
-    <div class="col-12 col-md-8">
-      <h2>Plot Hook</h2>
-      <p id="results-plot" class="text-justify"></p>
-    </div>
-  </div>
-  <div class="row justify-content-center hidden" id="appearance-heading">
-    <div class="col-12 col-md-8">
-      <h2>Appearance</h2>
-      <ul id="results-appearance"></ul>
-    </div>
-  </div>
-  <div class="row justify-content-center hidden" id="portrayal-heading">
-    <div class="col-12 col-md-8">
-      <h2>Portrayal</h2>
-      <!--      <p id="results-portrayal" class="text-justify"></p>-->
-      <ul id="results-portrayal"></ul>
-    </div>
-  </div>
-  <div class="row justify-content-center hidden" id="power-heading">
-    <div class="col-12 col-md-8">
-      <h2>Strengths &amp; Weaknesses</h2>
-      <!--      <p id="results-power" class="text-justify"></p>-->
-      <ul id="results-power"></ul>
-    </div>
-  </div>
-  <div class="row justify-content-center hidden" id="personal-heading">
-    <div class="col-12 col-md-8">
-      <h2>Private Details</h2>
-      <!--      <p id="results-personal" class="text-justify"></p>-->
-      <ul id="results-personal"></ul>
-    </div>
-  </div>
-  <div class="row justify-content-center hidden" id="background-heading">
-    <div class="col-12 col-md-8">
-      <h2>Background</h2>
-      <!--      <p id="results-background" class="text-justify"></p>-->
-      <ul id="results-background"></ul>
-    </div>
-  </div>
-  <div class="row justify-content-center hidden" id="wealth-heading">
-    <div class="col-12 col-md-8">
-      <h2>Wealth</h2>
-      <!--      <p id="results-wealth" class="text-justify"></p>-->
-      <ul id="results-wealth"></ul>
-    </div>
-  </div>
+  <!-- Layout Container -->
+  <div class="app-layout">
 
-
-  <!-- Team results -->
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8">
-      <h2 class="hidden" id="team-heading">Team Structure</h2>
-      <p id="results-team" class="text-justify"></p>
-    </div>
-  </div>
-  <br>
-  <!-- Generator Form -->
-  <div class="form-group row justify-content-center">
-    <label for="name" class="col-4 col-md-3 col-xl-2">Character's Name</label>
-    <div class="col-8 col-md-5 col-xl-4">
-      <input id="name" class="form-control" type="text" placeholder="Leave empty to generate a name">
-    </div>
-  </div>
-  <div class="form-group row justify-content-center">
-    <label for="role" class="col-4 col-md-3 col-xl-2">Role</label>
-    <div class="col-8 col-md-5 col-xl-4">
-      <select class="form-control" id="role">
-        <option id="role-any">Any</option>
-        <option selected id="role-hero">Heroic</option>
-        <option id="role-villain">Villainous</option>
-        <option id="role-support">Support</option>
-      </select>
-    </div>
-  </div>
-  <div class="form-group row justify-content-center">
-    <label for="gender" class="col-4 col-md-3 col-xl-2">Gender</label>
-    <div class="col-8 col-md-5 col-xl-4">
-      <select class="form-control" id="gender">
-        <option selected id="gender-any">Any</option>
-        <option id="gender-male">Male</option>
-        <option id="gender-female">Female</option>
-      </select>
-    </div>
-  </div>
-  <div class="form-group row justify-content-center">
-    <label for="detail" class="col-4 col-md-3 col-xl-2">Detail level</label>
-    <div class="col-8 col-md-5 col-xl-4">
-      <select class="form-control" id="detail">
-        <option id="detail-sparse">Sparse</option>
-        <option selected id="detail-moderate">Moderate</option>
-        <option id="detail-high">High</option>
-        <option id="detail-very-high">Very high</option>
-      </select>
-    </div>
-  </div>
-  <!-- <div class="form-group row justify-content-center">
-    <label for="team-size" class="col-4 col-md-3 col-xl-2">Team Size</label>
-    <div class="col-8 col-md-5 col-xl-4">
-      <select class="form-control" id="team-size">
-        <option selected id="team-na">Not applicable</option>
-        <option id="team-one">One</option>
-      </select>
-    </div>
-  </div> -->
-  <div class="row justify-content-center">
-    <div class="col-4 col-md-3 col-xl-2"></div>
-    <div class="col-8 col-md-5 col-xl-4">
-      <div class="custom-control custom-checkbox">
-        <input type="checkbox" class="custom-control-input" id="no-stereotypes">
-        <label class="custom-control-label" for="no-stereotypes">No gender stereotypes</label>
-        <small id="emailHelp" class="form-text text-muted">Avoid gender cliches like Femme Fatale and Casanova</small>
+    <!-- Left Column: Controls & Hero -->
+    <section class="hero-column">
+      <div class="hero-content">
+        <h1 class="hero-title">CHARACTER GENERATOR</h1>
+        <p class="hero-desc">A sophisticated Random Character Generator web app, minimalist design, and timeless
+          aesthetic.</p>
       </div>
-    </div>
+
+      <div class="controls-panel">
+        <button id="generate" class="btn-primary">GENERATE NEW CHARACTER</button>
+
+        <div class="controls-grid">
+          <div class="control-group full-width">
+            <label for="name">Character Name</label>
+            <input id="name" type="text" placeholder="Leave empty to generate randomly">
+          </div>
+
+          <div class="control-group">
+            <label for="role">Role</label>
+            <select id="role">
+              <option id="role-any">Any</option>
+              <option selected id="role-hero">Heroic</option>
+              <option id="role-villain">Villainous</option>
+              <option id="role-support">Support</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="gender">Gender</label>
+            <select id="gender">
+              <option selected id="gender-any">Any</option>
+              <option id="gender-male">Male</option>
+              <option id="gender-female">Female</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="detail">Detail level</label>
+            <select id="detail">
+              <option id="detail-sparse">Sparse</option>
+              <option selected id="detail-moderate">Moderate</option>
+              <option id="detail-high">High</option>
+              <option id="detail-very-high">Very high</option>
+            </select>
+          </div>
+
+          <div class="control-group control-checkbox">
+            <label for="no-stereotypes">Options</label>
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="no-stereotypes">
+              <span>No gender stereotypes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Survey banner -->
+      <div id="survey-banner" class="banner mt-auto">
+        We're trying to improve the site. Please fill in <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a>!
+      </div>
+    </section>
+
+    <!-- Right Column: Character Sheet -->
+    <main class="sheet-column">
+
+      <div class="sheet-header">
+        <h2 class="sheet-name" id="display-name">CHARACTER NAME</h2>
+
+
+      </div>
+
+      <div class="sheet-content">
+
+        <!-- Personality -->
+        <div class="sheet-section" id="personality-heading">
+          <h3>PERSONALITY & FLAVOR</h3>
+          <ul id="list-results">
+            <li style="color: #999;">Waiting for generation...</li>
+          </ul>
+        </div>
+
+        <!-- Appearance -->
+        <div class="sheet-section hidden" id="appearance-heading">
+          <h3>PHYSICAL ATTRIBUTES</h3>
+          <ul id="results-appearance"></ul>
+        </div>
+
+        <!-- Want -->
+        <div class="sheet-section hidden" id="want-heading">
+          <h3>MOTIVATION</h3>
+          <p id="results-want"></p>
+        </div>
+
+        <!-- Plot Hook -->
+        <div class="sheet-section hidden" id="plot-heading">
+          <h3>PLOT HOOK</h3>
+          <p id="results-plot"></p>
+        </div>
+
+        <!-- Portrayal -->
+        <div class="sheet-section hidden" id="portrayal-heading">
+          <h3>PORTRAYAL</h3>
+          <ul id="results-portrayal"></ul>
+        </div>
+
+        <!-- Power -->
+        <div class="sheet-section hidden" id="power-heading">
+          <h3>STRENGTHS & WEAKNESSES</h3>
+          <ul id="results-power"></ul>
+        </div>
+
+        <!-- Private Details -->
+        <div class="sheet-section hidden" id="personal-heading">
+          <h3>PRIVATE DETAILS</h3>
+          <ul id="results-personal"></ul>
+        </div>
+
+        <!-- Background -->
+        <div class="sheet-section hidden" id="background-heading">
+          <h3>BACKSTORY</h3>
+          <ul id="results-background"></ul>
+        </div>
+
+        <!-- Wealth -->
+        <div class="sheet-section hidden" id="wealth-heading">
+          <h3>WEALTH / EQUIPMENT</h3>
+          <ul id="results-wealth"></ul>
+        </div>
+
+        <!-- Team Structure -->
+        <div class="sheet-section hidden" id="team-heading">
+          <h3>TEAM STRUCTURE</h3>
+          <p id="results-team"></p>
+        </div>
+
+      </div>
+    </main>
   </div>
-  
-  <br>
-  <button id="generate" class="mx-auto d-block btn btn-secondary">Generate</button>
-  <br><br>
-</div>
 
-
-<div class="container-fluid">
-  <footer>
-    <hr>
-    
-    <div class="row">
-      <div class="col-11 col-md-10 offset-md-2">
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-links">
         <a href="blog.html">Blog</a>
-        <a href="roadmap.html">Roadmap</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="ai-policy.html">AI Usage</a>
-        <span class="float-right">© Random Character Generator 2019-2025</span>
+      </div>
+      <div class="footer-copy">
+        &copy; Random Character Generator 2019-2025
       </div>
     </div>
-    
-    <br>
   </footer>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
-<script src="js/vendor/modernizr-3.7.1.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ramda/0.25.0/ramda.min.js"></script>
+  <script src="js/vendor/modernizr-3.7.1.min.js"></script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/tag-details.js"></script>
+  <script src="js/plot-details.js"></script>
+  <script src="js/want-details.js"></script>
+  <script src="assets/names.js"></script>
 
-<script src="js/vendor/bootstrap.bundle.min.js"></script>
-<script src="js/plugins.js"></script>
-<script src="js/main.js"></script>
-<script src="js/tag-details.js"></script>
-<script src="js/plot-details.js"></script>
-<script src="js/want-details.js"></script>
-<script src="assets/names.js"></script>
+  <script src="js/generator7.js"></script>
 
+  <script>
+    // Inject the generated name into the top of the sheet
+    $('#generate').on('click', function () {
+      // Small timeout to let generator7.js finish
+      setTimeout(function () {
+        if (typeof p !== 'undefined' && p.Sdesc) {
+          $('#display-name').text(p.Sdesc.toUpperCase());
+        } else {
+          $('#display-name').text("NEW CHARACTER");
+        }
+      }, 50);
+    });
+  </script>
+</body>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<!--<script async src="https://www.googletagmanager.com/gtag/js?id=UA-140909040-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-140909040-1');
-</script>-->
-<!-- Google Analytics -->
-<script>
-  window.ga = window.ga || function () {
-    (ga.q = ga.q || []).push(arguments)
-  };
-  ga.l = +new Date;
-  ga('create', 'UA-140909040-1', 'auto');
-  ga('send', 'pageview');
-</script>
-<script async src='https://www.google-analytics.com/analytics.js'></script>
-<!-- End Google Analytics -->
-<script src="js/generator7.js"></script>
-
+</html>

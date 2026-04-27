@@ -467,7 +467,7 @@ function initTeams() {
 }
 
 function createCharacter(tags, branches = loadInitialBranches()) {
-  if (ga) {
+  if (typeof ga !== 'undefined') {
     ga('send', 'event', 'generate', 'create');
   }
   let c = new Character(tags, branches);
