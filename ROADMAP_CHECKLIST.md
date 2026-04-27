@@ -1,104 +1,68 @@
-# Roadmap Checklist
+# Roadmap Checklist & Migration Plan
 
 Based on [roadmap.html](roadmap.html) and survey results. Current version: **V7.4 (8 Aug 2023)**.
 
 ---
 
-## Active Roadmap Items
+## Migration Plan: V7 → V8
 
-- [ ] **Resources page** — Link to useful resources and credit contributors
-- [ ] **Appearance generator** — Generate hair, skin, size, race, fashion, etc.
-  - [ ] Decide generation order (personality → appearance, or appearance → personality)
-  - [ ] Handle consistency with tropes (e.g. size dependent on story trope)
-  - [ ] Handle setting variations (e.g. desert planet → darker skin)
-- [ ] **Palette generator** — Generate a primary color based on personality
-  - [ ] Map personality traits to colors (e.g. short-tempered → red, somber → purple/gray)
-  - [ ] Generate complementary/secondary colors
-  - [ ] Optionally generate skin color against the palette
-  - [ ] Integrate with Lospec API for similar palette suggestions
+**Current Status:** We are maintaining V7 (currently at V7.4.x, having just completed the Tier 1 data ports).
+> **Note:** The "Bolt" app was strictly a rapid prototype in Expo/React Native and is NOT part of the RCG codebase. We are exclusively salvaging its written data (like descriptions) but discarding its code and architecture.
+
+### The Path Forward
+1. **V7 Incremental Updates**: Port low-risk data (like the want stubs) into the live V7 engine so users benefit immediately.
+2. **V8 Rewrite**: Build a brand new, robust web architecture from scratch. **V8 will NOT use Vite or Bolt's architecture.** It requires a properly engineered solution that supports scalability, type-safety, and future backend integrations.
 
 ---
 
-## Survey Results (Ranked by Popularity)
+## Prioritized Backlog (Sorted by Risk × Completeness × Effort)
 
-### Appearance (100% requested)
-- [ ] Hair color
-- [ ] Eye color
-- [ ] Skin color
-- [ ] Body type
-- [ ] Hair type
-- [ ] Clothing
-- [ ] Handle consistency challenges (trope-based biases)
-- [ ] Handle setting-specific appearance
-- [ ] Palette-first approach (personality → color → appearance)
+### Tier 1: Pure Data Ports (Zero Risk)
+*Bolt data is complete; these are copy-paste jobs.*
+- [x] **Fill 22 stubbed want descriptions** — Done (Copied Bolt's want texts into V7's `wantToDesc()`)
+- [x] **Uncomment 22 disabled `initWants()` entries** — Done
 
-### Name Generation (40% requested)
-- [x] ~~Basic name generation~~ — Done (Moby Word List, Grady Ward)
-- [ ] Reduce US name bias
-- [ ] Race/ethnicity-aware names (depends on appearance/race system)
+### Tier 2 / V7.5 Expansion (Medium Risk)
+*These features will be built client-side to keep the generator instant and offline, acting as the bridge to V8. They require a new UI overhaul and a lightweight Rules Engine to handle the data structure.*
+- [ ] **Appearance System** (Skin, hair, eyes, physique, facial hair)
+- [ ] **Palette generator** (Mapping personality traits to colors)
+- [ ] **Clothing system** (fashion → outfit → flair → accessory)
+- [ ] **Character concept generator** (adj+noun concept system)
 
-### More Depth (33.3% requested)
-- [ ] Likes/dislikes
+### Tier 3: Major Features (Higher Risk)
+*Needs significant UI design and complex engine logic.*
+- [ ] **Obstacle system** (Replace plots, or add alongside?)
+- [ ] **Export/share** (Formatted text export)
+- [ ] **Aspect reroll/replacement** (Swap individual aspects - part of the Creation Flow UI)
+
+### Tier 4: V8-Only Features (The Cloud Transition)
+*These require a centralized database and cannot be done locally.*
+- [ ] **AI character art** (Requires backend)
+- [ ] **AI Chat with characters** (Needs backend, auth, API keys)
+- [ ] **Scenario system** (Complex multi-character UI)
+- [ ] **Cloud save/sync** (Needs auth + database)
+- [ ] **Manual creation flow** (Multi-step wizard UI)
+
+---
+
+## Legacy Roadmap Items (Pending / Deferred)
+
+### Survey Results (Ranked by Popularity)
+- [ ] Reduce US name bias (40%)
+- [ ] Race/ethnicity-aware names
+- [ ] Likes/dislikes (33.3%)
 - [ ] Birthdays (must not conflict with age)
-- [ ] Additional personality traits (must not conflict with wants)
 - [ ] Preferred weapons
-- [ ] Ethnicity
-- [ ] Religion
-- [ ] Sexual orientation
-
-### More Plots (26.7% requested)
-- [ ] Expand plot hook variety
-- [ ] ChatGPT integration for plot expansion
-
-### Back Story (20% requested)
-- [ ] Backstory generation
-- [ ] Explore non-AI approaches for generation
-
-### Reduce Inconsistencies (20% requested)
-- [ ] Engine tweaks to reduce trait conflicts
-- [ ] Add "flag inconsistency" button for users
-
-### Character Art (13.3% requested)
-- [ ] Visual character representation
-- [ ] Prerequisite: Appearance generator must be done first
-- [ ] Evaluate AI art integration
-
-### Miscellaneous (6.7% requested)
-- [ ] Clearer results presentation
+- [ ] Religion / Ethnicity / Sexual orientation
+- [ ] Expand plot hook variety (26.7%)
+- [ ] Backstory generation (20%)
 - [ ] Relationships between characters
 - [ ] Job concepts
-- [ ] Nonbinary gender options
-- [ ] Magic system traits
 
----
-
-## Deferred Items (Not in V7)
-
-These are acknowledged good ideas but deferred due to engine complexity:
-
-- [ ] **Moddability** — User-customizable content (planned after Appearances, Back Story, Palette)
-- [ ] **Settings** — Genre/world setting support (solvable via moddable content)
-- [ ] **Dialogue** — Generated character dialogue
-- [ ] **World generator** — Planet, biomes, sci-fi, towns, shops
-- [ ] **Fine control** — Lock/reroll specific traits, fill in own details
-- [ ] **Combat** — Combat-related generation
-- [ ] **First encounter writing prompt** — Low demand, hard without AI
-- [ ] **Fictional languages**
-- [ ] **Poetry**
-- [ ] **Fandom generator**
-- [ ] **Legacy versions** — Access to older generator versions
-
----
-
-## Internal / Code-Level Tasks
-
-Extracted from code comments and stubs:
-
-- [ ] Flesh out stub want descriptions (`WGETJOBDONE`, `WRETURNHOME`, `WUPHOLDHONOR`, `WENEMIES`, `WCOLLECTION`, `WSMALLTHING`, `WFREEFROMBONDAGE`, `WSAVEDLIFE`, `WCHOSENONE`, `WENVY`, `WLOSTLOVE`, `WSPECIFICWEALTH`, `WSPECIFICJOB`, `WFAKEHEROISM`, `WFEAR`, `WBULLY`, `WFORCEDVILLAIN`, `WDISABLED`, `WBEHUMAN`, `WRESURRECT`, `WLUST`, `WSEERUINED`)
-- [ ] Re-enable commented out `initWants()` entries once descriptions are written
-- [ ] Deprecate V7 engine for V8 (server-based content, per `generator7.js` header comment)
-- [ ] Consider single model per tag with archetype holding appropriate tags (per `tag-details.js` TODO)
-- [ ] Replace appearance and wealth with treasure table system (per `tag-details.js` TODO)
-- [ ] Implement bundled trait combos (e.g. sadist-violent-aggressive-moredakka)
-- [ ] Re-enable Background section in `displayCharacter()` (currently commented out)
+### Internal / Code-Level Tasks
+- [ ] Deprecate V7 engine for V8 (server-based content)
+- [ ] Consider single model per tag with archetype holding appropriate tags
+- [ ] Replace appearance and wealth with treasure table system
+- [ ] Implement bundled trait combos
+- [ ] Re-enable Background section in `displayCharacter()`
 - [ ] Populate `dist/` directory or remove it

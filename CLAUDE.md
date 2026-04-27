@@ -168,6 +168,8 @@ aspects.push(new Aspect("Trope Name", weight, "Description text",
 
 ## Notes
 
+- `ROADMAP_CHECKLIST.md`: Tracking feature progress and migration tiers.
+- `ARCHITECTURE.md`: Technical plan for V7.5 and V8, including UI overhaul strategy.
 - `js/main.js` is empty
 - `dist/` directory exists but is empty
 - `doc/` contains H5BP boilerplate docs, not project-specific documentation
