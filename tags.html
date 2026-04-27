@@ -10,40 +10,41 @@
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" type="image/png" href="icon.png">
 
-<link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+    rel="stylesheet">
+
+
 <link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/fonts.css">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-<style>
-  .form-inline input {
-    margin-right:8px;
-  }
-</style>
+
 
 
 <meta name="theme-color" content="#fafafa">
 
-<div class="container-fluid">
-  <header>
-    <div class="row">
-      <div class="col-11 col-md-10 offset-md-2" id="header-navbar">
-        <a href="index.html">Generator</a>
-        <a href="whatisthis.html">About</a>
-        <!-- <a href="chat.html">Chat</a> -->
-      </div>
+  <!-- Top Header -->
+  <header class="top-header">
+    <div class="header-container">
+      <div class="site-brand">RCG</div>
+      <nav class="main-nav">
+        <a href="index.html">CREATE</a>
+        <a href="whatisthis.html">ABOUT</a>
+        <a href="roadmap.html">ROADMAP</a>
+      </nav>
     </div>
-    <hr>
   </header>
-</div>
 
 <!-- Inspired by:
 https://codepen.io/edward1995/pen/ooyKbq
 https://codepen.io/humber_cde_91/pen/agmmJq-->
 
 <div id="app">
-  <div class="container">
-    <h1 class="text-center">Tags</h1>
-    <br>
+  <main class="page-layout">
+  <div class="page-content">
+    <h1 class="page-title">Tags</h1>
     <div class="form-group row justify-content-center">
       <label for="tag-group" class="col-4 col-md-3 col-xl-2">Tag Group</label>
       <div class="col-8 col-md-5 col-xl-4">
@@ -98,28 +99,24 @@ https://codepen.io/humber_cde_91/pen/agmmJq-->
           $('#errors-modal').load('segment-modal-errors.html');
         });
       </script>
+    
     </div>
-  </div>
-</div>
+</main>
 
-<div class="container-fluid">
-  <footer>
-    <hr>
-    <div class="row">
-      <div class="col-11 col-md-10 offset-md-2">
+<footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-links">
         <a href="blog.html">Blog</a>
-        <a href="roadmap.html">Roadmap</a>
         <a href="privacy.html">Privacy Policy</a>
         <a href="ai-policy.html">AI Usage</a>
-        <span class="float-right">© Random Character Generator 2019-2025</span>
+      </div>
+      <div class="footer-copy">
+        &copy; Random Character Generator 2019-2025
       </div>
     </div>
-    <br>
   </footer>
-</div>
 
 <script src="js/vendor/modernizr-3.7.1.min.js"></script>
-<script src="js/vendor/bootstrap.bundle.min.js"></script>
 <script src="js/plugins.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 <script src="js/main.js"></script>

@@ -384,3 +384,63 @@ input[type="text"]:focus, select:focus {
   color: var(--text-muted);
   font-size: 0.85rem;
 }
+
+/* General Pages Layout */
+.page-layout {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  background-color: #ffffff;
+  min-height: calc(100vh - 120px);
+  border-left: 1px solid var(--panel-border);
+  border-right: 1px solid var(--panel-border);
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-family: var(--font-heading);
+}
+
+.page-content p {
+  margin-bottom: 1.5rem;
+  color: var(--text-main);
+}
+
+.page-content h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-family: var(--font-heading);
+}
+
+.page-content h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-heading);
+}
+
+.page-content ul {
+  margin-bottom: 1.5rem;
+  padding-left: 2rem;
+  color: var(--text-main);
+}
+
+.page-content li {
+  margin-bottom: 0.5rem;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 2rem auto;
+}
+
+.page-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+
+
