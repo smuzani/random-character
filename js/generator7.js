@@ -1074,5 +1074,18 @@ function init() {
       starter.unshift(teamSize);
     }
     createCharacter(loadTags(), starter);
+
+    // Scroll to character sheet on mobile
+    if (window.innerWidth < 1024) {
+      document.querySelector('.sheet-column').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Add a quick visual indicator
+    let $sheet = $('.sheet-column');
+    $sheet.css('transition', 'background-color 0.3s ease');
+    $sheet.css('background-color', '#f3f4f6');
+    setTimeout(() => {
+      $sheet.css('background-color', '#ffffff');
+    }, 300);
   });
 }
