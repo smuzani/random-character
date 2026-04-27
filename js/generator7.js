@@ -714,6 +714,11 @@ function filterPersonalityFromRoot(personalities, root, c) {
 }
 
 function displayCharacter(c) {
+  // Update name in sheet header
+  if (typeof p !== 'undefined' && p.Sdesc) {
+    $('#display-name').text(p.Sdesc.toUpperCase());
+  }
+
   if (!showDetails) {
     let $listResults = $('#list-results');
     let $listTeam = $('#results-team');
