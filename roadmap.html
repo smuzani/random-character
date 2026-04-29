@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Random Character Generator - Roadmap</title>
 <meta name="description" content="Future plans for this generator">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,111 +9,147 @@
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="icon" type="image/png" href="icon.png">
 
-  <!-- Modern Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
-    rel="stylesheet">
+<!-- Modern Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+  rel="stylesheet">
 
 
 <link rel="stylesheet" href="css/main.css">
 <meta name="theme-color" content="#fafafa">
 
-  <!-- Top Header -->
-  <header class="top-header">
-    <div class="header-container">
-      <div class="site-brand">RCG</div>
-      <nav class="main-nav">
-        <a href="index.html">CREATE</a>
-        <a href="whatisthis.html">ABOUT</a>
-        <a href="roadmap.html">ROADMAP</a>
-      </nav>
-    </div>
-  </header>
+<!-- Top Header -->
+<header class="top-header">
+  <div class="header-container">
+    <div class="site-brand">RCG</div>
+    <nav class="main-nav">
+      <a href="index.html">CREATE</a>
+      <a href="whatisthis.html">ABOUT</a>
+      <a href="roadmap.html">ROADMAP</a>
+    </nav>
+  </div>
+</header>
 
 
 
 <main class="page-layout">
   <div class="page-content">
     <h1 class="page-title">Roadmap</h1>
-  
-      <p ><small>Current Version: V7.4 (8 Aug 2023)</small></p>
-      <h2>Roadmap</h2>
-      <p ><span class="focused">Resources page</span>: I realize there's a lot of resources that can help others, so we'll add a page to link to them. Also a lot of people I'd like to credit.</p>
-      <p ><span class="focused">Appearance</span>: This will likely turn out to be another generator in itself, about the same size as the existing one. It'll have to generate hair, skin, size, race, fashion, etc. We'll have to start thinking in what order we want to do this.</p>
-      <p >Are personalities based off appearance or vice versa? Say, you have a kung fu character. They'd bias towards being muscular. But say it's the other way around, where you want a guard, a mook, or a love interest to look a certain way, and then generate their personality.</p>
-      <p ><span class="focused">Palette</span>: I'm actually more excited about this than the appearance. One idea is to generate a primary <a href="https://tvtropes.org/pmwiki/pmwiki.php/Main/ColourCodedForYourConvenience">color around a personality</a>. If a character is short-tempered, they'd bias to red. If they were somber, they'd be purple or gray. And so on.</a></p>
-      <p >Then we'd generate complementary colors and such. There's palette algorithms. Primary <span style="color:#D71C1C">red</span>, secondary <span style="color:#008D11">green</span>, with bands of <span style="color:#009BB2">cyan.</span></p>
-      <p >It's possible to generate skin color against that too, e.g. <span style="color:#BB8377">dark</span>, <span style="background-color: #D71C1C"><span style="color:#FFF5F0">light</span>, or <span style="color:#EDE9D0">yellower</span></span>.</p>
-      <p >We can also use these colors to search for similar palettes from <a href="https://lospec.com/palettes/api">Lospec</a> and such.</p>
-      <h2>Survey results</h2>
-      <p >Thanks for those who answered <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a>. After 3 long years, we have finally actually gone through each of them. Here's the results, indexed and ranked by popularity:</p>
-      <img src="img/rcg_requests.png" class="img-fluid" alt="Roadmap"><br><br>
-      <h4>Appearance (100%)</h4>
-      <p >Some examples include: Hair color, eye color, skin color, body type, hair type, clothing</p>
-      <p >There's three challenges here</p>
-      <ul>
-        <li>Consistency. We heavily use tropes here to bias results. Only white people get naturally colorful hair, and things like size is dependent on story trope as well. It's doable, but it's complex and slow because of possible conflicts.</li>
-        <li>Setting: We don't cater for orcs and elves yet, and that would be a whole new expansion. Even natural human bias might be different; if you have something based in Arabian deserts or a desert planet, people would be darker skinned.</li>
-        <li>Palette: We think palette matters more than the actual colors. For example, we could make badass villains brighter or, say, fiery colored hotheaded characters. I'd love to make an alpha orc villain with bright blue tattoos and colors, denoting rank like a mandrill. This would take first priority when we do appearance, but we have to take care that it doesn't conflict with the other things. A lot of people gave feedback that they use this tool for drawing; we'd like to cater for that.</li>
-      </ul>
-      <h4>Name generation (40%)</h4>
-      <p >DONE. It's basing off the <a href="https://www.gutenberg.org/ebooks/3201">Moby Word List, Grady Ward</a>. It could still be improved, currently heavily biased towards US names. But characters don't have races yet, so we'll revisit this later.</p>
-      <h4>More Depth (33.3%)</h4>
-      <p >Users have shown requested things like: likes/dislikes, birthdays, personality traits, preferred weapons, ethnicity, religion, or sexual orientation</p>
-      <p >This is a bit more difficult, because it's not just a matter of adding more things. We have to make sure that the things we add are actually useful, and that they don't conflict with each other. For example, if we add a birthday, we have to make sure that it doesn't conflict with the age. If we add a personality trait, we have to make sure that it doesn't conflict with the wants. We have to make sure that the things we add actually improve the character, and that they don't conflict with each other.</p>
-      <h4>More Plots (26.7%)</h4>
-      <p >We can expand this and we'll look into ways to make it combo well with ChatGPT.</p>
-      <h4>Back Story (20%)</h4>
-      <p >This is one reason I started this tool. There's been some amazing outcomes doing this with AI, but I'd like to look for a way without paying AI to generate them.</p>
-      <h4>Reduce inconsistencies (20%)</h4>
-      <p >This should be reduced with engine tweaks, but we'll monitor this. Likely we'll have a button so you can flag inconsistencies.</p>
-      <h4>Character Art (13.3%)</h4>
-      <p >Visual stuff. Pre-requisite for this is appearance. A lot of people submitted this in the survey before AI art was a thing; I'm not sure if it's still relevant.</p>
-      <h4>Miscellaneous (6.7%)</h4>
-      <p >Several features like clearer results, relationships, job concepts, nonbinary options, and magic have been highlighted. Please bring things like this up if you feel strongly about them.</p>
 
-      <h3>Things we won't do (yet)</h3>
-      <p >There's some nice suggestions here, but they won't be in version 7 because of the difficulty of implementation with the current engine.</p>
-      <ul>
-        <li>Moddability. This is top of the list because it's easier for us to develop in the future as well. Likely this will be done after Appearances, Back Story, and Palette generation</li>
-        <li>Settings: Should be solvable with moddable content</li>
-        <li>Dialogue</li>
-        <li>World generator: planet, biomes, scifi, towns, shops</li>
-        <li>Fine control: fill in your own details, select traits to lock or reroll</li>
-        <li>Combat</li>
-        <li>Writing prompt for first encounter. I love this idea, but it's not in high demand and challenging without AI.</li>
-        <li>Fictional languages</li>
-        <li>Poetry</li>
-        <li>Fandom generator</li>
-        <li>Using older versions of this generator</li>
-      </ul>
-      <p >Please let us know what you'd like to see in <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a></p>
-    </div>
+    <p><small>Current Version: V7.4 (8 Aug 2023)</small></p>
+    <h2>Roadmap</h2>
+    <p><span class="focused">Resources page</span>: I realize there's a lot of resources that can help others, so we'll
+      add a page to link to them. Also a lot of people I'd like to credit.</p>
+    <p><span class="focused">Appearance</span>: This will likely turn out to be another generator in itself, about the
+      same size as the existing one. It'll have to generate hair, skin, size, race, fashion, etc. We'll have to start
+      thinking in what order we want to do this.</p>
+    <p>Are personalities based off appearance or vice versa? Say, you have a kung fu character. They'd bias towards
+      being muscular. But say it's the other way around, where you want a guard, a mook, or a love interest to look a
+      certain way, and then generate their personality.</p>
+    <p><span class="focused">Palette</span>: I'm actually more excited about this than the appearance. One idea is to
+      generate a primary <a href="https://tvtropes.org/pmwiki/pmwiki.php/Main/ColourCodedForYourConvenience">color
+        around a personality</a>. If a character is short-tempered, they'd bias to red. If they were somber, they'd be
+      purple or gray. And so on.</a></p>
+    <p>Then we'd generate complementary colors and such. There's palette algorithms. Primary <span
+        style="color:#D71C1C">red</span>, secondary <span style="color:#008D11">green</span>, with bands of <span
+        style="color:#009BB2">cyan.</span></p>
+    <p>It's possible to generate skin color against that too, e.g. <span style="color:#BB8377">dark</span>, <span
+        style="background-color: #D71C1C"><span style="color:#FFF5F0">light</span>, or <span
+          style="color:#EDE9D0">yellower</span></span>.</p>
+    <p>We can also use these colors to search for similar palettes from <a
+        href="https://lospec.com/palettes/api">Lospec</a> and such.</p>
+    <h2>Survey results</h2>
+    <p>Thanks for those who answered <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a>. After 3 long years,
+      we have finally actually gone through each of them. Here's the results, indexed and ranked by popularity:</p>
+    <img src="img/rcg_requests.png" class="img-fluid" alt="Roadmap"><br><br>
+    <h4>Appearance (100%)</h4>
+    <p>Some examples include: Hair color, eye color, skin color, body type, hair type, clothing</p>
+    <p>There's three challenges here</p>
+    <ul>
+      <li>Consistency. We heavily use tropes here to bias results. Only white people get naturally colorful hair, and
+        things like size is dependent on story trope as well. It's doable, but it's complex and slow because of possible
+        conflicts.</li>
+      <li>Setting: We don't cater for orcs and elves yet, and that would be a whole new expansion. Even natural human
+        bias might be different; if you have something based in Arabian deserts or a desert planet, people would be
+        darker skinned.</li>
+      <li>Palette: We think palette matters more than the actual colors. For example, we could make badass villains
+        brighter or, say, fiery colored hotheaded characters. I'd love to make an alpha orc villain with bright blue
+        tattoos and colors, denoting rank like a mandrill. This would take first priority when we do appearance, but we
+        have to take care that it doesn't conflict with the other things. A lot of people gave feedback that they use
+        this tool for drawing; we'd like to cater for that.</li>
+    </ul>
+    <h4>Name generation (40%)</h4>
+    <p>DONE. It's basing off the <a href="https://www.gutenberg.org/ebooks/3201">Moby Word List, Grady Ward</a>. It
+      could still be improved, currently heavily biased towards US names. But characters don't have races yet, so we'll
+      revisit this later.</p>
+    <h4>More Depth (33.3%)</h4>
+    <p>Users have shown requested things like: likes/dislikes, birthdays, personality traits, preferred weapons,
+      ethnicity, religion, or sexual orientation</p>
+    <p>This is a bit more difficult, because it's not just a matter of adding more things. We have to make sure that the
+      things we add are actually useful, and that they don't conflict with each other. For example, if we add a
+      birthday, we have to make sure that it doesn't conflict with the age. If we add a personality trait, we have to
+      make sure that it doesn't conflict with the wants. We have to make sure that the things we add actually improve
+      the character, and that they don't conflict with each other.</p>
+    <h4>More Plots (26.7%)</h4>
+    <p>We can expand this and we'll look into ways to make it combo well with ChatGPT.</p>
+    <h4>Back Story (20%)</h4>
+    <p>This is one reason I started this tool. There's been some amazing outcomes doing this with AI, but I'd like to
+      look for a way without paying AI to generate them.</p>
+    <h4>Reduce inconsistencies (20%)</h4>
+    <p>This should be reduced with engine tweaks, but we'll monitor this. Likely we'll have a button so you can flag
+      inconsistencies.</p>
+    <h4>Character Art (13.3%)</h4>
+    <p>Visual stuff. Pre-requisite for this is appearance. A lot of people submitted this in the survey before AI art
+      was a thing; I'm not sure if it's still relevant.</p>
+    <h4>Miscellaneous (6.7%)</h4>
+    <p>Several features like clearer results, relationships, job concepts, nonbinary options, and magic have been
+      highlighted. Please bring things like this up if you feel strongly about them.</p>
+
+    <h3>Things we won't do (yet)</h3>
+    <p>There's some nice suggestions here, but they won't be in version 7 because of the difficulty of implementation
+      with the current engine.</p>
+    <ul>
+      <li>Moddability. This is top of the list because it's easier for us to develop in the future as well. Likely this
+        will be done after Appearances, Back Story, and Palette generation</li>
+      <li>Settings: Should be solvable with moddable content</li>
+      <li>Dialogue</li>
+      <li>World generator: planet, biomes, scifi, towns, shops</li>
+      <li>Fine control: fill in your own details, select traits to lock or reroll</li>
+      <li>Combat</li>
+      <li>Writing prompt for first encounter. I love this idea, but it's not in high demand and challenging without AI.
+      </li>
+      <li>Fictional languages</li>
+      <li>Poetry</li>
+      <li>Fandom generator</li>
+      <li>Using older versions of this generator</li>
+    </ul>
+    <p>Please let us know what you'd like to see in <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a></p>
   </div>
-</div>
+  </div>
+  </div>
 
 
 
 </main>
 
 <footer class="site-footer">
-    <div class="footer-container">
-      <div class="footer-links">
-        <a href="blog.html">Blog</a>
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="ai-policy.html">AI Usage</a>
-      </div>
-      <div class="footer-copy">
-        &copy; Random Character Generator 2019-2025
-      </div>
+  <div class="footer-container">
+    <div class="footer-links">
+      <a href="blog.html">Blog</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="ai-policy.html">AI Usage</a>
     </div>
-  </footer>
+    <div class="footer-copy">
+      &copy; Random Character Generator 2019-2026
+    </div>
+  </div>
+</footer>
 
 <script src="js/vendor/modernizr-3.7.1.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')</script>
 
 <script src="js/plugins.js"></script>
@@ -132,4 +168,3 @@
 
   gtag('config', 'UA-140909040-1');
 </script>
-
