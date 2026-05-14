@@ -606,7 +606,7 @@ function tagToPortrayal(tag) {
     case TINDIVIDUALISTIC:
       return randomArray([`${p.She} resents it when others get more attention than ${p.his}, especially ${p.his} co-workers.`,
         `${p.Sdesc} might agree to a boss, but resentfully so.`,
-        `${p.Sdesc} is egoistic and acts as if the whole world revolves around them.`]);
+        `${p.Sdesc} is egoistic and acts as if the whole world revolves around ${p.him}.`]);
     case TTEAMPLAYER:
       return randomArray([`${p.Sdesc} happily and eagerly follows orders.`,
         `${p.She} is a team player.`]);
@@ -642,7 +642,7 @@ function tagToPortrayal(tag) {
         `Everyone hates ${p.sdesc}.`]);
     case TLOVABLE:
       return randomArray([`${p.She} is fun to be around.`,
-        `The mood of the room lightens up when ${p.sdesc} is around.`,
+        `The mood of the room lightens up when ${p.she} is around.`,
         `${p.She} is adorable.`,]);
     case TLOAD:
       return randomArray([`${p.Sdesc} is dead weight who makes things harder for everyone else`,
