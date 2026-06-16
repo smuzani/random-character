@@ -52,7 +52,6 @@ const WRESURRECT = 'resurrect';
 const WLUST = 'reallywant';
 const WSEERUINED = 'seeruined';
 
-
 function wantToDesc(tag) {
   switch (tag) {
     case WWANTBURN:
@@ -60,6 +59,9 @@ function wantToDesc(tag) {
         `${p.Sdesc} is a very angry person. ${p.She} is angry at the world, and ${p.she} is angry at those who are not like ${p.him}. ${p.She} likes to take ${p.his} anger out on others, using violence and cruelty as ${p.his} weapon of choice. ${p.She} has been this way for most of ${p.his} life, and ${p.she} doesn't see any reason to change now.`,
         `${p.Sdescs} abusive childhood led to this. ${p.She} enjoyed seeing people suffer, and developed a sadistic personality.`,
         `${p.Sdesc} is just fed up with life. ${p.She} just wants to see the world burn down.`,
+        `${p.Sdesc} has stopped believing the world can be repaired. If ruin is inevitable, ${p.she} intends to be the hand that brings it early.`,
+        `${p.She} sees mercy as a lie people tell themselves so they can sleep. ${p.Sdesc} wants to strip that comfort away and leave everyone exposed.`,
+        `Every disappointment has hardened into spite. ${p.Sdesc} does not want victory so much as the satisfaction of watching everything collapse.`,
       ]);
     case WPROTECTIVE:
       return randomArray([
@@ -67,17 +69,22 @@ function wantToDesc(tag) {
         `${p.She}'s always looking out for the success of the team because ${p.she} knows there's strength in unity.`,
         `${p.Sdesc} is unquestioningly loyal to ${p.his} organization. ${p.She} will always take the organization's interests as paramount.`,
         `${p.Sdesc} would do anything to make sure ${p.his} younger sister is safe. ${p.She} and ${p.his} sister have always been close, and that bond has only grown after the death of their mother. ${p.His} sister isn't the brightest crayon in the box and ${p.she} gets into more than ${p.his} fair share of trouble. But ${p.sdesc} has promised ${p.herself} that he'll protect her come hell or high water.`,
-        `${p.She} has sworn to always protect ${p.his} spouse.`
+        `${p.She} has sworn to always protect ${p.his} spouse.`,
+        `${p.Sdesc} has chosen one person as ${p.his} responsibility, and that choice has become sacred. Anyone who threatens them becomes the enemy.`,
+        `${p.She} protects ${p.his} found family with a vigilance that borders on frightening. Love, to ${p.him}, means never being too late again.`,
+        `${p.Sdesc} knows the world eats the careless. ${p.She} keeps watch so someone else can afford to be soft.`,
       ]);
     case WMACGUFFIN:
       return randomArray([
         `${p.Sdesc} has always been a determined person with aspirations to greater heights. Somewhere deep down ${p.she} can't help but feel that ${p.his} family is being held hostage from the gifts they could have. The next step in achieving this goal is getting ${p.his} hands on the artifact and then finding somone who can teach ${p.him} to wield it.`,
         `${p.Sdesc} wishes to take hold of a powerful artifact in order to use it as leverage against ${p.his} enemies. ${p.She} believes that by obtaining this item and using it as a bargaining chip, ${p.she} will be able to outmaneuver them.`,
-        `An ally is being framed for a crime that they didn't commit. The people framing the ally have all the evidence necessary. ${p.Sdesc} has to get the evidence in time, using legal or illegal means.
-        `,
+        `An ally is being framed for a crime that they didn't commit. The people framing the ally have all the evidence necessary. ${p.Sdesc} has to get the evidence in time, using legal or illegal means.`,
         `${p.She} is in need of some decisive evidence to make sure ${p.she} will have a solid case against the enemy.`,
         `${p.Sdesc} believes that whoever owns a certain relic is the rightful heir, and wants to take possession of it.`,
-        `${p.She} doesn't want to make a move for the relic because ${p.she} is worried about one of ${p.his} own family members owning it. However, now ${p.she} needs the relic as means of victory.`
+        `${p.She} doesn't want to make a move for the relic because ${p.she} is worried about one of ${p.his} own family members owning it. However, now ${p.she} needs the relic as means of victory.`,
+        `${p.Sdesc} needs a single object to unlock the next stage of ${p.his} plan. Without it, every sacrifice so far becomes meaningless.`,
+        `The artifact is proof, weapon, inheritance, and bargaining chip all at once. ${p.Sdesc} cannot afford to let anyone else claim it first.`,
+        `${p.She} has chased rumors of the relic for years. Now they realize that it may well be real.`,
       ]);
     case WGREATPOWER:
       return randomArray([
@@ -87,7 +94,9 @@ function wantToDesc(tag) {
         `${p.She} feels the need to right wrongs because ${p.she} feels that ${p.she} has been let down by others. ${p.She} feels like ${p.she} needs to prove ${p.herself}, but to whom? ${p.His} family and friends seem to be on a different path. ${p.She} feels forgotten and alone, but still believes that this hero complex is justified.`,
         `${p.She} was tired of being a hero. There were plenty of others and ${p.she} wants to find a replacement.`,
         `${p.She} is tired of the constant praise and attention. ${p.She} wants to be like everyone else, instead of the object of admiration. It ruins mundane things like grocery shopping or finding a parking space. Plus ${p.she} would get to put ${p.herself} first for once, instead of thinking of only others.`,
-        `${p.She} just hates how pressure is constantly put on ${p.him}. ${p.His} father had told ${p.him} that ${p.she} needed to be the savior, to come home with the win even when everyone else wasn't doing their part.`
+        `${p.She} just hates how pressure is constantly put on ${p.him}. ${p.His} father had told ${p.him} that ${p.she} needed to be the savior, to come home with the win even when everyone else wasn't doing their part.`,
+        `${p.Sdesc} was given enough power to make inaction feel like a crime. ${p.She} cannot walk away from suffering while ${p.she} has the means to answer it.`,
+        `${p.Sdesc} resents being needed, but ${p.she} keeps showing up because nobody else can do the work.`,
       ]);
     case WCRAVELOVE:
       return randomArray([
@@ -99,14 +108,20 @@ function wantToDesc(tag) {
         `${p.She} believes ${p.she} lacks the feeling of love from family. ${p.She} doesn't want to be alone.`,
         `${p.She} has always had a difficult time meeting people. ${p.She} can't seem to find anyone ${p.she} connects with.`,
         `${p.Sdesc} wished for romance, because the forecast of loneliness was looking too gloomy. ${p.She} wanted to find a girl who would love ${p.him} and take care of ${p.him}. ${p.She} wanted someone to date and share the rest of ${p.his} life with.`,
-        `${p.Sdesc} wants something to love unconditionally, but ${p.she} can't find that with a human. ${p.She} adopted a pet but it died early because of an illness. Getting hurt again feels too familiar.`
+        `${p.Sdesc} wants something to love unconditionally, but ${p.she} can't find that with a human. ${p.She} adopted a pet but it died early because of an illness. Getting hurt again feels too familiar.`,
+        `${p.Sdesc} mistakes attention for safety and affection for proof that ${p.she} matters. Losing either terrifies ${p.him}.`,
+        `${p.She} wants someone to choose ${p.him} without hesitation. Until that happens, every room feels temporary.`,
+        `${p.Sdesc} has learned to become whatever people need, hoping one of those versions will finally be loved.`,
       ]);
     case WSTRONGETHICS:
       return randomArray([
         `${p.Sdesc} is a soldier. ${p.She} was bred for duty, forged by flames and fury. Rain or shine, blood or tears, ${p.sdesc} will do ${p.his} duty. ${p.She} always has, ${p.she} always would.`,
         `${p.Sdesc} will always do the right thing, no matter the consequences.`,
         `${p.Sdesc} is a deeply moral person. ${p.She} believes in doing what is right and just, even against the odds, even if it means sacrificing ${p.herself} for others.`,
-        `${p.Sdesc} does the right thing. ${p.She} has always had a dim view of pragmatism, believing that tough choices are for tough people.`
+        `${p.Sdesc} does the right thing. ${p.She} has always had a dim view of pragmatism, believing that tough choices are for tough people.`,
+        `${p.Sdesc} has one line ${p.she} will not cross, even if the whole world insists it is necessary. Especially then.`,
+        `${p.She} clings to principle because everything else can be negotiated away. ${p.His} code is the last thing ${p.she} trusts.`,
+        `${p.Sdesc} believes a person is only as good as what ${p.she} refuses to do when winning would be easy.`,
       ]);
     case WBETTERWORLD:
       return randomArray([
@@ -114,17 +129,23 @@ function wantToDesc(tag) {
         `The might of ${p.sdesc} is what keeps society safe. ${p.She} is willing to risk ${p.his} life and die if it means fighting for justice.`,
         `${p.His} motivation is to help the world, and to make it a better place in any way ${p.she} can, not just for its people but also for the animals. ${p.She} wants healing, forgiveness and peace.`,
         `${p.She} is motivated not by ${p.his} own interests but by a love for others. All ${p.his} efforts gravitate towards easing the pain and suffering of others.`,
-        `${p.She} is motivated by a strong sense of love for others. The only thing that seems to make ${p.him} feel better is helping those who need it.`
+        `${p.She} is motivated by a strong sense of love for others. The only thing that seems to make ${p.him} feel better is helping those who need it.`,
+        `${p.Sdesc} wants to leave the world gentler than ${p.she} found it. That goal sounds simple until people start calling it naive.`,
+        `${p.She} is tired of systems that grind people down and then blame them for breaking. ${p.Sdesc} means to change the machinery.`,
+        `${p.Sdesc} cannot save everyone, but ${p.she} keeps trying to widen the circle of who gets saved.`,
       ]);
     case WPASTMISTAKE:
       return randomArray([
         `${p.Sdesc} feels guilty for being the only survivor. ${p.She} knew that ${p.she} should have died with ${p.his} friend. Sometimes ${p.she} still has panic attacks remembering the incident.`,
         `One of the people under ${p.his} watch passed away--one of many casualties in a crisis. ${p.Sdesc} feels personally responsible. Why couldn't ${p.she} have done more to save her?`,
         `${p.Sdesc} hates ${p.herself} for not being able to save and protect everyone. There were so many people that ${p.she} couldn't save.`,
-        `${p.Sdesc} feels guilt over the people ${p.she} couldn't save.`,        
+        `${p.Sdesc} feels guilt over the people ${p.she} couldn't save.`,
         `${p.Sdesc} screwed up so badly ${p.she} was nearly fired. But ${p.she} was given a second chance and was determined to do well this time.`,
         `When ${p.sdesc} took the oath, ${p.she} promised ${p.his} patients that ${p.she} would do whatever it took to make them healthy.`,
-        `${p.Sdesc} always been able to protect ${p.his} family from danger, and this has always tormented ${p.him}.`
+        `${p.Sdesc} hasn't always been able to protect ${p.his} family from danger, and this has tormented ${p.him}.`,
+        `${p.Sdesc} made one choice that cannot be undone. Everything since has been an attempt to make the future less cruel than the past.`,
+        `${p.She} carries an old failure like a hidden wound. Success will not erase it, but ${p.she} hopes it might finally let ${p.him} breathe.`,
+        `${p.Sdesc} is chasing redemption from someone who may never forgive ${p.him}. ${p.She} keeps going anyway.`,
       ]);
     case WMONEYPOWER:
       return randomArray([
@@ -133,7 +154,10 @@ function wantToDesc(tag) {
         `${p.Sdesc} always wanted to be more famous than ${p.his} cousin. But ${p.she} has reached a plateau. ${p.She} is trying to leverage ${p.his} current fame and get into politics for more money and power.`,
         `${p.Sdesc} has this idea in ${p.his} head that if ${p.she} made more money and had more power, ${p.his} family would respect ${p.him} more.`,
         `${p.She} always dreamed of making a better world to live in. ${p.She} thought the government is not doing what they could be doing. Along with some friends, they set a goal to take over the world.`,
-        `${p.Sdesc} doesn’t want to be a statistic. ${p.She} wants a better world and will go to extremes to make sure that it happens. ${p.She} also feels that ${p.she} is the one that must see this through due to what ${p.she} has gone through in life.`
+        `${p.Sdesc} doesn’t want to be a statistic. ${p.She} wants a better world and will go to extremes to make sure that it happens. ${p.She} also feels that ${p.she} is the one that must see this through due to what ${p.she} has gone through in life.`,
+        `${p.Sdesc} learned that people listen when money speaks and kneel when power enters the room. ${p.She} wants both voices on ${p.his} side.`,
+        `${p.She} does not crave luxury as much as immunity. Wealth and influence are shields ${p.sdesc} never had before.`,
+        `${p.Sdesc} wants enough power that nobody can dismiss ${p.him} again, and enough money that nobody can buy ${p.him}.`,
       ]);
     case WPARENTAL:
       return randomArray([
@@ -143,12 +167,15 @@ function wantToDesc(tag) {
         `${p.She} has an intense need to feel needed and loved by ${p.his} mother, who due to Alzheimer's disease, will not likely remember anything ${p.she} says or does.`,
         `All ${p.she} wants is for ${p.his} mentor to approve of ${p.him}. But ${p.she} can never please ${p.his} mentor, no matter what ${p.she} does.`,
         `${p.She} has a hard time meeting all the standards that ${p.his} mentor puts before ${p.him}.`,
+        `${p.Sdesc} is still performing for a parent who may never applaud. Every victory feels incomplete without that impossible approval.`,
+        `${p.She} keeps chasing the version of ${p.his} family that might have loved ${p.him} properly if ${p.she} had only been better.`,
       ]);
     case WBELOVED:
       return randomArray([
         `The person that ${p.sdesc} loves, might be happy with someone else, but ${p.she} is willing to let go of ${p.his} own happiness for the sake of their happiness.`,
         `${p.Sdesc} would do anything for the one ${p.she} loves. ${p.She} has a tendency to let the other person control ${p.him}.`,
-        `${p.She} wants the person ${p.she} loves to be happy. ${p.She} ultimately chooses the person ${p.she} loves over ${p.herself}.`
+        `${p.She} wants the person ${p.she} loves to be happy. ${p.She} ultimately chooses the person ${p.she} loves over ${p.herself}.`,
+        `${p.Sdesc} has made another person's happiness the center of ${p.his} map. ${p.She} will burn ${p.his} own road if it lights theirs.`,
       ]);
     case WPRIDE:
       return randomArray([
@@ -156,6 +183,7 @@ function wantToDesc(tag) {
         `${p.She} will do what it takes to be the best. ${p.She} is driven not by ${p.his} need to save people, but rather to uphold ${p.his} pride of being a hero for them.`,
         `${p.Sdesc} values ${p.herself} highly. ${p.She} knows that ${p.his} peers do not always hold ${p.him} in high esteem- ${p.she} is often underestimated and underestimated. ${p.She} feels that if ${p.she} can prove that ${p.she} can survive any challenge, then they will give ${p.him} the respect ${p.she} deserves.`,
         `${p.She} was tired of being told that ${p.she} wasn't good enough. It was time for ${p.him} to prove ${p.herself}.`,
+        `${p.Sdesc} cannot bear being second-best. Admiration is pleasant, but superiority is the real hunger.`,
       ]);
     case WFAVOUR:
       return randomArray([
