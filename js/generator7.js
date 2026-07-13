@@ -713,11 +713,38 @@ function filterPersonalityFromRoot(personalities, root, c) {
   });
 }
 
-function displayCharacter(c) {
-  // Update name in sheet header
-  if (typeof p !== 'undefined' && p.Sdesc) {
-    $('#display-name').text(p.Sdesc.toUpperCase());
+// Reveals the portrait card, renders the palette pie into the square, sets the
+// name and the Eyes/Hair/Skin/Build stats. Runs at every detail level.
+function renderPortraitHeader(values) {
+  values = values || {};
+  const name = (typeof p !== 'undefined' && p.Sdesc) ? p.Sdesc.toUpperCase() : 'NEW CHARACTER';
+  $('#display-name').text(name);
+
+  if (typeof generatePalette === 'function' && typeof palettePieSvg === 'function') {
+    const palette = generatePalette();
+    $('#portrait-square').html(palettePieSvg(palette, 96));
   }
+
+  $('#stat-eyes').text(values.eyes || '—');
+  $('#stat-hair').text(values.hair || '—');
+  $('#stat-skin').text(values.skin || '—');
+  $('#stat-build').text(values.build || '—');
+
+  // Swap the plain first-load name for the full card.
+  $('#display-name-plain').addClass('hidden');
+  $('#portrait-card').removeClass('hidden');
+}
+
+function displayCharacter(c) {
+  // Portrait header: always roll a palette + the 4 appearance values, at any
+  // detail level. The full appearance roll (values + section lines) is stashed
+  // on the character so the detail branch below reuses it instead of re-rolling.
+  let appearance = { values: {}, lines: [] };
+  if (typeof rollAppearance === 'function') {
+    appearance = rollAppearance(c.tags);
+  }
+  c.appearance = appearance;
+  renderPortraitHeader(appearance.values);
 
   if (!showDetails) {
     let $listResults = $('#list-results');
@@ -790,8 +817,14 @@ function displayCharacter(c) {
     let backgroundText = $background.html();
     let wealthText = $wealth.html();
     let plotText = $plot.html();
-    let wantText = $want.html();  
+    let wantText = $want.html();
     let tags = c.tags;
+    // Reuse the appearance already rolled at the top (header + section share one
+    // roll). Eye/hair/skin sentences are suppressed here since they show in the
+    // portrait header; physique flavor, grooming, and facial hair remain.
+    (c.appearance ? c.appearance.lines : []).forEach(function (line) {
+      appearanceText += '<li class="text-justify">' + line + '</li>';
+    });
     tags.forEach(function (t) {
       // console.log(t);
       let appearance = tagToAppearance(t);

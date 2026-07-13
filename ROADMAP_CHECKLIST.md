@@ -24,8 +24,8 @@ Based on [roadmap.html](roadmap.html) and survey results. Current version: **V7.
 
 ### Tier 2 / V7.5 Expansion (Medium Risk)
 *These features will be built client-side to keep the generator instant and offline, acting as the bridge to V8. They require a new UI overhaul and a lightweight Rules Engine to handle the data structure.*
-- [ ] **Appearance System** (Skin, hair, eyes, physique, facial hair)
-- [ ] **Palette generator** (Mapping personality traits to colors)
+- [x] **Appearance System** (Skin, hair, eyes, physique, facial hair) — V1 live in `js/appearance-details.js` (two-layer: free-rolling colors + tag-aware body/style; generic `rollRules()` engine for clothing/palette to reuse)
+- [x] **Palette generator** — V1 live in `js/palette-details.js` (dependency-free port of Bolt's harmony engine; renders as the portrait pie in the header card). *Follow-up: map personality traits to color families (currently random-first).*
 - [ ] **Clothing system** (fashion → outfit → flair → accessory)
 - [ ] **Character concept generator** (adj+noun concept system)
 

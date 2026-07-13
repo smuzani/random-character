@@ -104,9 +104,22 @@
     <main class="sheet-column">
 
       <div class="sheet-header">
-        <h2 class="sheet-name" id="display-name">CHARACTER NAME</h2>
+        <!-- First-load state: plain name, no empty square. Replaced by the card on first generation. -->
+        <h2 class="sheet-name" id="display-name-plain">CHARACTER NAME</h2>
 
-
+        <!-- Portrait card: pie (the palette) + name + stat grid. Hidden until first generation. -->
+        <div class="portrait-card hidden" id="portrait-card">
+          <div class="portrait-square" id="portrait-square"></div>
+          <div class="portrait-info">
+            <h2 class="sheet-name" id="display-name">CHARACTER NAME</h2>
+            <div class="portrait-stats">
+              <div class="stat-block"><span class="stat-label">Eyes</span><span class="stat-value" id="stat-eyes">&mdash;</span></div>
+              <div class="stat-block"><span class="stat-label">Hair</span><span class="stat-value" id="stat-hair">&mdash;</span></div>
+              <div class="stat-block"><span class="stat-label">Skin</span><span class="stat-value" id="stat-skin">&mdash;</span></div>
+              <div class="stat-block"><span class="stat-label">Build</span><span class="stat-value" id="stat-build">&mdash;</span></div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="sheet-content">
@@ -200,23 +213,12 @@
   <script src="js/tag-details.js"></script>
   <script src="js/plot-details.js"></script>
   <script src="js/want-details.js"></script>
+  <script src="js/appearance-details.js"></script>
+  <script src="js/palette-details.js"></script>
   <script src="assets/names.js"></script>
 
   <script src="js/generator7.js"></script>
 
-  <script>
-    // Inject the generated name into the top of the sheet
-    $('#generate').on('click', function () {
-      // Small timeout to let generator7.js finish
-      setTimeout(function () {
-        if (typeof p !== 'undefined' && p.Sdesc) {
-          $('#display-name').text(p.Sdesc.toUpperCase());
-        } else {
-          $('#display-name').text("NEW CHARACTER");
-        }
-      }, 50);
-    });
-  </script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-140909040-1"></script>
