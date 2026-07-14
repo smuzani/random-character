@@ -715,13 +715,15 @@ function filterPersonalityFromRoot(personalities, root, c) {
 
 // Reveals the portrait card, renders the palette pie into the square, sets the
 // name and the Eyes/Hair/Skin/Build stats. Runs at every detail level.
-function renderPortraitHeader(values) {
+function renderPortraitHeader(values, baseHue) {
   values = values || {};
   const name = (typeof p !== 'undefined' && p.Sdesc) ? p.Sdesc.toUpperCase() : 'NEW CHARACTER';
   $('#display-name').text(name);
 
   if (typeof generatePalette === 'function' && typeof palettePieSvg === 'function') {
-    const palette = generatePalette();
+    // baseHue (from the character's physical coloring) seeds the palette when
+    // present; passing null/undefined yields a fully random palette.
+    const palette = (typeof baseHue === 'number') ? generatePalette(baseHue) : generatePalette();
     $('#portrait-square').html(palettePieSvg(palette, 96));
   }
 
@@ -744,7 +746,7 @@ function displayCharacter(c) {
     appearance = rollAppearance(c.tags);
   }
   c.appearance = appearance;
-  renderPortraitHeader(appearance.values);
+  renderPortraitHeader(appearance.values, appearance.baseHue);
 
   if (!showDetails) {
     let $listResults = $('#list-results');

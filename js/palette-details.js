@@ -204,18 +204,25 @@ function tripletToPalette(hexes, harmony) {
   };
 }
 
-function generateTriadic() {
+// Each generator takes an optional baseHue: when the character's physical
+// coloring supplies one, it drives h1 (the dominant hue) and the harmony is
+// built around it; otherwise h1 is a random weighted hue as before.
+function baseOrRandom(baseHue) {
+  return (typeof baseHue === 'number') ? ((baseHue % 360) + 360) % 360 : weightedRandomHue();
+}
+
+function generateTriadic(baseHue) {
   for (let a = 0; a < 50; a++) {
-    const h1 = weightedRandomHue();
+    const h1 = baseOrRandom(baseHue);
     const t = makeTriplet([h1, (h1 + 120) % 360, (h1 + 240) % 360]);
     if (t) return tripletToPalette(t, 'triadic');
   }
   return null;
 }
 
-function generateSplitComplementary() {
+function generateSplitComplementary(baseHue) {
   for (let a = 0; a < 50; a++) {
-    const h1 = weightedRandomHue();
+    const h1 = baseOrRandom(baseHue);
     const offset = rndInt(20, 35);
     const t = makeTriplet([h1, (h1 + 180 - offset) % 360, (h1 + 180 + offset) % 360]);
     if (t) return tripletToPalette(t, 'splitComplementary');
@@ -223,9 +230,9 @@ function generateSplitComplementary() {
   return null;
 }
 
-function generateAnalogous() {
+function generateAnalogous(baseHue) {
   for (let a = 0; a < 50; a++) {
-    const h1 = weightedRandomHue();
+    const h1 = baseOrRandom(baseHue);
     const t = makeTriplet([h1, (h1 + rndInt(15, 30)) % 360, (h1 - rndInt(15, 30) + 360) % 360]);
     if (t) return tripletToPalette(t, 'analogous');
   }
@@ -233,8 +240,8 @@ function generateAnalogous() {
 }
 
 // Complementary is a guaranteed 2-color fallback (no quality gate to fail).
-function generateComplementary() {
-  const domH = weightedRandomHue();
+function generateComplementary(baseHue) {
+  const domH = baseOrRandom(baseHue);
   const domS = rnd(SATURATION_RANGE[0], SATURATION_RANGE[1]);
   const domV = rnd(LIGHTNESS_RANGE[0], LIGHTNESS_RANGE[1]);
   const secH = (domH + 180 + rndInt(-20, 20)) % 360;
@@ -250,17 +257,37 @@ function generateComplementary() {
   };
 }
 
-// Public entry: a harmonious palette, harmony chosen at random.
-function generatePalette() {
+// When a physical color seeds the palette, it lands as the dominant (Primary)
+// hue by construction. A coin-flip promotes it to the Accent role instead, so
+// the character's eye/hair color is sometimes the big field and sometimes the
+// pop — "randomly pick which becomes the primary or accent color."
+function maybeSwapPrimaryAccent(palette) {
+  const cols = palette.colors;
+  if (cols.length < 3 || roll(1, 2) === 1) return palette;
+  const prim = cols[0], acc = cols[2];
+  const pRole = prim.role, aRole = acc.role;
+  const pRatio = prim.usageRatio, aRatio = acc.usageRatio;
+  prim.role = aRole; prim.usageRatio = aRatio;
+  acc.role = pRole; acc.usageRatio = pRatio;
+  return palette;
+}
+
+// Public entry: a harmonious palette, harmony chosen at random. An optional
+// baseHue (0-360) seeds the dominant hue from the character's physical coloring;
+// omit it for a fully random palette.
+function generatePalette(baseHue) {
+  const seeded = typeof baseHue === 'number';
   const harmonies = ['complementary', 'triadic', 'splitComplementary', 'analogous'];
   const pick = harmonies[rndInt(0, harmonies.length - 1)];
+  let palette;
   switch (pick) {
-    case 'triadic': return generateTriadic() || generateComplementary();
-    case 'splitComplementary': return generateSplitComplementary() || generateComplementary();
-    case 'analogous': return generateAnalogous() || generateComplementary();
+    case 'triadic': palette = generateTriadic(baseHue) || generateComplementary(baseHue); break;
+    case 'splitComplementary': palette = generateSplitComplementary(baseHue) || generateComplementary(baseHue); break;
+    case 'analogous': palette = generateAnalogous(baseHue) || generateComplementary(baseHue); break;
     case 'complementary':
-    default: return generateComplementary();
+    default: palette = generateComplementary(baseHue); break;
   }
+  return seeded ? maybeSwapPrimaryAccent(palette) : palette;
 }
 
 // --- pie renderer (the portrait square) -----------------------------
