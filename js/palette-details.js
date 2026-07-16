@@ -83,6 +83,26 @@ function lerp(a, b, t) {
 const SATURATION_RANGE = [45, 85];
 const LIGHTNESS_RANGE = [35, 78];
 
+// Neutral families. Ported back from Bolt's ColorFamily 'black'/'white', which
+// the first pass dropped by accident: they were entangled with the user-picked
+// -family feature the PRD cut, so cutting that cut these too, leaving the engine
+// unable to emit any gray, black or white at all.
+//
+// A neutral family drives the *whole* triplet rather than contributing one
+// swatch: every member goes desaturated and shares a lightness band, so black
+// reads as a charcoal scheme rather than one black wedge among colors. Hue is
+// near-meaningless at this saturation, so the generators roll it freely.
+//
+// The gates have to relax to match — three near-grays are legitimately similar,
+// and the chromatic thresholds (ΔE 12 / ΔL 20) would reject every one of them.
+// `gray` is ours; Bolt had only black and white, and silver hair needs a mid
+// band that neither covers.
+const NEUTRAL_FAMILIES = {
+  black: { sat: [0, 20], light: [8, 35], deltaE: 6, dLight: 8 },
+  gray: { sat: [0, 20], light: [35, 70], deltaE: 6, dLight: 8 },
+  white: { sat: [0, 25], light: [70, 98], deltaE: 3, dLight: 4 },
+};
+
 // Gaudy hue bands to steer away from (yellow-green goblin zone etc.)
 const GAUDY_HUE_BANDS = [[60, 95], [330, 360], [40, 80]];
 const NEUTRAL_HSL = { h: 210, s: 15, l: 50 };
@@ -151,37 +171,57 @@ function valueTriplet() {
 }
 
 // Builds a validated 3-color triplet from hues, or null if quality gates fail.
-function makeTriplet(hues) {
+// `family` names a NEUTRAL_FAMILIES key to force a desaturated scheme; omit it
+// for the ordinary chromatic path.
+function makeTriplet(hues, family) {
   let [domH, supAH, supBH] = hues;
-  let domS = rnd(40, 70), supAS = rnd(25, 55), supBS = rnd(25, 55);
-  let [domV, supAV, supBV] = valueTriplet();
+  const neutral = NEUTRAL_FAMILIES[family];
 
-  // Neutral-blend the worst zone (yellow-green 60-95).
-  const cols = [[domH, domS, domV], [supAH, supAS, supAV], [supBH, supBS, supBV]];
-  for (let i = 0; i < cols.length; i++) {
-    let [h, s, v] = cols[i];
-    if (h >= 60 && h <= 95) [h, s, v] = neutralize(h, s, v);
-    cols[i] = [h, s, v];
+  let domS, supAS, supBS, domV, supAV, supBV;
+  if (neutral) {
+    // Every member desaturated and inside one lightness band — the scheme *is*
+    // the neutral, so there's no dominant/support value pattern to assign.
+    domS = rnd(neutral.sat[0], neutral.sat[1]);
+    supAS = rnd(neutral.sat[0], neutral.sat[1]);
+    supBS = rnd(neutral.sat[0], neutral.sat[1]);
+    domV = rnd(neutral.light[0], neutral.light[1]);
+    supAV = rnd(neutral.light[0], neutral.light[1]);
+    supBV = rnd(neutral.light[0], neutral.light[1]);
+  } else {
+    domS = rnd(40, 70); supAS = rnd(25, 55); supBS = rnd(25, 55);
+    [domV, supAV, supBV] = valueTriplet();
+
+    // Neutral-blend the worst zone (yellow-green 60-95). Pointless for a neutral
+    // family — already desaturated — so it's skipped there.
+    const cols = [[domH, domS, domV], [supAH, supAS, supAV], [supBH, supBS, supBV]];
+    for (let i = 0; i < cols.length; i++) {
+      let [h, s, v] = cols[i];
+      if (h >= 60 && h <= 95) [h, s, v] = neutralize(h, s, v);
+      cols[i] = [h, s, v];
+    }
+    [domH, domS, domV] = cols[0];
+    [supAH, supAS, supAV] = cols[1];
+    [supBH, supBS, supBV] = cols[2];
   }
-  [domH, domS, domV] = cols[0];
-  [supAH, supAS, supAV] = cols[1];
-  [supBH, supBS, supBV] = cols[2];
 
   const hexes = [hslToHex(domH, domS, domV), hslToHex(supAH, supAS, supAV), hslToHex(supBH, supBS, supBV)];
   const lab = hexes.map(hexToLab);
   const lights = [domV, supAV, supBV];
 
-  // Quality gates: enough chroma distance and lightness contrast.
-  if (Math.min(deltaE(lab[0], lab[1]), deltaE(lab[0], lab[2]), deltaE(lab[1], lab[2])) < 12) {
+  // Quality gates: enough chroma distance and lightness contrast. Neutrals carry
+  // their own thresholds — three charcoals are meant to be close.
+  const eGate = neutral ? neutral.deltaE : 12;
+  const lGate = neutral ? neutral.dLight : 20;
+  if (Math.min(deltaE(lab[0], lab[1]), deltaE(lab[0], lab[2]), deltaE(lab[1], lab[2])) < eGate) {
     return null;
   }
   if (Math.min(
     Math.abs(lights[0] - lights[1]),
     Math.abs(lights[0] - lights[2]),
-    Math.abs(lights[1] - lights[2])) < 20) {
+    Math.abs(lights[1] - lights[2])) < lGate) {
     return null;
   }
-  // Reject "all screaming".
+  // Reject "all screaming". Unreachable for neutrals, which cap saturation at 25.
   if (Math.max(domS, supAS, supBS) > 90 && Math.min(domS, supAS, supBS) > 70) {
     return null;
   }
@@ -204,49 +244,73 @@ function tripletToPalette(hexes, harmony) {
   };
 }
 
-// Each generator takes an optional baseHue: when the character's physical
-// coloring supplies one, it drives h1 (the dominant hue) and the harmony is
-// built around it; otherwise h1 is a random weighted hue as before.
-function baseOrRandom(baseHue) {
-  return (typeof baseHue === 'number') ? ((baseHue % 360) + 360) % 360 : weightedRandomHue();
+// Each generator takes an optional seed describing the character's coloring:
+//   { hue: 0-360 }        a chromatic color (red hair, blue eyes) drives h1
+//   { family: 'black' }   an achromatic color drives the whole scheme desaturated
+//   null / undefined      fully random, as before
+function seedHue(seed) {
+  if (seed && typeof seed.hue === 'number') return ((seed.hue % 360) + 360) % 360;
+  // A neutral has no meaningful hue below ~25% saturation, so let it roll free
+  // across the whole wheel rather than through the chromatic bands.
+  if (seed && NEUTRAL_FAMILIES[seed.family]) return rndInt(0, 359);
+  return weightedRandomHue();
 }
 
-function generateTriadic(baseHue) {
+function seedFamily(seed) {
+  return (seed && NEUTRAL_FAMILIES[seed.family]) ? seed.family : undefined;
+}
+
+function generateTriadic(seed) {
+  const family = seedFamily(seed);
   for (let a = 0; a < 50; a++) {
-    const h1 = baseOrRandom(baseHue);
-    const t = makeTriplet([h1, (h1 + 120) % 360, (h1 + 240) % 360]);
+    const h1 = seedHue(seed);
+    const t = makeTriplet([h1, (h1 + 120) % 360, (h1 + 240) % 360], family);
     if (t) return tripletToPalette(t, 'triadic');
   }
   return null;
 }
 
-function generateSplitComplementary(baseHue) {
+function generateSplitComplementary(seed) {
+  const family = seedFamily(seed);
   for (let a = 0; a < 50; a++) {
-    const h1 = baseOrRandom(baseHue);
+    const h1 = seedHue(seed);
     const offset = rndInt(20, 35);
-    const t = makeTriplet([h1, (h1 + 180 - offset) % 360, (h1 + 180 + offset) % 360]);
+    const t = makeTriplet([h1, (h1 + 180 - offset) % 360, (h1 + 180 + offset) % 360], family);
     if (t) return tripletToPalette(t, 'splitComplementary');
   }
   return null;
 }
 
-function generateAnalogous(baseHue) {
+function generateAnalogous(seed) {
+  const family = seedFamily(seed);
   for (let a = 0; a < 50; a++) {
-    const h1 = baseOrRandom(baseHue);
-    const t = makeTriplet([h1, (h1 + rndInt(15, 30)) % 360, (h1 - rndInt(15, 30) + 360) % 360]);
+    const h1 = seedHue(seed);
+    const t = makeTriplet([h1, (h1 + rndInt(15, 30)) % 360, (h1 - rndInt(15, 30) + 360) % 360], family);
     if (t) return tripletToPalette(t, 'analogous');
   }
   return null;
 }
 
 // Complementary is a guaranteed 2-color fallback (no quality gate to fail).
-function generateComplementary(baseHue) {
-  const domH = baseOrRandom(baseHue);
-  const domS = rnd(SATURATION_RANGE[0], SATURATION_RANGE[1]);
-  const domV = rnd(LIGHTNESS_RANGE[0], LIGHTNESS_RANGE[1]);
+// Note: Bolt neutralized only the dominant here and left the complement fully
+// saturated, which contradicts its own triadic/analogous (all-neutral). We keep
+// the neutral consistent across every harmony instead.
+function generateComplementary(seed) {
+  const neutral = NEUTRAL_FAMILIES[seedFamily(seed)];
+  const domH = seedHue(seed);
+  const domS = neutral ? rnd(neutral.sat[0], neutral.sat[1]) : rnd(SATURATION_RANGE[0], SATURATION_RANGE[1]);
+  const domV = neutral ? rnd(neutral.light[0], neutral.light[1]) : rnd(LIGHTNESS_RANGE[0], LIGHTNESS_RANGE[1]);
   const secH = (domH + 180 + rndInt(-20, 20)) % 360;
-  const secS = rnd(SATURATION_RANGE[0], SATURATION_RANGE[1]);
-  const secV = domV > 50 ? rnd(30, 50) : rnd(60, 80);
+  const secS = neutral ? rnd(neutral.sat[0], neutral.sat[1]) : rnd(SATURATION_RANGE[0], SATURATION_RANGE[1]);
+  // Split the neutral's own band so the two wedges stay tellable apart; the
+  // chromatic path keeps its light/dark flip.
+  let secV;
+  if (neutral) {
+    const mid = (neutral.light[0] + neutral.light[1]) / 2;
+    secV = domV > mid ? rnd(neutral.light[0], mid) : rnd(mid, neutral.light[1]);
+  } else {
+    secV = domV > 50 ? rnd(30, 50) : rnd(60, 80);
+  }
   const primaryRatio = rndInt(50, 90);
   return {
     harmony: 'complementary',
@@ -272,20 +336,21 @@ function maybeSwapPrimaryAccent(palette) {
   return palette;
 }
 
-// Public entry: a harmonious palette, harmony chosen at random. An optional
-// baseHue (0-360) seeds the dominant hue from the character's physical coloring;
-// omit it for a fully random palette.
-function generatePalette(baseHue) {
-  const seeded = typeof baseHue === 'number';
+// Public entry: a harmonious palette, harmony chosen at random. `seed` describes
+// the character's coloring — { hue } or { family } — and may be omitted for a
+// fully random palette. Accepts a bare number as the old hue-only form.
+function generatePalette(seed) {
+  if (typeof seed === 'number') seed = { hue: seed };
+  const seeded = !!(seed && (typeof seed.hue === 'number' || NEUTRAL_FAMILIES[seed.family]));
   const harmonies = ['complementary', 'triadic', 'splitComplementary', 'analogous'];
   const pick = harmonies[rndInt(0, harmonies.length - 1)];
   let palette;
   switch (pick) {
-    case 'triadic': palette = generateTriadic(baseHue) || generateComplementary(baseHue); break;
-    case 'splitComplementary': palette = generateSplitComplementary(baseHue) || generateComplementary(baseHue); break;
-    case 'analogous': palette = generateAnalogous(baseHue) || generateComplementary(baseHue); break;
+    case 'triadic': palette = generateTriadic(seed) || generateComplementary(seed); break;
+    case 'splitComplementary': palette = generateSplitComplementary(seed) || generateComplementary(seed); break;
+    case 'analogous': palette = generateAnalogous(seed) || generateComplementary(seed); break;
     case 'complementary':
-    default: palette = generateComplementary(baseHue); break;
+    default: palette = generateComplementary(seed); break;
   }
   return seeded ? maybeSwapPrimaryAccent(palette) : palette;
 }

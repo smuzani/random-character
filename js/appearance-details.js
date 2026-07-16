@@ -23,20 +23,41 @@ const ADELICATE = 'a-delicate';
 const AGROOMED = 'a-groomed';
 const ASCRUFFY = 'a-scruffy';
 
+// Color-pinning tags, set by aspects rather than by the appearance roll. A trope
+// that names a color outright (a Fiery Redhead whose hair isn't red isn't the
+// trope) sets one of these; the matching rule's `forcedBy` then wins the layer.
+// Aspects that pin the same layer must exclude each other's tag — see the color
+// tropes in generator7.js's initAspects().
+const AHAIRRED = 'a-hair-red';
+const AHAIRBLOND = 'a-hair-blond';
+const AHAIRBLACK = 'a-hair-black';
+const AHAIRGRAY = 'a-hair-gray';
+const ASKINPALE = 'a-skin-pale';
+const AEYESBLUE = 'a-eyes-blue';
+const AEYESRED = 'a-eyes-red';
+
 // Skin/hair/eye/physique rules carry a short `value` (single source of truth)
 // so the portrait header can show Eyes / Hair / Skin / Build without re-deriving
 // them from the prose sentence.
 //
-// Color rules may also carry an optional `hue` (0-360). When a rolled feature
-// has a hue, rollAppearance() may pick it to seed the character's palette (see
-// pickBaseHue below). A rule with no `hue` contributes nothing to the palette —
-// which is how black/gray/dyed hair and mismatched eyes stay out of it: they
-// don't read as a single color, so they don't steer the palette. Skin tones are
-// deliberately left hue-less this pass; they cluster in a narrow low-chroma warm
-// band that makes for dull palette seeds. Revisit case by case.
+// Color rules may carry a palette seed, which rollAppearance() may pick to steer
+// the character's palette (see pickSeed below). Two kinds:
+//   `hue` (0-360)     a chromatic color: red hair drives a red palette
+//   `family`          an achromatic one: black hair drives a charcoal scheme
+//                     (a NEUTRAL_FAMILIES key in palette-details.js)
+// A rule with neither contributes nothing and leaves the palette random — that's
+// dyed hair (no fixed color) and mismatched eyes (not one color). Skin stays
+// seedless across the board: the tones cluster in a narrow low-chroma warm band
+// that makes for dull seeds, and letting every pale character drive an ivory
+// palette would wash out a good fraction of the cast. So Raven Hair, Ivory Skin
+// steers the palette through its *hair* pin, and its skin pin is header-only.
+//
+// A rule may also carry `forcedBy`: the tag an aspect sets to pin this color.
+// When that tag is present the rule skips the weighted roll entirely, and the
+// color it pins wins the palette seed (see pickSeed).
 function skinRules() {
   return [
-    { name: 'pale', value: 'Pale', weight: 3, texts: [`${p.She} has pale skin that burns before it tans.`] },
+    { name: 'pale', value: 'Pale', weight: 3, forcedBy: ASKINPALE, texts: [`${p.She} has pale skin that burns before it tans.`] },
     { name: 'fair', value: 'Fair', weight: 4, texts: [`${p.She} has fair, freckled skin.`, `${p.She} has a fair complexion.`] },
     { name: 'olive', value: 'Olive', weight: 4, texts: [`${p.She} has an olive complexion.`] },
     { name: 'tan', value: 'Tan', weight: 4, texts: [`${p.She} has tan, sun-weathered skin.`, `${p.She} has a warm bronze complexion.`] },
@@ -47,11 +68,11 @@ function skinRules() {
 
 function hairRules() {
   return [
-    { name: 'black', value: 'Black', weight: 5, texts: [`${p.His} hair is black.`, `${p.His} hair is so black it shines blue in the light.`] },
+    { name: 'black', value: 'Black', weight: 5, family: 'black', forcedBy: AHAIRBLACK, texts: [`${p.His} hair is black.`, `${p.His} hair is so black it shines blue in the light.`] },
     { name: 'brown', value: 'Brown', weight: 5, hue: 28, texts: [`${p.His} hair is brown.`, `${p.His} hair is a dark chestnut.`] },
-    { name: 'blond', value: 'Blond', weight: 3, hue: 45, texts: [`${p.His} hair is blond.`, `${p.His} hair is a pale straw color.`] },
-    { name: 'red', value: 'Red', weight: 2, hue: 15, texts: [`${p.His} hair is copper-red.`] },
-    { name: 'gray', value: 'Gray', weight: 2, texts: [`${p.His} hair is going gray at the temples.`, `${p.His} hair is fully silver, whatever ${p.his} age.`] },
+    { name: 'blond', value: 'Blond', weight: 3, hue: 45, forcedBy: AHAIRBLOND, texts: [`${p.His} hair is blond.`, `${p.His} hair is a pale straw color.`] },
+    { name: 'red', value: 'Red', weight: 2, hue: 15, forcedBy: AHAIRRED, texts: [`${p.His} hair is copper-red.`] },
+    { name: 'gray', value: 'Gray', weight: 2, family: 'gray', forcedBy: AHAIRGRAY, texts: [`${p.His} hair is going gray at the temples.`, `${p.His} hair is fully silver, whatever ${p.his} age.`] },
     { name: 'dyed', value: 'Dyed', weight: 1, texts: [`${p.His} hair is dyed a color found nowhere in nature.`] },
   ];
 }
@@ -61,8 +82,11 @@ function eyeRules() {
     { name: 'brown', value: 'Brown', weight: 6, hue: 30, texts: [`${p.His} eyes are brown.`, `${p.His} eyes are so dark the pupil disappears.`] },
     { name: 'hazel', value: 'Hazel', weight: 3, hue: 40, texts: [`${p.His} eyes are hazel, shifting color with the light.`] },
     { name: 'green', value: 'Green', weight: 2, hue: 120, texts: [`${p.His} eyes are green.`] },
-    { name: 'blue', value: 'Blue', weight: 3, hue: 210, texts: [`${p.His} eyes are blue.`, `${p.His} eyes are a washed-out gray-blue.`] },
+    { name: 'blue', value: 'Blue', weight: 3, hue: 210, forcedBy: AEYESBLUE, texts: [`${p.His} eyes are blue.`, `${p.His} eyes are a washed-out gray-blue.`] },
     { name: 'mismatched', value: 'Mismatched', weight: 1, texts: [`${p.His} eyes are two different colors, which people notice a moment too late to be polite about.`] },
+    // Red eyes only exist when a trope pins them: `requires` keeps them out of
+    // the ordinary roll, so nobody gets them by accident.
+    { name: 'red', value: 'Red', weight: 1, hue: 355, requires: [AEYESRED], forcedBy: AEYESRED, texts: [`${p.His} eyes are red, and people find reasons to look elsewhere.`] },
   ];
 }
 
@@ -95,20 +119,41 @@ function facialHairRules() {
   ];
 }
 
-// From the rolled color features that carry a hue, pick one at random to seed
-// the palette (or null if none rolled a hue this run — then the palette stays
-// fully random). This is what "tie a physical color into the palette" means:
-// the character's own eye/hair coloring becomes the palette's base hue.
-function pickBaseHue(rolled) {
-  const hued = rolled.filter(r => typeof r.hue === 'number');
-  if (!hued.length) return null;
-  return hued[roll(1, hued.length) - 1].hue;
+// A rule's palette seed, or null when it has none (dyed hair, mismatched eyes,
+// every skin tone). `hue` and `family` are mutually exclusive.
+function ruleSeed(rule) {
+  if (typeof rule.hue === 'number') return { hue: rule.hue };
+  if (rule.family) return { family: rule.family };
+  return null;
+}
+
+// A trope that names a color pins the matching rule, skipping the weighted roll.
+// Returns null when this layer isn't pinned. Rules without `forcedBy` are never
+// pinnable, so layers that no trope names behave exactly as before.
+function forcedRule(rules, tags) {
+  return rules.find(r => r.forcedBy && tags.has(r.forcedBy)) || null;
+}
+
+// From the rolled color features that carry a seed, pick one to steer the palette
+// (or null if none did this run — then the palette stays fully random). This is
+// what "tie a physical color into the palette" means: the character's own
+// coloring drives it. Black hair yields { family: 'black' }, red hair { hue: 15 }.
+//
+// A pinned color wins outright. Fiery Redhead named the red, so seeding off her
+// blue eyes instead would contradict the trope that just rolled. Unpinned colors
+// keep the random pick among themselves.
+function pickSeed(rolled) {
+  const seeded = rolled.filter(r => r.seed);
+  if (!seeded.length) return null;
+  const pinned = seeded.filter(r => r.pinned);
+  const pool = pinned.length ? pinned : seeded;
+  return pool[roll(1, pool.length) - 1].seed;
 }
 
 // Rolls the full appearance and returns:
-//   values:  { eyes, hair, skin, build }  — for the portrait header
-//   lines:   [sentence, ...]              — for the Appearance section
-//   baseHue: number | null                — seeds the palette (see pickBaseHue)
+//   values:  { eyes, hair, skin, build }        — for the portrait header
+//   lines:   [sentence, ...]                    — for the Appearance section
+//   seed:    { hue } | { family } | null        — steers the palette (see pickSeed)
 // Eye/hair/skin sentences are suppressed from `lines` (they already show in the
 // header); physique keeps its flavor sentence, and grooming + facial hair always
 // appear in the section.
@@ -126,14 +171,15 @@ function rollAppearance(charTags) {
     { rules: facialHairRules(), key: null, inSection: true },
   ];
   layers.forEach(function (layer) {
-    const r = rollRules(layer.rules, tags);
+    const forced = forcedRule(layer.rules, tags);
+    const r = forced || rollRules(layer.rules, tags);
     if (!r) return;
     (r.adds || []).forEach(t => tags.add(t));
     if (layer.key) values[layer.key] = r.value;
-    if (layer.color) colorRolls.push(r);
+    if (layer.color) colorRolls.push({ seed: ruleSeed(r), pinned: !!forced });
     if (layer.inSection) lines.push(randomArray(r.texts));
   });
-  return { values: values, lines: lines, baseHue: pickBaseHue(colorRolls) };
+  return { values: values, lines: lines, seed: pickSeed(colorRolls) };
 }
 
 // Back-compat: array of appearance sentences only (header suppression applied).

@@ -86,6 +86,8 @@ This prevents conflicts (e.g. a pacifist won't also be a sadist).
 | `js/tag-details.js` | Tag constants + `tagToDesc()`, `tagToPortrayal()`, `tagToAppearance()`, `tagToPowerBase()`, `tagToHiddenPersonality()`, `tagToWealth()` |
 | `js/plot-details.js` | Plot hook constants + `plotToDesc()`, `initPlots()` |
 | `js/want-details.js` | Want/motivation constants + `wantToDesc()`, `initWants()` |
+| `js/appearance-details.js` | Appearance rules engine: `rollRules()`, `rollAppearance()`, `pickSeed()`, `forcedRule()` + the `A*` internal/pin tags |
+| `js/palette-details.js` | Palette engine + portrait pie: `generatePalette(seed)`, `NEUTRAL_FAMILIES`, `palettePieSvg()`, vanilla color math |
 | `assets/names.js` | Name lists (`namesM`, `namesF`) from Moby Word List |
 | `js/plugins.js` | Browser console safety shim |
 | `css/main.css` | Custom styles (H5BP-based) |
@@ -150,6 +152,32 @@ In `generator7.js` → `initAspects()`:
 aspects.push(new Aspect("Trope Name", weight, "Description text",
   BPERSONALITY, [TAG1, TAG2], [ROLE_TAG], [EXCLUDE_TAG], [], []));
 ```
+
+Note: an Aspect's `"Description text"` is **never rendered** for personality aspects —
+only `c.teamType.text` (solo-team aspects) reaches the DOM. A personality trope
+reaches the reader purely through its tags, via the `tagTo*()` functions.
+
+### Adding a Color Trope
+Only for tropes that **name** a color (Fiery Redhead, Red Eyes Take Warning). There
+is deliberately no blanket tag→color table: most personality has no honest color.
+1. Pick an `A*` pin tag from `appearance-details.js` (`AHAIRRED`, `AEYESBLUE`, …)
+2. Ensure the target rule in `hairRules()`/`eyeRules()`/`skinRules()` carries
+   `forcedBy: THATTAG`. A color that should *only* exist when pinned also needs
+   `requires: [THATTAG]` (see the red eye rule).
+3. Add the tag to the Aspect's tags, and exclude every **other** pin tag for that
+   same layer, or two tropes can claim one layer (`forcedRule()` is first-match-wins).
+4. Gender-gate via `TFEMALE`/`TMALE` if the source trope is gendered — that makes it
+   inherit the "No gender stereotypes" checkbox automatically.
+
+### Palette seeds
+A color rule steers the palette via one of two mutually exclusive fields:
+- `hue: 0-360` — a chromatic color. Red hair (`hue: 15`) ⇒ a red harmony.
+- `family: 'black' | 'gray' | 'white'` — an achromatic one. A `NEUTRAL_FAMILIES` key
+  in `palette-details.js`; it drives the *whole* triplet desaturated into one
+  lightness band, so black hair ⇒ a charcoal scheme, not one black wedge.
+
+A rule with neither leaves the palette random (dyed hair, mismatched eyes, all skin
+tones). `pickSeed()` picks among the rolled seeds, pinned ones first.
 
 ### Adding a New Tag
 1. Define constant in `tag-details.js`: `const TNEWTAG = 'newtag';`

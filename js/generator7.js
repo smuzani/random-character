@@ -356,6 +356,41 @@ function initAspects() {
   //   BPERSONALITY, [TSTOIC, TWOOBIE, TDISTRESSED], [], [TSWEET, TWARM], [], []));
   aspects.push(new Aspect("True Neutral", 1, "Doesn't take sides whether for good or evil.",
     BPERSONALITY, [TNEUTRAL], [], [TEVIL, TGOOD], [], []));
+
+  // Color tropes: the only tropes that name a physical color outright. Each pins
+  // an appearance layer with an A* tag (see appearance-details.js), which also
+  // makes that color the palette seed — a Fiery Redhead gets a red palette.
+  // Tropes pinning the same layer exclude each other's tag so the color can't be
+  // claimed twice. Deliberately rare: most personality has no color, and reading
+  // temperament off hair is a trope, not a rule.
+  //
+  // The gendered ones carry TFEMALE/TMALE as their source material does, so they
+  // drop out entirely under "No gender stereotypes" along with every other
+  // gender-gated aspect.
+  aspects.push(new Aspect("Fiery Redhead", 2, "Red hair and a temper to match. The character is loud, quick to anger, and quicker to act. Nobody who has met them describes them as calm.",
+    BPERSONALITY, [TENERGETIC, TSHORTFUSE, THOTBLOODED, AHAIRRED], [TFEMALE],
+    [TSTOIC, TLONGFUSE, TLETHARGIC, TLAZY, AHAIRBLOND, AHAIRBLACK, AHAIRGRAY], [], []));
+  aspects.push(new Aspect("Dumb Blonde", 1, "Blonde, and treated as an idiot by everyone around them. The unkind assumption arrives before they do, and in this case it happens to be correct.",
+    BPERSONALITY, [TNAIVE, AHAIRBLOND], [TFEMALE],
+    [TSMART, TGENRESAVVY, TWISE, TTACTICIAN, AHAIRRED, AHAIRBLACK, AHAIRGRAY], [], []));
+  aspects.push(new Aspect("Raven Hair, Ivory Skin", 2, "Black hair against pale skin, a contrast striking enough that people remember the character's face before they remember anything they said.",
+    BPERSONALITY, [TATTRACTIVE, AHAIRBLACK, ASKINPALE], [TFEMALE],
+    [TUGLY, AHAIRRED, AHAIRBLOND, AHAIRGRAY], [], []));
+  aspects.push(new Aspect("Distinguished Gentleman's Gray", 2, "Gray at the temples, and it only made them more imposing. The character wears age as credentials.",
+    BPERSONALITY, [TCLASSY, TATTRACTIVE, AHAIRGRAY], [TMALE],
+    [TUGLY, AHAIRRED, AHAIRBLOND, AHAIRBLACK], [], []));
+  aspects.push(new Aspect("Hair of Gold, Heart of Gold", 2, "Fair-haired and genuinely kind with it. The character is the one who checks on people nobody else thought to check on.",
+    BPERSONALITY, [TSWEET, TGOOD, AHAIRBLOND], [],
+    [TMEAN, TEVIL, TRUTHLESS, TCOLD, AHAIRRED, AHAIRBLACK, AHAIRGRAY], [], []));
+  aspects.push(new Aspect("Icy Blue Eyes", 2, "Pale blue eyes that give away nothing. The character is distant and unreadable, and the stare does most of the work.",
+    BPERSONALITY, [TCOLD, TSTOIC, AEYESBLUE], [],
+    [TWARM, THOTBLOODED, TSWEET, TSHORTFUSE, AEYESRED], [], []));
+  aspects.push(new Aspect("Innocent Blue Eyes", 2, "Wide blue eyes that make the character look harmless, trustworthy, and younger than they are. People tell them things they shouldn't.",
+    BPERSONALITY, [TNAIVE, TSWEET, AEYESBLUE], [],
+    [TMEAN, TEVIL, TCYNICAL, TRUTHLESS, TCOLD, TSTOIC, AEYESRED], [], []));
+  aspects.push(new Aspect("Red Eyes, Take Warning", 1, "The character's eyes are red, and everyone reads it as a warning. They are not wrong to.",
+    BPERSONALITY, [TCREEPY, TDREADED, AEYESRED], [],
+    [TSWEET, TWARM, TLOVABLE, AEYESBLUE], [], []));
 }
 
 // Weighted at x5 kwicks, to set friendless default to 1, and x1.5 those with char reqs and no aspect reqs
@@ -715,15 +750,15 @@ function filterPersonalityFromRoot(personalities, root, c) {
 
 // Reveals the portrait card, renders the palette pie into the square, sets the
 // name and the Eyes/Hair/Skin/Build stats. Runs at every detail level.
-function renderPortraitHeader(values, baseHue) {
+function renderPortraitHeader(values, seed) {
   values = values || {};
   const name = (typeof p !== 'undefined' && p.Sdesc) ? p.Sdesc.toUpperCase() : 'NEW CHARACTER';
   $('#display-name').text(name);
 
   if (typeof generatePalette === 'function' && typeof palettePieSvg === 'function') {
-    // baseHue (from the character's physical coloring) seeds the palette when
-    // present; passing null/undefined yields a fully random palette.
-    const palette = (typeof baseHue === 'number') ? generatePalette(baseHue) : generatePalette();
+    // seed comes from the character's physical coloring — { hue } for a chromatic
+    // color, { family } for an achromatic one. Null yields a random palette.
+    const palette = generatePalette(seed || undefined);
     $('#portrait-square').html(palettePieSvg(palette, 96));
   }
 
@@ -741,12 +776,12 @@ function displayCharacter(c) {
   // Portrait header: always roll a palette + the 4 appearance values, at any
   // detail level. The full appearance roll (values + section lines) is stashed
   // on the character so the detail branch below reuses it instead of re-rolling.
-  let appearance = { values: {}, lines: [] };
+  let appearance = { values: {}, lines: [], seed: null };
   if (typeof rollAppearance === 'function') {
     appearance = rollAppearance(c.tags);
   }
   c.appearance = appearance;
-  renderPortraitHeader(appearance.values, appearance.baseHue);
+  renderPortraitHeader(appearance.values, appearance.seed);
 
   if (!showDetails) {
     let $listResults = $('#list-results');
