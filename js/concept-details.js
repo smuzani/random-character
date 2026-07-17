@@ -390,13 +390,17 @@ function generateConcept(tags) {
     }
   });
 
+  // Shared 4-char stem means the words are the same idea ("Idealistic
+  // Idealist", "Heroic Hero") — redraw the noun once, then live with it.
+  const sameStem = (a, b) => a.slice(0, 4) === b.slice(0, 4);
   const adj1 = randomArray(adjectives);
-  const noun = randomArray(nouns);
+  let noun = randomArray(nouns);
+  if (sameStem(adj1, noun)) noun = randomArray(nouns);
   let concept = adj1 + ' ' + noun;
   if (roll(1, 4) === 1) {
     const adj2 = randomArray(adjectives);
     const extended = adj1 + ' ' + adj2 + ' ' + noun;
-    if (adj2 !== adj1 && extended.length <= CONCEPT_MAX_LEN) concept = extended;
+    if (adj2 !== adj1 && !sameStem(adj2, noun) && extended.length <= CONCEPT_MAX_LEN) concept = extended;
   }
   return conceptTitleCase(concept);
 }
