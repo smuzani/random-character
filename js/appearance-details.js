@@ -110,12 +110,14 @@ function groomingRules() {
   ];
 }
 
+// Beard/mustache add a facial_hair_* tag so the concept generator can lean on
+// them ("Grizzled Marshal") — see conceptMap in concept-details.js.
 function facialHairRules() {
   return [
     { name: 'clean', weight: 4, requires: [TMALE], texts: [`${p.She} is clean-shaven.`] },
     { name: 'stubble', weight: 3, requires: [TMALE], excludes: [AGROOMED], texts: [`${p.She} wears a few days of stubble.`] },
-    { name: 'beard', weight: 3, requires: [TMALE], texts: [`${p.She} keeps a full beard.`] },
-    { name: 'mustache', weight: 1, requires: [TMALE], excludes: [ASCRUFFY], texts: [`${p.She} maintains a mustache with visible pride.`] },
+    { name: 'beard', weight: 3, requires: [TMALE], adds: ['facial_hair_beard'], texts: [`${p.She} keeps a full beard.`] },
+    { name: 'mustache', weight: 1, requires: [TMALE], excludes: [ASCRUFFY], adds: ['facial_hair_mustache'], texts: [`${p.She} maintains a mustache with visible pride.`] },
   ];
 }
 

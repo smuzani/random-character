@@ -507,3 +507,14 @@ input[type="text"]:focus, select:focus {
 .style-details ul {
   margin: 0;
 }
+
+/* Concept subtitle (V7.5): "Vengeful Assassin" under the name in the portrait
+   card. Italic serif against the uppercase name; quiet, like a book epigraph. */
+.sheet-concept {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--accent-secondary);
+  margin: -0.5rem 0 0.75rem;
+  letter-spacing: 0.02em;
+}

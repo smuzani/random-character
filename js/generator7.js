@@ -749,11 +749,13 @@ function filterPersonalityFromRoot(personalities, root, c) {
 }
 
 // Reveals the portrait card, renders the palette pie into the square, sets the
-// name and the Eyes/Hair/Skin/Build stats. Runs at every detail level.
-function renderPortraitHeader(values, seed) {
+// name, the concept subtitle, and the Eyes/Hair/Skin/Build stats. Runs at
+// every detail level.
+function renderPortraitHeader(values, seed, concept) {
   values = values || {};
   const name = (typeof p !== 'undefined' && p.Sdesc) ? p.Sdesc.toUpperCase() : 'NEW CHARACTER';
   $('#display-name').text(name);
+  $('#display-concept').text(concept || '').toggleClass('hidden', !concept);
 
   if (typeof generatePalette === 'function' && typeof palettePieSvg === 'function') {
     // seed comes from the character's physical coloring — { hue } for a chromatic
@@ -815,7 +817,14 @@ function displayCharacter(c) {
   if (clothing && typeof pickSeed === 'function') {
     seed = pickSeed((appearance.seedCandidates || []).concat(clothing.seedCandidates));
   }
-  renderPortraitHeader(appearance.values, seed);
+  // The concept reads the full end-of-roll tag set — personality + wants +
+  // plots + the appearance and clothing rolls' adds — so it goes last.
+  let concept = null;
+  if (typeof generateConcept === 'function') {
+    concept = generateConcept(clothing ? clothing.tags : (appearance.tags || c.tags));
+  }
+  c.concept = concept;
+  renderPortraitHeader(appearance.values, seed, concept);
   renderStyle(clothing);
 
   if (!showDetails) {
