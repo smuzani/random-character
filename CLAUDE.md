@@ -27,14 +27,14 @@ My crew would die for me. They're processes. They don't mind.
 
 ## Project Overview
 
-A procedural **random character generator** for writers, game designers, and storytellers. Generates personality-driven characters using weighted trope-based aspects, with support for wants, plot hooks, appearance, and team dynamics. Currently at **V7.4**.
+A procedural **random character generator** for writers, game designers, and storytellers. Generates personality-driven characters using weighted trope-based aspects, with support for wants, plot hooks, appearance, clothing, concepts, and team dynamics. Currently at **V7.5** (Tier 2 offline expansion complete).
 
 Live site: Static HTML/JS served directly (no build step, no framework).
 
 ## Tech Stack
 
 - **HTML5** — Static pages, no templating engine
-- **CSS** — Bootstrap 4 (bundled `css/bootstrap.min.css`) + custom `css/main.css`
+- **CSS** — Custom `css/main.css` only. (`css/bootstrap.min.css` and `js/vendor/bootstrap.bundle.min.js` sit in the repo but `index.html` does not load them — don't reach for Bootstrap widgets; the Style accordion is a native `<details>` for exactly this reason.)
 - **JavaScript** — Vanilla ES6, jQuery 3.3.1, Ramda.js (functional utils)
 - **Backend** — Currently none
 - **Analytics** — Google Analytics (UA-140909040-1)
@@ -87,6 +87,8 @@ This prevents conflicts (e.g. a pacifist won't also be a sadist).
 | `js/plot-details.js` | Plot hook constants + `plotToDesc()`, `initPlots()` |
 | `js/want-details.js` | Want/motivation constants + `wantToDesc()`, `initWants()` |
 | `js/appearance-details.js` | Appearance rules engine: `rollRules()`, `rollAppearance()`, `pickSeed()`, `forcedRule()` + the `A*` internal/pin tags |
+| `js/clothing-details.js` | Clothing system: `rollClothing()` — fashion → outfit → flair → accessory as four `rollRules()` layers; `F*` fashion tag constants; color flairs carry unpinned palette seeds |
+| `js/concept-details.js` | Concept generator: `generateConcept(tags)` — adj+noun subtitle under the name; `conceptMap` biases words 2× off the full end-of-roll tag set |
 | `js/palette-details.js` | Palette engine + portrait pie: `generatePalette(seed)`, `NEUTRAL_FAMILIES`, `palettePieSvg()`, vanilla color math |
 | `assets/names.js` | Name lists (`namesM`, `namesF`) from Moby Word List |
 | `js/plugins.js` | Browser console safety shim |
@@ -125,11 +127,13 @@ Display: Tags → mapped through tagToDesc(), tagToPortrayal(), tagToAppearance(
 
 ## Display Sections (Detail Mode)
 
-When `showDetails = true` (default), the output is categorized into:
+The portrait header (all detail levels) shows the palette pie, name, **concept
+subtitle** ("Vengeful Assassin"), and Eyes/Hair/Skin/Build. When `showDetails =
+true` (default), the output is categorized into:
 - **Personality** — Main traits list
 - **Want** — Character motivation paragraph
 - **Plot Hook** — Story situation paragraph
-- **Appearance** — Physical description bullets
+- **Appearance** — Physical description bullets, plus the collapsed **Style** `<details>` accordion (outfit name in the summary; fashion/flair/accessory prose inside)
 - **Portrayal** — Behavioral description bullets
 - **Strengths & Weaknesses** — Power base bullets
 - **Private Details** — Hidden personality bullets
@@ -178,6 +182,37 @@ A color rule steers the palette via one of two mutually exclusive fields:
 
 A rule with neither leaves the palette random (dyed hair, mismatched eyes, all skin
 tones). `pickSeed()` picks among the rolled seeds, pinned ones first.
+
+Clothing color flairs (Red Accents, White Coloring, …) carry the same `hue`/`family`
+fields but always join the pool **unpinned**: a trope-pinned hair color beats a
+jacket, but a flair can steer an otherwise unseeded palette. `displayCharacter()`
+pools `appearance.seedCandidates` with `clothing.seedCandidates` before `pickSeed()`.
+
+### The end-of-roll tag chain (order matters)
+
+`rollAppearance()` and `rollClothing()` each work on a *copy* of the tag set and
+return it augmented (`.tags`); they never mutate `c.tags`. The pipeline threads it:
+
+```
+c.tags → rollAppearance() → +facial_hair_*, A* adds
+       → rollClothing()   → +fashion_* adds
+       → generateConcept() — reads everything above, so it must roll last
+```
+
+### Adding a Clothing Entry
+
+In `clothing-details.js`, push a rule into the matching layer function. Outfits
+carry `value` (the display name shown in the Style accordion's `<summary>`) and
+`requires: [F*]` for their fashion style — keep at least one non-gendered outfit
+per style or the pool can empty under "No gender stereotypes". Flair/accessory
+"none" entries have empty `texts` and print nothing: absence stays silent. A
+flair that **names** a color carries `hue`/`family`; texture flair carries neither.
+
+### Adding a Concept Bias
+
+In `concept-details.js`, add to `conceptMap` keyed by the **tag constant**
+(`[TNEWTAG]: { adjectives: [...], nouns: [...] }`). Computed keys mean a typo'd
+constant fails at load instead of sitting silently dead — that's deliberate.
 
 ### Adding a New Tag
 1. Define constant in `tag-details.js`: `const TNEWTAG = 'newtag';`
