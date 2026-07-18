@@ -22,6 +22,11 @@ const ATOWERING = 'a-towering';
 const ADELICATE = 'a-delicate';
 const AGROOMED = 'a-groomed';
 const ASCRUFFY = 'a-scruffy';
+// V7.6: skin rolls first and dark tones set this; naturally-implausible hair
+// and eye colors carry `excludes: [ADARKSKIN]` so coloring stays coherent
+// without racial bucket presets. Dyed/unnatural colors stay open to everyone,
+// and a trope pin (forcedRule) still overrides — the trope named the color.
+const ADARKSKIN = 'a-skin-dark';
 
 // Color-pinning tags, set by aspects rather than by the appearance roll. A trope
 // that names a color outright (a Fiery Redhead whose hair isn't red isn't the
@@ -58,22 +63,40 @@ const AEYESRED = 'a-eyes-red';
 function skinRules() {
   return [
     { name: 'pale', value: 'Pale', weight: 3, forcedBy: ASKINPALE, texts: [`${p.She} has pale skin that burns before it tans.`] },
+    { name: 'porcelain', value: 'Porcelain', weight: 1, texts: [`${p.She} has smooth, porcelain-pale skin.`] },
+    { name: 'sickly', value: 'Sickly Pale', weight: 1, excludes: [TATTRACTIVE, TSEXY], texts: [`${p.She} is unhealthily pale, as if sunlight were a rumor.`] },
     { name: 'fair', value: 'Fair', weight: 4, texts: [`${p.She} has fair, freckled skin.`, `${p.She} has a fair complexion.`] },
+    { name: 'golden', value: 'Golden', weight: 2, texts: [`${p.She} has warm, golden-toned skin.`] },
     { name: 'olive', value: 'Olive', weight: 4, texts: [`${p.She} has an olive complexion.`] },
     { name: 'tan', value: 'Tan', weight: 4, texts: [`${p.She} has tan, sun-weathered skin.`, `${p.She} has a warm bronze complexion.`] },
-    { name: 'brown', value: 'Brown', weight: 4, texts: [`${p.She} has brown skin.`, `${p.She} has a deep copper complexion.`] },
-    { name: 'dark', value: 'Dark', weight: 3, texts: [`${p.She} has dark, cool-toned skin.`] },
+    { name: 'bronze', value: 'Bronze', weight: 2, texts: [`${p.She} has sun-kissed bronze skin.`] },
+    { name: 'brown', value: 'Brown', weight: 4, adds: [ADARKSKIN], texts: [`${p.She} has brown skin.`, `${p.She} has a deep copper complexion.`] },
+    { name: 'dark', value: 'Dark', weight: 3, adds: [ADARKSKIN], texts: [`${p.She} has dark, cool-toned skin.`] },
+    { name: 'ebony', value: 'Deep Ebony', weight: 2, adds: [ADARKSKIN], texts: [`${p.She} has deep ebony skin.`] },
   ];
 }
 
 function hairRules() {
+  // Dyed hair picks its color when the rules are built (hairRules() is called
+  // fresh per roll), so unnatural colors get real names and palette seeds
+  // without inflating the dyed slot's overall weight.
+  const dyed = randomArray([
+    { value: 'Electric Blue', hue: 220, text: `${p.His} hair is dyed an electric blue.` },
+    { value: 'Dyed Green', hue: 130, text: `${p.His} hair is dyed a deep green.` },
+    { value: 'Violet', hue: 275, text: `${p.His} hair is dyed violet.` },
+    { value: 'Pink', hue: 330, text: `${p.His} hair is dyed bubblegum pink.` },
+  ]);
   return [
     { name: 'black', value: 'Black', weight: 5, family: 'black', forcedBy: AHAIRBLACK, texts: [`${p.His} hair is black.`, `${p.His} hair is so black it shines blue in the light.`] },
     { name: 'brown', value: 'Brown', weight: 5, hue: 28, texts: [`${p.His} hair is brown.`, `${p.His} hair is a dark chestnut.`] },
-    { name: 'blond', value: 'Blond', weight: 3, hue: 45, forcedBy: AHAIRBLOND, texts: [`${p.His} hair is blond.`, `${p.His} hair is a pale straw color.`] },
-    { name: 'red', value: 'Red', weight: 2, hue: 15, forcedBy: AHAIRRED, texts: [`${p.His} hair is copper-red.`] },
+    { name: 'blond', value: 'Blond', weight: 3, hue: 45, forcedBy: AHAIRBLOND, excludes: [ADARKSKIN], texts: [`${p.His} hair is blond.`, `${p.His} hair is a pale straw color.`] },
+    { name: 'platinum', value: 'Platinum Blond', weight: 1, hue: 48, excludes: [ADARKSKIN], texts: [`${p.His} hair is platinum blond, nearly white in sunlight.`] },
+    { name: 'strawberry', value: 'Strawberry Blond', weight: 1, hue: 25, excludes: [ADARKSKIN], texts: [`${p.His} hair is strawberry blond.`] },
+    { name: 'red', value: 'Red', weight: 2, hue: 15, forcedBy: AHAIRRED, excludes: [ADARKSKIN], texts: [`${p.His} hair is copper-red.`] },
+    { name: 'auburn', value: 'Auburn', weight: 2, hue: 20, excludes: [ADARKSKIN], texts: [`${p.His} hair is auburn, red-brown like old brick.`] },
     { name: 'gray', value: 'Gray', weight: 2, family: 'gray', forcedBy: AHAIRGRAY, texts: [`${p.His} hair is going gray at the temples.`, `${p.His} hair is fully silver, whatever ${p.his} age.`] },
-    { name: 'dyed', value: 'Dyed', weight: 1, texts: [`${p.His} hair is dyed a color found nowhere in nature.`] },
+    { name: 'white', value: 'White', weight: 1, family: 'white', texts: [`${p.His} hair is fully white.`] },
+    { name: 'dyed', value: dyed.value, weight: 1, hue: dyed.hue, texts: [dyed.text] },
   ];
 }
 
@@ -81,8 +104,12 @@ function eyeRules() {
   return [
     { name: 'brown', value: 'Brown', weight: 6, hue: 30, texts: [`${p.His} eyes are brown.`, `${p.His} eyes are so dark the pupil disappears.`] },
     { name: 'hazel', value: 'Hazel', weight: 3, hue: 40, texts: [`${p.His} eyes are hazel, shifting color with the light.`] },
-    { name: 'green', value: 'Green', weight: 2, hue: 120, texts: [`${p.His} eyes are green.`] },
-    { name: 'blue', value: 'Blue', weight: 3, hue: 210, forcedBy: AEYESBLUE, texts: [`${p.His} eyes are blue.`, `${p.His} eyes are a washed-out gray-blue.`] },
+    { name: 'green', value: 'Green', weight: 2, hue: 120, excludes: [ADARKSKIN], texts: [`${p.His} eyes are green.`] },
+    { name: 'blue', value: 'Blue', weight: 3, hue: 210, forcedBy: AEYESBLUE, excludes: [ADARKSKIN], texts: [`${p.His} eyes are blue.`, `${p.His} eyes are a washed-out gray-blue.`] },
+    { name: 'gray', value: 'Gray', weight: 2, family: 'gray', texts: [`${p.His} eyes are a flat storm-gray.`] },
+    { name: 'amber', value: 'Amber', weight: 1, hue: 45, texts: [`${p.His} eyes are amber, almost gold in the right light.`] },
+    { name: 'violet', value: 'Violet', weight: 1, hue: 275, excludes: [ADARKSKIN], texts: [`${p.His} eyes are a startling violet.`] },
+    { name: 'black', value: 'Black', weight: 2, family: 'black', texts: [`${p.His} eyes are so dark they read as black.`] },
     { name: 'mismatched', value: 'Mismatched', weight: 1, texts: [`${p.His} eyes are two different colors, which people notice a moment too late to be polite about.`] },
     // Red eyes only exist when a trope pins them: `requires` keeps them out of
     // the ordinary roll, so nobody gets them by accident.
@@ -110,6 +137,25 @@ function groomingRules() {
   ];
 }
 
+// V7.6: hairstyle layer. Rolls after grooming so it can lean on AGROOMED /
+// ASCRUFFY; contributes a section line only (the header's Hair slot stays
+// color). Gendered cuts are gender-gated so "No gender stereotypes"
+// neutralizes them.
+function hairstyleRules() {
+  return [
+    { name: 'short', weight: 3, texts: [`${p.His} hair is cut short and practical.`] },
+    { name: 'buzz', weight: 2, excludes: [TCLASSY], texts: [`${p.His} hair is buzzed almost to the scalp.`] },
+    { name: 'slicked', weight: 1, excludes: [ASCRUFFY], texts: [`${p.His} hair is slicked back, never a strand loose.`] },
+    { name: 'long', weight: 3, texts: [`${p.His} hair falls past ${p.his} shoulders.`] },
+    { name: 'ponytail', weight: 3, texts: [`${p.His} hair is tied back in a ponytail.`] },
+    { name: 'bob', weight: 2, requires: [TFEMALE], texts: [`${p.His} hair is cut in a neat bob.`] },
+    { name: 'pixie', weight: 1, requires: [TFEMALE], texts: [`${p.She} wears a short pixie cut.`] },
+    { name: 'braids', weight: 2, texts: [`${p.His} hair is worked into braids.`] },
+    { name: 'wild', weight: 2, excludes: [AGROOMED, TCLASSY], texts: [`${p.His} hair is a wild, untamed mane.`] },
+    { name: 'bun', weight: 1, texts: [`${p.His} hair is twisted up into a bun, held by whatever was in reach.`] },
+  ];
+}
+
 // Beard/mustache add a facial_hair_* tag so the concept generator can lean on
 // them ("Grizzled Marshal") — see conceptMap in concept-details.js.
 function facialHairRules() {
@@ -117,7 +163,12 @@ function facialHairRules() {
     { name: 'clean', weight: 4, requires: [TMALE], texts: [`${p.She} is clean-shaven.`] },
     { name: 'stubble', weight: 3, requires: [TMALE], excludes: [AGROOMED], texts: [`${p.She} wears a few days of stubble.`] },
     { name: 'beard', weight: 3, requires: [TMALE], adds: ['facial_hair_beard'], texts: [`${p.She} keeps a full beard.`] },
+    { name: 'goatee', weight: 2, requires: [TMALE], adds: ['facial_hair_beard'], texts: [`${p.She} keeps a trimmed goatee.`] },
     { name: 'mustache', weight: 1, requires: [TMALE], excludes: [ASCRUFFY], adds: ['facial_hair_mustache'], texts: [`${p.She} maintains a mustache with visible pride.`] },
+    { name: 'pencil', weight: 1, requires: [TMALE, TCLASSY], adds: ['facial_hair_mustache'], texts: [`${p.She} wears a dapper pencil mustache.`] },
+    { name: 'chops', weight: 1, requires: [TMALE], excludes: [AGROOMED], adds: ['facial_hair_beard'], texts: [`${p.She} wears heavy mutton chops.`] },
+    { name: 'wizard', weight: 1, requires: [TMALE, TWISE], adds: ['facial_hair_beard'], texts: [`${p.His} beard is long enough to qualify as a life choice.`] },
+    { name: 'sorrow', weight: 1, requires: [TMALE, TANGST], adds: ['facial_hair_beard'], texts: [`${p.His} beard has grown unattended, a calendar of bad months.`] },
   ];
 }
 
@@ -175,6 +226,7 @@ function rollAppearance(charTags) {
     { rules: eyeRules(), key: 'eyes', inSection: false, color: true },
     { rules: physiqueRules(), key: 'build', inSection: true },
     { rules: groomingRules(), key: null, inSection: true },
+    { rules: hairstyleRules(), key: null, inSection: true },
     { rules: facialHairRules(), key: null, inSection: true },
   ];
   layers.forEach(function (layer) {
