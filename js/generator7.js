@@ -675,33 +675,22 @@ function loadTags() {
   return tags;
 }
 
+// One branch table for every consumer (the form reader below, the roll lab).
+const DETAIL_BRANCHES = {
+  "detail-sparse": [BWANT, BSINGLEPLOT, BPERSONALITY],
+  "detail-moderate": [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY],
+  "detail-high": [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY, BPERSONALITY],
+  "detail-very-high": [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY, BPERSONALITY, BPERSONALITY],
+};
+
+function branchesForDetail(detail) {
+  const branches = DETAIL_BRANCHES[detail] || DETAIL_BRANCHES["detail-moderate"];
+  return branches.slice();
+}
+
 function loadInitialBranches() {
-  let branches = [];
-
-  const DETAIL_SPARSE = "detail-sparse";
-  const DETAIL_MODERATE = "detail-moderate";
-  const DETAIL_HIGH = "detail-high";
-  const DETAIL_VHIGH = "detail-very-high";
-
   let detail = $('select#detail option:selected').attr("id");
-  switch (detail) {
-    case DETAIL_MODERATE:
-      branches = [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY];
-      break;
-    case DETAIL_HIGH:
-      branches = [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY, BPERSONALITY];
-      break;
-    case DETAIL_VHIGH:
-      branches = [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY, BPERSONALITY, BPERSONALITY];
-      break;
-    case DETAIL_SPARSE:
-      branches = [BWANT, BSINGLEPLOT, BPERSONALITY];
-      break;
-    default:
-      branches = [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY];
-  }
-
-  return branches;
+  return branchesForDetail(detail);
 }
 
 function getTeamSize() {
@@ -722,7 +711,6 @@ function generate(c) {
 }
 
 function generateCharacter(c) {
-  console.log('----------')
   let len = c.branches.length;
   while (len > 0) {
     let branch = c.branches[0];
@@ -901,7 +889,10 @@ function renderStyle(clothing) {
   $details.removeClass('hidden');
 }
 
-function displayCharacter(c) {
+// Completes a generated character into displayable data — appearance,
+// clothing, palette seed, concept — with no DOM access. The roll lab calls
+// this directly; displayCharacter is only the DOM half.
+function resolveCharacter(c) {
   // Portrait header: always roll a palette + the 4 appearance values, at any
   // detail level. The full appearance roll (values + section lines) is stashed
   // on the character so the detail branch below reuses it instead of re-rolling.
@@ -923,6 +914,7 @@ function displayCharacter(c) {
   if (clothing && typeof pickSeed === 'function') {
     seed = pickSeed((appearance.seedCandidates || []).concat(clothing.seedCandidates));
   }
+  c.paletteSeed = seed;
   // The concept reads the full end-of-roll tag set — personality + wants +
   // plots + the appearance and clothing rolls' adds — so it goes last.
   let concept = null;
@@ -930,8 +922,62 @@ function displayCharacter(c) {
     concept = generateConcept(clothing ? clothing.tags : (appearance.tags || c.tags));
   }
   c.concept = concept;
-  renderPortraitHeader(appearance.values, seed, concept);
-  renderStyle(clothing);
+  return c;
+}
+
+// Assembles every detail-mode section as data: arrays of
+// { text, src: { bank, tag, via } } where `via` names the aspect that put the
+// tag on the character. Provenance stays content-level (trope names, tag
+// constants) — never file/line — so it survives an engine rewrite.
+// displayCharacter renders from this; the roll lab exports it.
+function characterSections(c) {
+  // Map each tag back to the aspect that added it.
+  let owners = {};
+  c.aspects.forEach(function (a) {
+    a.tags.forEach(function (t) { owners[t] = a.name; });
+    a.branchRequirements.forEach(function (t) { owners[t] = a.name; });
+  });
+  if (c.teamType) {
+    c.teamType.tags.forEach(function (t) { owners[t] = c.teamType.name; });
+  }
+
+  let sections = {
+    appearance: [], portrayal: [], power: [],
+    personal: [], wealth: [], plot: [], want: []
+  };
+  const line = (bank, tag, text) =>
+    ({ text: text, src: { bank: bank, tag: tag || null, via: (tag && owners[tag]) || null } });
+
+  // Physique flavor, grooming, and facial hair from the appearance roll.
+  // Eye/hair/skin sentences are suppressed there since they show in the
+  // portrait header.
+  (c.appearance ? c.appearance.lines : []).forEach(function (text) {
+    sections.appearance.push(line('rollAppearance', null, text));
+  });
+
+  c.tags.forEach(function (t) {
+    let appearance = tagToAppearance(t);
+    if (appearance) sections.appearance.push(line('tagToAppearance', t, appearance));
+    let portrayal = tagToPortrayal(t);
+    if (portrayal) sections.portrayal.push(line('tagToPortrayal', t, portrayal));
+    let power = tagToPowerBase(t);
+    if (power) sections.power.push(line('tagToPowerBase', t, power));
+    let personal = tagToHiddenPersonality(t);
+    if (personal) sections.personal.push(line('tagToHiddenPersonality', t, personal));
+    let wealth = tagToWealth(t);
+    if (wealth) sections.wealth.push(line('tagToWealth', t, wealth));
+    let plot = plotToDesc(t);
+    if (plot) sections.plot.push(line('plotToDesc', t, plot));
+    let want = wantToDesc(t);
+    if (want) sections.want.push(line('wantToDesc', t, want));
+  });
+  return sections;
+}
+
+function displayCharacter(c) {
+  resolveCharacter(c);
+  renderPortraitHeader(c.appearance.values, c.paletteSeed, c.concept);
+  renderStyle(c.clothing);
 
   if (!showDetails) {
     let $listResults = $('#list-results');
@@ -997,61 +1043,20 @@ function displayCharacter(c) {
     $plotHeading.hide();
     $wantHeading.hide();
 
-    let appearanceText = $appearance.html();
-    let portrayalText = $portrayal.html();
-    let powerText = $power.html();
-    let personalText = $personal.html();
-    let backgroundText = $background.html();
-    let wealthText = $wealth.html();
-    let plotText = $plot.html();
-    let wantText = $want.html();
-    let tags = c.tags;
-    // Reuse the appearance already rolled at the top (header + section share one
-    // roll). Eye/hair/skin sentences are suppressed here since they show in the
-    // portrait header; physique flavor, grooming, and facial hair remain.
-    (c.appearance ? c.appearance.lines : []).forEach(function (line) {
-      appearanceText += '<li class="text-justify">' + line + '</li>';
-    });
-    tags.forEach(function (t) {
-      // console.log(t);
-      let appearance = tagToAppearance(t);
-      if (appearance) {
-        appearanceText += '<li class="text-justify">' + appearance + '</li>';
-      }
-      // console.log('appearance', appearance);
-      let portrayal = tagToPortrayal(t);
-      if (portrayal) {
-        portrayalText += '<li class="text-justify">' + portrayal + '</li>';
-      }
-      // console.log('portrayal', portrayal);
-      let power = tagToPowerBase(t);
-      if (power) {
-        powerText += '<li class="text-justify">' + power + '</li>';
-      }
-      // console.log('power', power);
-      let personal = tagToHiddenPersonality(t);
-      if (personal) {
-        personalText += '<li class="text-justify">' + personal + '</li>';
-      }
-      // console.log('personal', personal);
-      // let background = tagToBackground(t);
-      // if (background) {
-      //   backgroundText += '<li class="text-justify">' + background + '</li>';
-      // }
-      let wealth = tagToWealth(t);
-      if (wealth) {
-        wealthText += '<li class="text-justify">' + wealth + '</li>';
-      }
-      // console.log('wealth', wealth);
-      let plot = plotToDesc(t);
-      if (plot) {
-        plotText += plot;
-      }
-      let want = wantToDesc(t);
-      if (want) {
-        wantText += want;
-      }
-    });
+    // All section content comes pre-assembled from characterSections(); this
+    // branch only wraps it in markup.
+    const sections = characterSections(c);
+    const toList = (lines) => lines.map(function (l) {
+      return '<li class="text-justify">' + l.text + '</li>';
+    }).join('');
+    let appearanceText = toList(sections.appearance);
+    let portrayalText = toList(sections.portrayal);
+    let powerText = toList(sections.power);
+    let personalText = toList(sections.personal);
+    let backgroundText = '';
+    let wealthText = toList(sections.wealth);
+    let plotText = sections.plot.map(function (l) { return l.text; }).join('');
+    let wantText = sections.want.map(function (l) { return l.text; }).join('');
 
     if (appearanceText) {
       $appearanceHeading.removeClass('hidden').show();
