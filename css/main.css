@@ -478,3 +478,43 @@ input[type="text"]:focus, select:focus {
 
 
 
+
+/* Style accordion (V7.5 clothing system): lives at the bottom of the Physical
+   Attributes section. The summary carries the outfit name so the card shows the
+   headline fact collapsed; the marker is the only visual chrome it needs. */
+.style-details {
+  margin-top: 0.75rem;
+  border-top: 1px dashed var(--panel-border);
+  padding-top: 0.75rem;
+}
+
+.style-details summary {
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--accent-secondary);
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+.style-details summary:hover {
+  color: var(--accent-primary);
+}
+
+.style-details[open] summary {
+  margin-bottom: 0.5rem;
+}
+
+.style-details ul {
+  margin: 0;
+}
+
+/* Concept subtitle (V7.5): "Vengeful Assassin" under the name in the portrait
+   card. Italic serif against the uppercase name; quiet, like a book epigraph. */
+.sheet-concept {
+  font-family: var(--font-heading);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--accent-secondary);
+  margin: -0.5rem 0 0.75rem;
+  letter-spacing: 0.02em;
+}

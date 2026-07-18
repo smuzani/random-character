@@ -110,12 +110,14 @@ function groomingRules() {
   ];
 }
 
+// Beard/mustache add a facial_hair_* tag so the concept generator can lean on
+// them ("Grizzled Marshal") — see conceptMap in concept-details.js.
 function facialHairRules() {
   return [
     { name: 'clean', weight: 4, requires: [TMALE], texts: [`${p.She} is clean-shaven.`] },
     { name: 'stubble', weight: 3, requires: [TMALE], excludes: [AGROOMED], texts: [`${p.She} wears a few days of stubble.`] },
-    { name: 'beard', weight: 3, requires: [TMALE], texts: [`${p.She} keeps a full beard.`] },
-    { name: 'mustache', weight: 1, requires: [TMALE], excludes: [ASCRUFFY], texts: [`${p.She} maintains a mustache with visible pride.`] },
+    { name: 'beard', weight: 3, requires: [TMALE], adds: ['facial_hair_beard'], texts: [`${p.She} keeps a full beard.`] },
+    { name: 'mustache', weight: 1, requires: [TMALE], excludes: [ASCRUFFY], adds: ['facial_hair_mustache'], texts: [`${p.She} maintains a mustache with visible pride.`] },
   ];
 }
 
@@ -153,7 +155,12 @@ function pickSeed(rolled) {
 // Rolls the full appearance and returns:
 //   values:  { eyes, hair, skin, build }        — for the portrait header
 //   lines:   [sentence, ...]                    — for the Appearance section
-//   seed:    { hue } | { family } | null        — steers the palette (see pickSeed)
+//   seed:    { hue } | { family } | null        — the pick among appearance-only
+//            candidates (kept for callers that don't roll clothing)
+//   seedCandidates: [{ seed, pinned }, ...]     — raw candidates, so the caller
+//            can pool them with the clothing system's before running pickSeed()
+//   tags:    Set — charTags plus this roll's adds (a-groomed, facial_hair_*...),
+//            consumed by the clothing and concept systems downstream
 // Eye/hair/skin sentences are suppressed from `lines` (they already show in the
 // header); physique keeps its flavor sentence, and grooming + facial hair always
 // appear in the section.
@@ -179,7 +186,7 @@ function rollAppearance(charTags) {
     if (layer.color) colorRolls.push({ seed: ruleSeed(r), pinned: !!forced });
     if (layer.inSection) lines.push(randomArray(r.texts));
   });
-  return { values: values, lines: lines, seed: pickSeed(colorRolls) };
+  return { values: values, lines: lines, seed: pickSeed(colorRolls), seedCandidates: colorRolls, tags: tags };
 }
 
 // Back-compat: array of appearance sentences only (header suppression applied).

@@ -749,11 +749,13 @@ function filterPersonalityFromRoot(personalities, root, c) {
 }
 
 // Reveals the portrait card, renders the palette pie into the square, sets the
-// name and the Eyes/Hair/Skin/Build stats. Runs at every detail level.
-function renderPortraitHeader(values, seed) {
+// name, the concept subtitle, and the Eyes/Hair/Skin/Build stats. Runs at
+// every detail level.
+function renderPortraitHeader(values, seed, concept) {
   values = values || {};
   const name = (typeof p !== 'undefined' && p.Sdesc) ? p.Sdesc.toUpperCase() : 'NEW CHARACTER';
   $('#display-name').text(name);
+  $('#display-concept').text(concept || '').toggleClass('hidden', !concept);
 
   if (typeof generatePalette === 'function' && typeof palettePieSvg === 'function') {
     // seed comes from the character's physical coloring — { hue } for a chromatic
@@ -772,16 +774,58 @@ function renderPortraitHeader(values, seed) {
   $('#portrait-card').removeClass('hidden');
 }
 
+// Renders the wardrobe into the collapsed Style accordion at the bottom of the
+// Physical Attributes section. The outfit name rides in the <summary> so the
+// headline fact is on the card without opening it; fashion sense, flair, and
+// accessory prose tuck behind the click. Deliberately never touches the open/
+// closed state: it starts collapsed, and a reader who opens it keeps it open
+// across rerolls.
+function renderStyle(clothing) {
+  const $details = $('#style-details');
+  if (!clothing) {
+    $details.addClass('hidden');
+    return;
+  }
+  $('#style-summary-outfit').text(clothing.outfit || 'Unremarkable');
+  let styleText = '';
+  clothing.lines.forEach(function (line) {
+    styleText += '<li class="text-justify">' + line + '</li>';
+  });
+  $('#results-style').html(styleText);
+  $details.removeClass('hidden');
+}
+
 function displayCharacter(c) {
   // Portrait header: always roll a palette + the 4 appearance values, at any
   // detail level. The full appearance roll (values + section lines) is stashed
   // on the character so the detail branch below reuses it instead of re-rolling.
-  let appearance = { values: {}, lines: [], seed: null };
+  let appearance = { values: {}, lines: [], seed: null, seedCandidates: [], tags: c.tags };
   if (typeof rollAppearance === 'function') {
     appearance = rollAppearance(c.tags);
   }
   c.appearance = appearance;
-  renderPortraitHeader(appearance.values, appearance.seed);
+
+  // Clothing rolls off the appearance-augmented tag set. Its color flairs join
+  // the palette-seed pool unpinned, so a trope-pinned hair color still wins,
+  // but Red Accents can steer an otherwise unseeded palette.
+  let clothing = null;
+  if (typeof rollClothing === 'function') {
+    clothing = rollClothing(appearance.tags || c.tags);
+  }
+  c.clothing = clothing;
+  let seed = appearance.seed;
+  if (clothing && typeof pickSeed === 'function') {
+    seed = pickSeed((appearance.seedCandidates || []).concat(clothing.seedCandidates));
+  }
+  // The concept reads the full end-of-roll tag set — personality + wants +
+  // plots + the appearance and clothing rolls' adds — so it goes last.
+  let concept = null;
+  if (typeof generateConcept === 'function') {
+    concept = generateConcept(clothing ? clothing.tags : (appearance.tags || c.tags));
+  }
+  c.concept = concept;
+  renderPortraitHeader(appearance.values, seed, concept);
+  renderStyle(clothing);
 
   if (!showDetails) {
     let $listResults = $('#list-results');
