@@ -1,0 +1,503 @@
+<title>RCG Roll Lab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root {
+    --paper: #FBF9F4;
+    --ink: #1C1B18;
+    --muted: #8A8578;
+    --rule: #E3DFD4;
+    --brass: #A8814A;
+    --brass-ink: #7A5C30;
+    --chrome: #F1EEE6;
+    --card-shadow: 0 1px 3px rgba(28, 27, 24, 0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #211F1B;
+      --ink: #E8E4DA;
+      --muted: #948E7F;
+      --rule: #3A372F;
+      --brass: #C29A5E;
+      --brass-ink: #D8B27C;
+      --chrome: #171613;
+      --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #FBF9F4; --ink: #1C1B18; --muted: #8A8578; --rule: #E3DFD4;
+    --brass: #A8814A; --brass-ink: #7A5C30; --chrome: #F1EEE6;
+    --card-shadow: 0 1px 3px rgba(28, 27, 24, 0.08);
+  }
+  :root[data-theme="dark"] {
+    --paper: #211F1B; --ink: #E8E4DA; --muted: #948E7F; --rule: #3A372F;
+    --brass: #C29A5E; --brass-ink: #D8B27C; --chrome: #171613;
+    --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  }
+
+  html { background: var(--chrome); }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: var(--ink);
+    background: var(--chrome);
+  }
+  .wrap {
+    max-width: 42rem;
+    margin: 0 auto;
+    padding: 0.75rem 1rem 7.5rem;
+  }
+
+  /* ---- chrome ---- */
+  .controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0.25rem 0 0.75rem;
+  }
+  .controls label {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .controls select {
+    font: inherit;
+    font-size: 0.85rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 0.3rem 0.4rem;
+  }
+  .controls .spacer { flex: 1; }
+  .lab-title {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--muted);
+    align-self: flex-end;
+    padding-bottom: 0.45rem;
+  }
+
+  /* ---- sheet ---- */
+  .sheet {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    box-shadow: var(--card-shadow);
+    padding: 1.5rem 1.4rem 1.75rem;
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    line-height: 1.55;
+  }
+  .portrait {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .portrait .pie { flex: 0 0 auto; }
+  .portrait .pie svg { display: block; border-radius: 4px; }
+  .char-name {
+    margin: 0;
+    font-size: 1.55rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  .concept {
+    margin: 0.1rem 0 0.6rem;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--muted);
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.25rem 1.25rem;
+    font-size: 0.9rem;
+  }
+  .stats .k {
+    font-family: system-ui, sans-serif;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    display: block;
+  }
+  .section { margin-top: 1.4rem; }
+  .section h2 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 0.5rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section ul { margin: 0; padding-left: 1.1rem; }
+  .section li { margin-bottom: 0.35rem; }
+  .section p { margin: 0; }
+  .style-line { color: var(--muted); font-size: 0.92rem; margin-top: 0.9rem; }
+  .src {
+    display: none;
+    font-family: ui-monospace, monospace;
+    font-size: 0.62rem;
+    color: var(--brass-ink);
+    padding-left: 0.4rem;
+    word-break: break-all;
+  }
+  .show-src .src { display: inline; }
+  .seed-line {
+    margin-top: 1.5rem;
+    font-family: ui-monospace, monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .seed-line button {
+    font: inherit;
+    color: var(--muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+  }
+
+  /* ---- bottom bar ---- */
+  .bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: var(--chrome);
+    border-top: 1px solid var(--rule);
+    padding: 0.6rem 1rem calc(0.6rem + env(safe-area-inset-bottom));
+  }
+  .bar-inner {
+    max-width: 42rem;
+    margin: 0 auto;
+    display: flex;
+    gap: 0.6rem;
+    align-items: stretch;
+  }
+  .roll-btn {
+    flex: 1;
+    font-family: system-ui, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    border: none;
+    border-radius: 5px;
+    padding: 0.85rem;
+    cursor: pointer;
+  }
+  .roll-btn:active { transform: translateY(1px); }
+  .flag-btn, .drawer-btn {
+    font-family: system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--paper);
+    color: var(--ink);
+    border: 1px solid var(--rule);
+    border-radius: 5px;
+    padding: 0 0.9rem;
+    cursor: pointer;
+  }
+  .flag-btn.flagged { color: var(--brass-ink); border-color: var(--brass); }
+  .drawer-btn .count { color: var(--brass-ink); }
+
+  /* ---- drawer ---- */
+  .drawer {
+    display: none;
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    margin-top: 0.75rem;
+    padding: 1rem 1.1rem;
+  }
+  .drawer.open { display: block; }
+  .drawer h2 {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin: 0 0 0.6rem;
+  }
+  .drawer ul { list-style: none; margin: 0; padding: 0; }
+  .drawer li {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.85rem;
+  }
+  .drawer li:last-child { border-bottom: none; }
+  .drawer .note-input {
+    font: inherit;
+    font-size: 0.8rem;
+    width: 100%;
+    margin-top: 0.2rem;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    background: var(--chrome);
+    color: var(--ink);
+    padding: 0.25rem 0.4rem;
+  }
+  .drawer .rm {
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font-size: 0.75rem; padding: 0;
+    text-decoration: underline;
+    flex: 0 0 auto;
+  }
+  .drawer-actions { display: flex; gap: 0.6rem; margin-top: 0.8rem; }
+  .drawer-actions button {
+    font: inherit; font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    background: var(--chrome); color: var(--ink);
+    border: 1px solid var(--rule); border-radius: 4px;
+    padding: 0.4rem 0.8rem; cursor: pointer;
+  }
+  .toast {
+    position: fixed;
+    bottom: 5.5rem; left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink); color: var(--paper);
+    font-family: system-ui, sans-serif;
+    font-size: 0.75rem;
+    padding: 0.45rem 0.9rem;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .toast { transition: none; }
+    .roll-btn:active { transform: none; }
+  }
+  :focus-visible { outline: 2px solid var(--brass); outline-offset: 2px; }
+</style>
+
+<div class="wrap">
+  <div class="controls">
+    <span class="lab-title">RCG Roll Lab</span>
+    <span class="spacer"></span>
+    <label>Role
+      <select id="role">
+        <option value="any">Any</option>
+        <option value="hero">Heroic</option>
+        <option value="villain">Villainous</option>
+        <option value="support">Support</option>
+      </select>
+    </label>
+    <label>Detail
+      <select id="detail">
+        <option value="sparse">Sparse</option>
+        <option value="moderate">Moderate</option>
+        <option value="high" selected>High</option>
+        <option value="very-high">Very high</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="sheet" id="sheet"></div>
+  <div class="drawer" id="drawer"></div>
+</div>
+
+<div class="bar">
+  <div class="bar-inner">
+    <button class="drawer-btn" id="drawerBtn">Flags <span class="count" id="flagCount">0</span></button>
+    <button class="roll-btn" id="rollBtn">Roll</button>
+    <button class="flag-btn" id="flagBtn">&#9873; Flag</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/*__ENGINE__*/
+
+/* ---------- lab page ---------- */
+(function () {
+  "use strict";
+
+  initAspects(); initTeams(); initPlots(); initWants();
+
+  const LS_KEY = 'rcg-lab-flags-v1';
+  let current = null;
+  let flags = [];
+  try { flags = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch (e) { flags = []; }
+
+  const $id = (x) => document.getElementById(x);
+  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  function newSeed() {
+    return (Date.now() % 2147483647) ^ Math.floor(Math.random() * 0xffff);
+  }
+
+  function srcMark(l) {
+    const s = l.src || {};
+    let m = s.bank || '';
+    if (s.tag) m += ':' + s.tag;
+    if (s.via) m += ' \u2190 ' + s.via;
+    return m;
+  }
+
+  function renderSheet(data) {
+    const st = data.stats || {};
+    let html = '<div class="portrait">';
+    if (typeof generatePalette === 'function' && typeof palettePieSvg === 'function') {
+      html += '<div class="pie">' + palettePieSvg(generatePalette(data.paletteSeed || undefined), 84) + '</div>';
+    }
+    html += '<div><h1 class="char-name">' + esc(data.name) + '</h1>';
+    if (data.concept) html += '<p class="concept">' + esc(data.concept) + '</p>';
+    html += '<div class="stats">' +
+      '<span><span class="k">Eyes</span>' + esc(st.eyes || '\u2014') + '</span>' +
+      '<span><span class="k">Hair</span>' + esc(st.hair || '\u2014') + '</span>' +
+      '<span><span class="k">Skin</span>' + esc(st.skin || '\u2014') + '</span>' +
+      '<span><span class="k">Build</span>' + esc(st.build || '\u2014') + '</span>' +
+      '</div></div></div>';
+
+    LAB_SECTION_ORDER.forEach(function (def) {
+      const key = def[0], title = def[1], mode = def[2];
+      const lines = data.sections[key] || [];
+      if (!lines.length) return;
+      html += '<div class="section"><h2>' + esc(title) + '</h2>';
+      if (mode === 'para') {
+        html += lines.map(l => '<p>' + esc(l.text) +
+          '<span class="src">' + esc(srcMark(l)) + '</span></p>').join('');
+      } else {
+        html += '<ul>' + lines.map(l => '<li>' + esc(l.text) +
+          '<span class="src">' + esc(srcMark(l)) + '</span></li>').join('') + '</ul>';
+      }
+      html += '</div>';
+    });
+
+    if (data.outfit) {
+      html += '<p class="style-line">Style \u2014 ' + esc(data.outfit);
+      if (data.styleLines.length) html += '. ' + data.styleLines.map(esc).join(' ');
+      html += '</p>';
+    }
+
+    html += '<div class="seed-line"><span>seed ' + data.seed + ' \u00b7 ' +
+      esc(data.opts.role) + '/' + esc(data.opts.detail) + '</span>' +
+      '<button id="srcToggle" type="button">sources</button></div>';
+
+    $id('sheet').innerHTML = html;
+    $id('srcToggle').addEventListener('click', function () {
+      $id('sheet').classList.toggle('show-src');
+    });
+  }
+
+  function isFlagged(seed) {
+    return flags.some(f => f.data.seed === seed);
+  }
+
+  function refreshBar() {
+    $id('flagCount').textContent = flags.length;
+    const b = $id('flagBtn');
+    const on = current && isFlagged(current.seed);
+    b.classList.toggle('flagged', !!on);
+    b.innerHTML = on ? '\u2691 Flagged' : '\u2690 Flag';
+  }
+
+  function saveFlags() {
+    localStorage.setItem(LS_KEY, JSON.stringify(flags));
+    refreshBar();
+    renderDrawer();
+  }
+
+  function roll() {
+    const opts = {
+      seed: newSeed(),
+      role: $id('role').value,
+      gender: 'any',
+      detail: $id('detail').value
+    };
+    current = buildCharacter(opts);
+    renderSheet(current);
+    refreshBar();
+  }
+
+  function toggleFlag() {
+    if (!current) return;
+    const i = flags.findIndex(f => f.data.seed === current.seed);
+    if (i >= 0) { flags.splice(i, 1); toast('Flag removed'); }
+    else {
+      flags.push({ at: new Date().toISOString(), note: '', data: current });
+      toast('Flagged \u2014 note it in the drawer if you like');
+    }
+    saveFlags();
+  }
+
+  function renderDrawer() {
+    const d = $id('drawer');
+    if (!flags.length) {
+      d.innerHTML = '<h2>Flags</h2><p style="font-size:0.85rem;color:var(--muted)">Nothing flagged yet. Roll until something looks weird, then hit Flag.</p>';
+      return;
+    }
+    let html = '<h2>Flags (' + flags.length + ')</h2><ul>';
+    flags.forEach(function (f, i) {
+      html += '<li><div style="flex:1"><strong>' + esc(f.data.name) + '</strong>' +
+        ' <span style="color:var(--muted)">\u2014 ' + esc(f.data.concept || '') +
+        ' \u00b7 seed ' + f.data.seed + '</span>' +
+        '<input class="note-input" data-i="' + i + '" placeholder="what looked off?" value="' + esc(f.note) + '">' +
+        '</div><button class="rm" data-rm="' + i + '">remove</button></li>';
+    });
+    html += '</ul><div class="drawer-actions">' +
+      '<button id="copyBtn">Copy JSON</button>' +
+      '<button id="clearBtn">Clear all</button></div>';
+    d.innerHTML = html;
+
+    d.querySelectorAll('.note-input').forEach(function (inp) {
+      inp.addEventListener('change', function () {
+        flags[+inp.dataset.i].note = inp.value;
+        localStorage.setItem(LS_KEY, JSON.stringify(flags));
+      });
+    });
+    d.querySelectorAll('.rm').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        flags.splice(+btn.dataset.rm, 1);
+        saveFlags();
+      });
+    });
+    d.querySelector('#copyBtn').addEventListener('click', function () {
+      navigator.clipboard.writeText(JSON.stringify(flags, null, 2)).then(
+        () => toast('Copied ' + flags.length + ' flag' + (flags.length === 1 ? '' : 's')),
+        () => toast('Copy failed \u2014 select manually'));
+    });
+    d.querySelector('#clearBtn').addEventListener('click', function () {
+      if (confirm('Clear all ' + flags.length + ' flags?')) { flags = []; saveFlags(); }
+    });
+  }
+
+  let toastTimer = null;
+  function toast(msg) {
+    const t = $id('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 1800);
+  }
+
+  $id('rollBtn').addEventListener('click', roll);
+  $id('flagBtn').addEventListener('click', toggleFlag);
+  $id('drawerBtn').addEventListener('click', function () {
+    $id('drawer').classList.toggle('open');
+    renderDrawer();
+  });
+
+  renderDrawer();
+  roll();
+})();
+</script>
