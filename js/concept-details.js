@@ -47,7 +47,14 @@ const conceptAdjectives = [
   'supernatural', 'synthetic', 'tattooed',
   'tentacled', 'timeless', 'tired', 'tireless', 'towering', 'toxic', 'tragic',
   'unhinged', 'unstoppable', 'uptight',
-  'vengeful', 'weary', 'weaponized', 'whimsical', 'witty'
+  'vengeful', 'weary', 'weaponized', 'whimsical', 'witty',
+  // V7.6 expansion
+  'borrowed', 'bulletproof', 'clockwork', 'counterfeit', 'crooked',
+  'exiled', 'feverish', 'forgotten', 'freelance', 'gilded', 'haunted',
+  'hollow', 'humming', 'immortal', 'iron', 'laughing', 'midnight',
+  'nervous', 'penitent', 'ragged', 'reluctant', 'restless', 'retired',
+  'rusted', 'sleepless', 'starving', 'thundering', 'unlicensed', 'velvet',
+  'wandering', 'wounded'
 ];
 
 const conceptNouns = [
@@ -67,19 +74,32 @@ const conceptNouns = [
   'seer', 'shadow', 'singer', 'spy',
   'survivor', 'thief', 'underdog', 'underlord', 'usurper', 'vampire', 'voyager', 'wanderer',
   'wannabe', 'warlock', 'warrior', 'weapon', 'whisperer', 'wizard',
-  'writer', 'zombie'
+  'writer', 'zombie',
+  // V7.6 expansion — dilutes the pool so no single noun dominates
+  'alchemist', 'apothecary', 'arsonist', 'bard', 'blacksmith', 'butcher',
+  'cartographer', 'chaplain', 'conscript', 'courier', 'deserter', 'diplomat',
+  'drifter', 'duelist', 'envoy', 'falconer', 'gambler', 'gladiator',
+  'gravedigger', 'gunslinger', 'hermit', 'innkeeper', 'jailer', 'jester',
+  'librarian', 'lockpick', 'mapmaker', 'mercenary', 'monk', 'mystic',
+  'nomad', 'outlaw', 'physician', 'pirate', 'preacher', 'quartermaster',
+  'ringleader', 'saboteur', 'scavenger', 'sellsword', 'smuggler', 'stowaway',
+  'surgeon', 'swindler', 'tinkerer', 'tyrant', 'undertaker', 'vagabond',
+  'warden', 'wrestler', 'zealot'
 ];
 
 // Only mixed in when the character actually carries the gender tag, so the
 // "No gender stereotypes" checkbox suppresses these automatically.
+// V7.6: trimmed to words that carry actual character flavor. Plain gender
+// nouns (prince, boy, dad, princess...) restated what the name and pronouns
+// already say, and at ~14% of every gendered draw they dominated subtitles.
 const conceptGenderWords = {
   male: {
     adjectives: ['boyish'],
-    nouns: ['boy', 'dad', 'husband', 'himbo', 'king', 'kingpin', 'patriarch', 'prince', 'stallion', 'gentleman', 'strongman', 'casanova', 'hero', 'madman', 'snowman', 'sorcerer']
+    nouns: ['himbo', 'kingpin', 'patriarch', 'casanova', 'madman', 'sorcerer']
   },
   female: {
     adjectives: ['maternal'],
-    nouns: ['huntress', 'daughter', 'matron', 'princess', 'diva', 'witch', 'songbird', 'snowwoman', 'sorceress']
+    nouns: ['huntress', 'diva', 'witch', 'songbird', 'sorceress']
   }
 };
 
@@ -252,6 +272,42 @@ const conceptMap = {
   [TDISTRESSED]: { adjectives: ['distressed', 'distraught'] },
   [TCREEPY]: { adjectives: ['creepy'], nouns: ['stalker'] },
   [TATTENTION]: { adjectives: ['dramatic'], nouns: ['diva'] },
+
+  // V7.6 Overdosed Tropes expansion
+  [TENFORCER]: { adjectives: ['loyal', 'deadly'], nouns: ['enforcer', 'dragon'] },
+  [TSTANDARDS]: { adjectives: ['principled'] },
+  [THIDDENDEPTHS]: { adjectives: ['surprising', 'unexpected'] },
+  [TVINDICTIVE]: { adjectives: ['vindictive', 'spiteful'], nouns: ['avenger'] },
+  [TMADSCIENCE]: { adjectives: ['unhinged', 'experimental'], nouns: ['scientist', 'inventor'] },
+  [TNOLINES]: { adjectives: ['remorseless', 'monstrous'], nouns: ['monster'] },
+  [THYPOCRITE]: { adjectives: ['hypocritical', 'two-faced'], nouns: ['hypocrite'] },
+  [TBADBOSS]: { adjectives: ['tyrannical'], nouns: ['taskmaster', 'tyrant'] },
+  [TFREUDIANEXCUSE]: { adjectives: ['wounded', 'broken'] },
+  [TREASONABLE]: { adjectives: ['sensible', 'fair'], nouns: ['arbiter'] },
+  [TOBLIVIOUS]: { adjectives: ['oblivious', 'clueless'] },
+  [TUNRAVELING]: { adjectives: ['unraveling', 'fraying'] },
+  [TMOLE]: { adjectives: ['undercover', 'two-faced'], nouns: ['mole', 'infiltrator', 'spy'] },
+  [TATONER]: { adjectives: ['penitent', 'repentant'], nouns: ['atoner'] },
+  [TWORTHYFOE]: { adjectives: ['honorable', 'chivalrous'], nouns: ['duelist'] },
+  [TTRANQUILFURY]: { adjectives: ['quiet', 'simmering'] },
+  [TSERIALKILLER]: { adjectives: ['murderous'], nouns: ['killer', 'butcher'] },
+  [TFAVORITEFOOD]: { adjectives: ['hungry'], nouns: ['gourmand'] },
+  [TMATCHMAKER]: { adjectives: ['meddling'], nouns: ['matchmaker', 'cupid'] },
+  [TOLDERTHANLOOKS]: { adjectives: ['ageless', 'timeless'] },
+  [TBIGGOOD]: { adjectives: ['legendary'], nouns: ['paragon', 'beacon'] },
+  [TRIVAL]: { adjectives: ['competitive'], nouns: ['rival', 'challenger'] },
+  [TPREPARED]: { adjectives: ['prepared', 'meticulous'], nouns: ['planner'] },
+  [TBLUNT]: { adjectives: ['blunt', 'unfiltered'] },
+  [TDARKNOTEVIL]: { adjectives: ['shadowy', 'gentle'], nouns: ['guardian'] },
+  [TMANCHILD]: { adjectives: ['childish', 'overgrown'], nouns: ['manchild'] },
+  [TSTEPFORD]: { adjectives: ['smiling', 'brittle'] },
+  [TALCOHOLIC]: { adjectives: ['drunken', 'sodden'], nouns: ['drunkard'] },
+  [TCHOSENONE]: { adjectives: ['chosen', 'destined'], nouns: ['chosen one'] },
+  [TPETTY]: { adjectives: ['petty', 'spiteful'] },
+  [TMARRIED]: { adjectives: ['devoted'], nouns: ['newlywed'] },
+  [TSKEWEDPRIORITIES]: { adjectives: ['distractible'] },
+  [TSELFDEPRECATING]: { adjectives: ['self-mocking'] },
+  [TCATCHPHRASE]: { adjectives: ['quotable'] },
 
   // Wants
   [WWANTBURN]: { adjectives: ['vengeful', 'wrathful', 'furious'], nouns: ['avenger', 'nemesis', 'destroyer', 'fury'] },
