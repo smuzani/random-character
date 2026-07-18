@@ -869,8 +869,10 @@ function tagToAppearance(tag) {
         `${p.She} has acne and a high-pitched laugh.`,
         `${p.She} is fat and wears thick glasses.`]);
     case TCREEPY:
-      return randomArray([`${p.She} has disheveled long hair, wears frumpy dark clothing.`,
-        `${p.She} appears sleep deprived, is pale, and looks unkempt.`]);
+      // Mood only — hair, skin, and clothing belong to the appearance and
+      // clothing layers now, and the old lines contradicted them.
+      return randomArray([`Strangers give ${p.him} space without quite knowing why.`,
+        `Something in ${p.his} stillness makes people glance at the exits.`]);
     case TOLDERTHANLOOKS:
       return randomArray([`${p.She} looks a decade or more younger than ${p.she} actually is.`,
         `${p.His} face and ${p.his} birthday disagree, and strangers guess wrong every time.`]);
@@ -944,7 +946,7 @@ function tagToPowerBase(tag) {
         `${p.Sdesc} can't afford many of the things ${p.she} needs.`]);
     case TBOSS:
       return randomArray([`${p.She} is the most skilled member of ${p.his} team, by a far margin.`,
-        `${p.She} is a master of ${p.his} field.`]);
+        `The people who taught ${p.him} now quote ${p.him}.`]);
     case TLOVED:
       return randomArray([`Someone out there loves ${p.sdesc} deeply.`,
         `${p.Sdesc} is loved by someone.`]);
@@ -1040,7 +1042,7 @@ function tagToPowerBase(tag) {
       return randomArray([`Whatever the situation calls for, ${p.she} already has it stashed somewhere.`,
         `${p.His} contingency plans have contingency plans.`]);
     case TCHOSENONE:
-      return randomArray([`Destiny bends events in ${p.his} favor at the strangest moments.`,
+      return randomArray([`Coincidence sides with ${p.him} often enough to feel deliberate.`,
         `Whatever marked ${p.him} as chosen came with power to match the burden.`]);
     case TENFORCER:
       return randomArray([`${p.She} is the most dangerous piece on ${p.his} boss's board.`,
@@ -1157,7 +1159,7 @@ function tagToHiddenPersonality(tag) {
       return randomArray([`${p.She} is a nasty person deep down inside.`,
         `${p.Sdesc} does deeds that violates ${p.his} moral values every now and then.`]);
     case TSHORTFUSE:
-      return randomArray([`Little things make ${p.him} blow up with anger.`,
+      return randomArray([`${p.His} friends keep a list of safe topics, and it keeps getting shorter.`,
         `${p.She} is easily triggered.`]);
     case TLONGFUSE:
       return randomArray([`It takes a lot to make ${p.sdesc} angry.`,
@@ -1198,7 +1200,7 @@ function tagToHiddenPersonality(tag) {
       return randomArray([`${p.She} is carrying the burden of taking care of a relative, where other family members pass the ball.`,
         `${p.She} is the sole caretaker of a sick relative.`]);
     case TWOOBIE:
-      return randomArray([`${p.Sdesc} is burdened by the weight of ${p.his} problems.`,
+      return randomArray([`Bad news has stopped surprising ${p.him}.`,
         `${p.She} has a sad story, that makes the audience feel sorry for ${p.him}.`]);
     case TDERE:
       return randomArray([`${p.She} is secretly sweet, kind, and generous to people who are close to ${p.him}.`,
@@ -1297,7 +1299,7 @@ function tagToWealth(tag) {
       return randomArray([`${p.She} has a minimalist, but comfortable home.`,
         `${p.She} lives with very little, only a single pair of clothes, and a small room.`]);
     case TBOSS:
-      return randomArray([`${p.She} owns all the most expensive tools of ${p.his} craft.`,
+      return randomArray([`${p.His} tools cost more than most people's homes, and have earned it back twice.`,
         `${p.She} has a signature weapon.`]);
     case TCOMMANDER:
       return randomArray([`${p.She} has a small army at ${p.his} disposal.`,

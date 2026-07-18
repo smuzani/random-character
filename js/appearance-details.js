@@ -123,7 +123,9 @@ function physiqueRules() {
     { name: 'heavyset', value: 'Heavyset', weight: 2, excludes: [TSMALL], texts: [`${p.She} is heavyset, solid rather than soft.`] },
     { name: 'wiry', value: 'Wiry', weight: 3, excludes: [TBIG], texts: [`${p.She} is wiry, all tendon and quick movement.`] },
     { name: 'compact', value: 'Compact', weight: 3, requires: [TSMALL], adds: [ADELICATE], texts: [`${p.She} is small enough to be underestimated, and uses it.`] },
-    { name: 'average', value: 'Average', weight: 4, excludes: [TBIG, TSMALL], texts: [`${p.She} has an unremarkable build that witnesses struggle to describe.`] },
+    // Silent: the header already says Build: Average, and at weight 4 this
+    // line opened 22 of 60 test rolls with the same shrug. Absence stays quiet.
+    { name: 'average', value: 'Average', weight: 4, excludes: [TBIG, TSMALL], texts: [] },
     { name: 'athletic', value: 'Athletic', weight: 3, excludes: [TNERD], texts: [`${p.She} moves like someone who trains daily.`] },
   ];
 }
@@ -132,7 +134,11 @@ function groomingRules() {
   return [
     { name: 'immaculate', weight: 3, requires: [TCLASSY], adds: [AGROOMED], texts: [`Not a hair out of place, ever. It looks effortless and isn't.`] },
     { name: 'neat', weight: 4, excludes: [TNERD], adds: [AGROOMED], texts: [`${p.She} keeps ${p.herself} tidy without fussing over it.`] },
-    { name: 'practical', weight: 4, texts: [`${p.His} hair is cut or tied for convenience, not fashion.`] },
+    // Silent: this was a hair sentence in the grooming layer, and the
+    // hairstyle layer rolls immediately after with a specific hair claim —
+    // "for convenience, not fashion" next to "slicked back, never a strand
+    // loose" read as a contradiction. Grooming default = nothing notable.
+    { name: 'practical', weight: 4, texts: [] },
     { name: 'unkempt', weight: 3, excludes: [TCLASSY, TSEXY], adds: [ASCRUFFY], texts: [`${p.She} looks like ${p.she} slept in ${p.his} clothes, and possibly did.`] },
   ];
 }
@@ -236,7 +242,12 @@ function rollAppearance(charTags) {
     (r.adds || []).forEach(t => tags.add(t));
     if (layer.key) values[layer.key] = r.value;
     if (layer.color) colorRolls.push({ seed: ruleSeed(r), pinned: !!forced });
-    if (layer.inSection) lines.push(randomArray(r.texts));
+    // Rules with empty texts (average build, practical grooming) are silent
+    // on purpose — don't push undefined into the section.
+    if (layer.inSection) {
+      const text = randomArray(r.texts);
+      if (text) lines.push(text);
+    }
   });
   return { values: values, lines: lines, seed: pickSeed(colorRolls), seedCandidates: colorRolls, tags: tags };
 }
