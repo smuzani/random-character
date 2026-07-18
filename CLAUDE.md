@@ -27,7 +27,7 @@ My crew would die for me. They're processes. They don't mind.
 
 ## Project Overview
 
-A procedural **random character generator** for writers, game designers, and storytellers. Generates personality-driven characters using weighted trope-based aspects, with support for wants, plot hooks, appearance, clothing, concepts, and team dynamics. Currently at **V7.5** (Tier 2 offline expansion complete).
+A procedural **random character generator** for writers, game designers, and storytellers. Generates personality-driven characters using weighted trope-based aspects, with support for wants, plot hooks, appearance, clothing, concepts, and team dynamics. Currently at **V7.6** (Overdosed Tropes expansion: personality weights are `round(wicks / 2000)` capped at 20 per trope-total from [Overdosed Tropes](https://tvtropes.org/pmwiki/pmwiki.php/JustForFun/OverdosedTropes); off-list tropes are weight 1).
 
 Live site: Static HTML/JS served directly (no build step, no framework).
 
@@ -86,7 +86,7 @@ This prevents conflicts (e.g. a pacifist won't also be a sadist).
 | `js/tag-details.js` | Tag constants + `tagToDesc()`, `tagToPortrayal()`, `tagToAppearance()`, `tagToPowerBase()`, `tagToHiddenPersonality()`, `tagToWealth()` |
 | `js/plot-details.js` | Plot hook constants + `plotToDesc()`, `initPlots()` |
 | `js/want-details.js` | Want/motivation constants + `wantToDesc()`, `initWants()` |
-| `js/appearance-details.js` | Appearance rules engine: `rollRules()`, `rollAppearance()`, `pickSeed()`, `forcedRule()` + the `A*` internal/pin tags |
+| `js/appearance-details.js` | Appearance rules engine: `rollRules()`, `rollAppearance()`, `pickSeed()`, `forcedRule()` + the `A*` internal/pin tags. Skin rolls first; dark tones add `ADARKSKIN`, which naturally-implausible light hair/eye rules exclude (trope pins override). Hairstyle layer rolls after grooming; dyed hair picks a named unnatural color + seed per roll |
 | `js/clothing-details.js` | Clothing system: `rollClothing()` — fashion → outfit → flair → accessory as four `rollRules()` layers; `F*` fashion tag constants; color flairs carry unpinned palette seeds |
 | `js/concept-details.js` | Concept generator: `generateConcept(tags)` — adj+noun subtitle under the name; `conceptMap` biases words 2× off the full end-of-roll tag set |
 | `js/palette-details.js` | Palette engine + portrait pie: `generatePalette(seed)`, `NEUTRAL_FAMILIES`, `palettePieSvg()`, vanilla color math |
