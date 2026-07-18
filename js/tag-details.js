@@ -184,6 +184,42 @@ const TNATURE = 'nature'; // nature lover
 const TMENTOR = 'mentor'; // teaching another character
 const TFERAL = 'feral'; // grew up neglected, feral, raised by wolves or some other creature
 
+// V7.6 Overdosed Tropes expansion
+const TCATCHPHRASE = 'catchphrase'; // has a signature phrase
+const TENFORCER = 'enforcer'; // the boss's right hand / dragon
+const TSTANDARDS = 'standards'; // villain with a line they won't cross
+const THIDDENDEPTHS = 'hiddendepths'; // more to them than the surface
+const TVINDICTIVE = 'vindictive'; // disproportionate retribution
+const TMADSCIENCE = 'madscience'; // science without ethics boards
+const TNOLINES = 'nolines'; // villain with no standards at all
+const THYPOCRITE = 'hypocrite'; // preaches what they don't practice
+const TBADBOSS = 'badboss'; // abuses their own minions
+const TFREUDIANEXCUSE = 'freudianexcuse'; // villainy with a backstory reason
+const TREASONABLE = 'reasonable'; // authority figure who actually listens
+const TOBLIVIOUS = 'oblivious'; // comically misses the point
+const TUNRAVELING = 'unraveling'; // sanity slipping, slowly
+const TMOLE = 'mole'; // secretly working for the other side
+const TATONER = 'atoner'; // seeking redemption for a past wrong
+const TWORTHYFOE = 'worthyfoe'; // honorable enemy who respects the other side
+const TTRANQUILFURY = 'tranquilfury'; // rage delivered quietly
+const TSERIALKILLER = 'serialkiller'; // kills by pattern and compulsion
+const TFAVORITEFOOD = 'favoritefood'; // trademark favorite food
+const TMATCHMAKER = 'matchmaker'; // shipper on deck
+const TOLDERTHANLOOKS = 'olderthanlooks'; // face and birthday disagree
+const TBIGGOOD = 'biggood'; // anchor of the side of good
+const TRIVAL = 'rival'; // defined by competing with someone
+const TPREPARED = 'prepared'; // crazy-prepared contingencies
+const TBLUNT = 'blunt'; // brutal honesty
+const TDARKNOTEVIL = 'darknotevil'; // scary look, kind heart
+const TMANCHILD = 'manchild'; // adult on playground instincts
+const TSTEPFORD = 'stepford'; // the smile is load-bearing
+const TALCOHOLIC = 'alcoholic'; // the bottle is a fixture
+const TCHOSENONE = 'chosenone'; // destiny picked them
+const TPETTY = 'petty'; // small-minded cruelty
+const TMARRIED = 'married'; // happily married
+const TSKEWEDPRIORITIES = 'skewedpriorities'; // worries about the wrong thing
+const TSELFDEPRECATING = 'selfdeprecating'; // their favorite target is themselves
+
 const TFACE = 'face';
 const THEEL = 'heel';
 const TSUPPORT = 'support';
@@ -705,6 +741,83 @@ function tagToPortrayal(tag) {
     case TWALKINGTHEEARTH:
       return randomArray([`${p.She} seems to be a traveller. Nobody knows ${p.him} and ${p.she} keeps no roots.`,
         `${p.She} is always out seeking adventure, never staying rooted in any one place for long.`]);
+    case TCATCHPHRASE:
+      return randomArray([`${p.She} has a verbal tic ${p.she} says as a matter of habit, like "Uh huh" or "you know..."`,
+        `${p.She} has a catch-phrase for saying goodbye.`,
+        `${p.She} shouts a signature battle cry before a fight.`,
+        `${p.She} mutters the same curse whenever ${p.she} fails at something.`]);
+    case TENFORCER:
+      return randomArray([`${p.She} stands at ${p.his} boss's shoulder and handles whatever needs handling.`,
+        `When the boss wants something done personally, ${p.sdesc} is who gets sent.`]);
+    case TSTANDARDS:
+      return randomArray([`There is one line ${p.she} will not cross, and ${p.she} holds open contempt for those who do.`,
+        `${p.She} refuses certain jobs flat, no matter the pay.`]);
+    case TVINDICTIVE:
+      return randomArray([`${p.She} answers the smallest slight with overwhelming payback.`,
+        `${p.She} keeps score of every offense, and the interest rate is brutal.`]);
+    case TMADSCIENCE:
+      return randomArray([`${p.She} talks about ${p.his} experiments with an enthusiasm that makes people back away slowly.`,
+        `${p.She} considers safety protocols a failure of imagination.`]);
+    case THYPOCRITE:
+      return randomArray([`${p.She} loudly preaches standards ${p.she} never holds ${p.herself} to.`,
+        `${p.His} rules, it turns out, apply to everyone but ${p.him}.`]);
+    case TBADBOSS:
+      return randomArray([`${p.She} treats ${p.his} own underlings as disposable, and they know it.`,
+        `Working for ${p.sdesc} is widely considered more dangerous than opposing ${p.him}.`]);
+    case TREASONABLE:
+      return randomArray([`When someone brings ${p.him} a wild story, ${p.she} hears it out before judging.`,
+        `${p.She} uses ${p.his} authority sensibly, which surprises everyone used to worse.`]);
+    case TOBLIVIOUS:
+      return randomArray([`${p.She} walks away from every conversation with exactly the wrong lesson.`,
+        `Sarcasm, hints, and outright warnings all sail past ${p.him} at altitude.`]);
+    case TUNRAVELING:
+      return randomArray([`${p.His} behavior has been getting stranger lately, a little at a time.`,
+        `People who knew ${p.him} before have started trading concerned looks.`]);
+    case TWORTHYFOE:
+      return randomArray([`${p.She} treats ${p.his} enemies with respect, and fights them fairly.`,
+        `${p.She} would rather lose clean than win ugly, and salutes a good opponent.`]);
+    case TTRANQUILFURY:
+      return randomArray([`When truly angry, ${p.she} goes very quiet, and everyone who knows ${p.him} clears the room.`,
+        `${p.His} rage never raises its voice, which makes it far more frightening.`]);
+    case TFAVORITEFOOD:
+      return randomArray([`${p.She} is never far from ${p.his} favorite food, and everyone knows what it is.`,
+        `${p.She} can be bribed, reliably, with one particular dish.`]);
+    case TMATCHMAKER:
+      return randomArray([`${p.She} has decided which two people belong together, and is forever nudging them.`,
+        `${p.She} ships ${p.his} friends shamelessly and schemes to get them alone together.`]);
+    case TBIGGOOD:
+      return randomArray([`Others rally to ${p.him} when things are darkest.`,
+        `${p.She} is the moral center the whole side of good organizes around.`]);
+    case TRIVAL:
+      return randomArray([`Everything ${p.she} does is measured against one particular person.`,
+        `${p.She} has a rival, and beating them matters more than winning.`]);
+    case TPREPARED:
+      return randomArray([`${p.She} has a contingency plan for scenarios nobody else even imagined.`,
+        `Whatever goes wrong, ${p.she} somehow packed for it.`]);
+    case TBLUNT:
+      return randomArray([`${p.She} tells the unvarnished truth, comfort be damned.`,
+        `${p.She} does not cushion bad news, and considers it a kindness.`]);
+    case TDARKNOTEVIL:
+      return randomArray([`People cross the street to avoid ${p.him}, then ${p.she} helps someone carry groceries.`,
+        `${p.His} looks say villain; ${p.his} actions say the kindest person in the room.`]);
+    case TMANCHILD:
+      return randomArray([`${p.She} is an adult running on playground instincts.`,
+        `${p.His} tastes, tantrums, and enthusiasms all stopped maturing years ago.`]);
+    case TALCOHOLIC:
+      return randomArray([`${p.She} is rarely far from a drink, and gets twitchy when one isn't available.`,
+        `${p.His} relationship with the bottle is the worst-kept secret around.`]);
+    case TPETTY:
+      return randomArray([`For all ${p.his} menace, ${p.she} spends real effort on small, spiteful cruelties.`,
+        `${p.She} will derail ${p.his} own plans to settle some tiny score.`]);
+    case TMARRIED:
+      return randomArray([`${p.She} is happily married, and it grounds everything ${p.she} does.`,
+        `${p.She} checks in with ${p.his} spouse before anything risky, and means it.`]);
+    case TSKEWEDPRIORITIES:
+      return randomArray([`In every crisis, ${p.she} worries about exactly the wrong detail.`,
+        `The building could be burning and ${p.she} would be rescuing the houseplants.`]);
+    case TSELFDEPRECATING:
+      return randomArray([`${p.His} favorite target of mockery is ${p.herself}.`,
+        `${p.She} gets the insult in about ${p.herself} before anyone else can.`]);
     case TFACE:
     case THEEL:
     case TSUPPORT:
@@ -758,6 +871,12 @@ function tagToAppearance(tag) {
     case TCREEPY:
       return randomArray([`${p.She} has disheveled long hair, wears frumpy dark clothing.`,
         `${p.She} appears sleep deprived, is pale, and looks unkempt.`]);
+    case TOLDERTHANLOOKS:
+      return randomArray([`${p.She} looks a decade or more younger than ${p.she} actually is.`,
+        `${p.His} face and ${p.his} birthday disagree, and strangers guess wrong every time.`]);
+    case TDARKNOTEVIL:
+      return randomArray([`${p.She} dresses in black and reads as dangerous from across the street.`,
+        `Everything about ${p.his} look — the dark clothes, the sharp silhouette — says villain.`]);
     default:
       return "";
   }
@@ -914,6 +1033,21 @@ function tagToPowerBase(tag) {
     case TFERAL:
       return randomArray([`${p.Sdesc} has severely limited social skills and mental handicap.`,
         `${p.She} has very poor language skills, barely enough to communicate, and unable to learn more.`]);
+    case TMADSCIENCE:
+      return randomArray([`${p.She} can build things that shouldn't work, and occasionally shouldn't exist.`,
+        `${p.His} inventions solve problems nobody else can touch — with side effects nobody else would accept.`]);
+    case TPREPARED:
+      return randomArray([`Whatever the situation calls for, ${p.she} already has it stashed somewhere.`,
+        `${p.His} contingency plans have contingency plans.`]);
+    case TCHOSENONE:
+      return randomArray([`Destiny bends events in ${p.his} favor at the strangest moments.`,
+        `Whatever marked ${p.him} as chosen came with power to match the burden.`]);
+    case TENFORCER:
+      return randomArray([`${p.She} is the most dangerous piece on ${p.his} boss's board.`,
+        `${p.She} has authority to act in ${p.his} boss's name, and the muscle to back it.`]);
+    case TBIGGOOD:
+      return randomArray([`${p.His} word carries weight with every faction on the side of good.`,
+        `Allies ${p.she} has helped over the years will answer when ${p.she} calls.`]);
     case TFACE:
     case THEEL:
     case TSUPPORT:
@@ -1109,6 +1243,36 @@ function tagToHiddenPersonality(tag) {
       return randomArray([`${p.She} was locked in a room as a child, and faced years of abuse by ${p.his} guardians.`,
         `${p.She} was abandoned as a child and left to fend for ${p.herself}`,
         `${p.She} was abandoned as a child and raised by wild animals.`]);
+    case THIDDENDEPTHS:
+      return randomArray([`There is far more to ${p.him} than anyone suspects — a talent or history nobody would guess.`,
+        `${p.She} keeps an unexpected skill quietly to ${p.herself}.`]);
+    case TNOLINES:
+      return randomArray([`There is genuinely nothing ${p.she} will not do. No line, no exception.`,
+        `Other villains have standards. ${p.Sdesc} finds that quaint.`]);
+    case TFREUDIANEXCUSE:
+      return randomArray([`${p.His} cruelty has a source: something was done to ${p.him} first.`,
+        `The wound that made ${p.him} this way is still open, if anyone cared to look.`]);
+    case TMOLE:
+      return randomArray([`${p.She} is secretly working for the other side.`,
+        `${p.His} loyalty is a performance; ${p.his} reports go elsewhere.`]);
+    case TATONER:
+      return randomArray([`${p.She} is trying to make up for a wrong ${p.she} committed, one that still defines ${p.him}.`,
+        `Every good deed ${p.she} does is quietly measured against an old sin.`]);
+    case TSERIALKILLER:
+      return randomArray([`${p.She} has killed before, more than once, and will again. There is a pattern to it.`,
+        `Somewhere there is a string of cases nobody has connected to ${p.him} yet.`]);
+    case TSTEPFORD:
+      return randomArray([`The smile never drops, and it is holding back something bleak.`,
+        `Behind the relentless cheerfulness, ${p.she} is quietly miserable.`]);
+    case TUNRAVELING:
+      return randomArray([`${p.She} is coming apart, slowly enough that nobody has called it yet.`,
+        `${p.She} has started hearing ${p.his} own thoughts as if they belonged to someone else.`]);
+    case TOLDERTHANLOOKS:
+      return randomArray([`${p.She} is far older than ${p.she} appears, and lets people assume wrong.`,
+        `${p.His} real age would end several conversations abruptly.`]);
+    case TCHOSENONE:
+      return randomArray([`A prophecy, bloodline, or destiny has marked ${p.him}, ready or not.`,
+        `${p.She} did not ask to be chosen, and some days wishes ${p.she} hadn't been.`]);
     case TFACE:
     case THEEL:
     case TSUPPORT:
