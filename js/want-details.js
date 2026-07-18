@@ -17,7 +17,7 @@ const WREVENGE = 'revenge';
 const WBEATFATE = 'beatfate';
 const WADVENTURE = 'adventure';
 const WFOOD = 'food';
-const WLAZY = 'lazy';
+const WLAZY = 'want-lazy'; // 'want-' prefix: TLAZY owns the bare string 'lazy'
 const WAVOIDSPOTLIGHT = 'avoidspotlight';
 const WDEBT = 'debt';
 const WBECOMEBEAUTIFUL = 'becomebeautiful';
@@ -37,7 +37,7 @@ const WCOLLECTION = 'collection';
 const WSMALLTHING = 'smallthing';
 const WFREEFROMBONDAGE = 'freefrombondage';
 const WSAVEDLIFE = 'savedlife';
-const WCHOSENONE = 'chosenone';
+const WCHOSENONE = 'want-chosenone'; // 'want-' prefix: TCHOSENONE owns the bare string
 const WENVY = 'envy';
 const WLOSTLOVE = 'lostlove';
 const WSPECIFICWEALTH = 'specificwealth';
@@ -183,7 +183,7 @@ function wantToDesc(tag) {
       return randomArray([
         `${p.She} has a deep, gnawing resentment towards someone more popular than ${p.him}.`,
         `${p.She} will do what it takes to be the best. ${p.She} is driven not by ${p.his} need to save people, but rather to uphold ${p.his} pride of being a hero for them.`,
-        `${p.Sdesc} values ${p.herself} highly. ${p.She} knows that ${p.his} peers do not always hold ${p.him} in high esteem- ${p.she} is often underestimated and underestimated. ${p.She} feels that if ${p.she} can prove that ${p.she} can survive any challenge, then they will give ${p.him} the respect ${p.she} deserves.`,
+        `${p.Sdesc} values ${p.herself} highly. ${p.She} knows that ${p.his} peers do not always hold ${p.him} in high esteem- ${p.she} is often underestimated and undervalued. ${p.She} feels that if ${p.she} can prove that ${p.she} can survive any challenge, then they will give ${p.him} the respect ${p.she} deserves.`,
         `${p.She} was tired of being told that ${p.she} wasn't good enough. It was time for ${p.him} to prove ${p.herself}.`,
         `${p.Sdesc} cannot bear being second-best. Admiration is pleasant, but superiority is the real hunger.`,
       ]);
@@ -563,7 +563,7 @@ function initWants() {
   want.push(new Aspect("Parental approval", 6, "",
     BWANT, [WPARENTAL], [TFACE], [], [], []));
   want.push(new Aspect("Willing to do anything for a beloved", 5, "",
-    BWANT, [WBELOVED], [], [], [TGOODCAUSE], []));
+    BWANT, [WBELOVED], [], [TINDIVIDUALISTIC], [TGOODCAUSE], []));
   want.push(new Aspect("Better than everyone else", 5, "",
     BWANT, [WPRIDE], [], [], [], []));
   want.push(new Aspect("Owe someone a favour", 4, "",
@@ -595,7 +595,7 @@ function initWants() {
   want.push(new Aspect("Prove someone wrong", 2, "",
     BWANT, [WPROVEWRONG], [], [], [], []));
   want.push(new Aspect("Unstoppable rage", 2, "",
-    BWANT, [WUNSTOPPABLERAGE], [], [], [], []));
+    BWANT, [WUNSTOPPABLERAGE], [], [TLONGFUSE, TSWEET], [], []));
   want.push(new Aspect("Ambition", 2, "",
     BWANT, [WAMBITION], [], [PAMBITION], [], []));
   want.push(new Aspect("Be happy", 1, "",

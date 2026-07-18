@@ -88,9 +88,11 @@ function initAspects() {
   // V7.6: ungendered half of the Alpha Bitch archetype (from bolt), so it
   // survives "No gender stereotypes"
   aspects.push(new Aspect("Alpha Bully", 3, "Character is the top dog of a posse. Manipulative, and hard to hurt because they come from money and a higher social status.",
-    BPERSONALITY, [TMANIPULATIVE, TRICH, TBITCH, THATED, TPOSSE], [THEEL], [TNAIVE, TPOOR, TLOVABLE, TBUTTMONKEY, TFEMALE, BTEAMONE], [], []));
+    BPERSONALITY, [TMANIPULATIVE, TRICH, TBITCH, THATED, TPOSSE], [THEEL], [TNAIVE, TPOOR, TLOVABLE, TBUTTMONKEY, TFEMALE, TBOSS, BTEAMONE], [], []));
+  // TBOSS removed: a one-shot villain is nobody's boss, and the boss-tag banks
+  // ("most skilled member of his team") assume a team that contradicts TDISPOSABLE.
   aspects.push(new Aspect("Monster of the Week", 7, "Character is a one-shot villain. At the end of the story, the character will either be destroyed, or repent.",
-    BPERSONALITY, [TDISPOSABLE, TBOSS], [THEEL], [TNECESSARY], [], []));
+    BPERSONALITY, [TDISPOSABLE], [THEEL], [TNECESSARY], [], []));
   // V7.6: absorbed The Man Behind the Man — same archetype, this is the on-list name
   aspects.push(new Aspect("Greater-Scope Villain", 7, "The character is the real main villain. More powerful, well connected, and intelligent, they have bigger plans than the lesser villains he bosses around.",
     BPERSONALITY, [TMANIPULATIVE, TMYSTERIOUS, TLAZY, TBOSS], [THEEL], [TNAIVE, TTALKATIVE, TDETERMINED, TBUTTMONKEY, BTEAMONE], [], []));
@@ -218,7 +220,7 @@ function initAspects() {
   aspects.push(new Aspect("Ax-Crazy", 15, "This character is an insane and sadistic person who enjoys murder and mutilation.",
     BPERSONALITY, [TSADIST, TVIOLENT], [THEEL], [TPACIFIST], [], []));
   aspects.push(new Aspect("Affably Evil", 8, "This character is evil but extremely polite and likeable. They may be benevolent bosses to their minions. They seem like any other normal person. They may even try to nicely convince their enemies not to oppose them. If turned down, they'll give clear reminders of their villainous nature.",
-    BPERSONALITY, [TEVIL, TSWEET, TRUTHLESS], [THEEL], [TSNARKY, TGOODCAUSE, TMEAN, TARROGANT], [], []));
+    BPERSONALITY, [TEVIL, TSWEET, TRUTHLESS], [THEEL], [TSNARKY, TGOODCAUSE, TMEAN, TARROGANT, TSTOIC, TCYNICAL], [], []));
   aspects.push(new Aspect("Knight Templar", 3, "This character is narcisisstic and always believes they are right. They are quick to judge others but refuse all judgement on themselves. They believe that fate handed them a means for inflicting punishment upon evil, and punish the weak.",
     BPERSONALITY, [TBADCAUSE, TBADMEANS, TARROGANT, TRUTHLESS, TMYOPIC], [THEEL], [TLOVABLE, TGOODCAUSE, TGOODMEANS, TTEAMPLAYER, TSWEET, TWARM, THUMBLE, TLAZY, TCARING], [], []));
   aspects.push(new Aspect("Knight Templar", 2, "This character is narcisisstic and always believes they are right. They are quick to judge others but refuse all judgement on themselves. They believe that fate handed them a means for inflicting punishment upon evil, and punish the weak.",
@@ -264,9 +266,9 @@ function initAspects() {
   aspects.push(new Aspect("Manipulative Bastard", 11, "This character is an expert in manipulating emotions, perspectives, and psychology.",
     BPERSONALITY, [TSMART, TSTREETSMART, TMANIPULATIVE, TRUTHLESS], [], [TNAIVE, BTEAMONE], [], []));
   aspects.push(new Aspect("Darker and Edgier", 10, "This character is serious, cynical, edgy, and gritty.",
-    BPERSONALITY, [TCYNICAL, TSTOIC], [], [TIDEALISTIC, TWARM, THOTBLOODED], [], []));
+    BPERSONALITY, [TCYNICAL, TSTOIC], [], [TIDEALISTIC, TWARM, THOTBLOODED, TSWEET], [], []));
   aspects.push(new Aspect("The Woobie", 8, "The character is in trouble and needs help.",
-    BPERSONALITY, [TWOOBIE, TDISTRESSED], [], [TDREADED, TBOSS], [], []));
+    BPERSONALITY, [TWOOBIE, TDISTRESSED], [], [TDREADED, TBOSS, TBADASS, TSTRONG, TTOUGH], [], []));
   aspects.push(new Aspect("Blatant Lies", 13, "This character has no issues with straight up lying, without having to cushion or justify the lie.",
     BPERSONALITY, [TLIAR], [], [THONEST, THONORABLE], [], []));
   aspects.push(new Aspect("The Stoic", 9, "This character shows little reaction to extreme things, like injury or disaster. They may break this facade with very rare things, like a death.",
@@ -352,8 +354,11 @@ function initAspects() {
 
   // V7.6: Overdosed Tropes expansion. Weights are round(wicks / 2000) capped
   // at 20, from tvtropes.org/pmwiki/pmwiki.php/JustForFun/OverdosedTropes.
+  // Excludes TBADBOSS/TPOSSE (and Bad Boss excludes TDREADED, Alpha Bully
+  // excludes TBOSS): the three boss tropes each read as "feared boss" through
+  // the tag banks, and stacking two produced six near-identical lines.
   aspects.push(new Aspect("Big Bad", 20, "The main villain of the story. Everything bad traces back to them.",
-    BPERSONALITY, [TBOSS, TDREADED, TRUTHLESS, TAMBITIOUS, TPOWERFUL], [THEEL], [TDISPOSABLE, TFOLLOWER, TWEAK, TNAIVE, TBUTTMONKEY, BTEAMONE], [], []));
+    BPERSONALITY, [TBOSS, TDREADED, TRUTHLESS, TAMBITIOUS, TPOWERFUL], [THEEL], [TDISPOSABLE, TFOLLOWER, TWEAK, TNAIVE, TBUTTMONKEY, TBADBOSS, TPOSSE, BTEAMONE], [], []));
   aspects.push(new Aspect("The Dragon", 13, "The boss's right hand and enforcer. The last obstacle before the real villain.",
     BPERSONALITY, [TENFORCER, TBADASS, TLOYAL, TVIOLENT, TNUMBERTWO], [THEEL], [TLEADER, TBOSS, TTREACHEROUS, TPACIFIST, TWEAK], [], []));
   aspects.push(new Aspect("Even Evil Has Standards", 12, "A villain with a line they will not cross, and contempt for those who do.",
@@ -373,7 +378,7 @@ function initAspects() {
   aspects.push(new Aspect("Hypocrite", 9, "Preaches standards they never hold themselves to.",
     BPERSONALITY, [THYPOCRITE], [], [THONEST], [], []));
   aspects.push(new Aspect("Bad Boss", 8, "Treats their own underlings as punching bags or worse.",
-    BPERSONALITY, [TBADBOSS, TMEAN, TBOSS], [THEEL], [TWARM, TSWEET, TCARING, TFOLLOWER, BTEAMONE], [], []));
+    BPERSONALITY, [TBADBOSS, TMEAN, TBOSS], [THEEL], [TWARM, TSWEET, TCARING, TFOLLOWER, TDREADED, BTEAMONE], [], []));
   aspects.push(new Aspect("Freudian Excuse", 8, "Their villainy has a reason, and the reason is a wound.",
     BPERSONALITY, [TFREUDIANEXCUSE, TTRAUMA], [THEEL], [], [], []));
   aspects.push(new Aspect("Anti-Hero", 8, "On the right side, with all the wrong methods.",
@@ -411,7 +416,7 @@ function initAspects() {
   aspects.push(new Aspect("Big Good", 6, "The anchor of the side of good — the one everyone rallies behind.",
     BPERSONALITY, [TBIGGOOD, TWISE, TLEADER, TGOODCAUSE], [TSUPPORT], [TEVIL, TMEAN, TFOLLOWER, BTEAMONE], [], []));
   aspects.push(new Aspect("The Ditz", 6, "Sweet-natured and reliably clueless, whatever their hair color.",
-    BPERSONALITY, [TNAIVE], [], [TSMART, TWISE, TGENRESAVVY, TTACTICIAN], [], []));
+    BPERSONALITY, [TNAIVE], [], [TSMART, TWISE, TGENRESAVVY, TTACTICIAN, TSHY, TINTROVERT], [], []));
   aspects.push(new Aspect("The Rival", 6, "Defined by the race to beat one particular person.",
     BPERSONALITY, [TRIVAL, TAMBITIOUS, TDETERMINED], [], [TLAZY], [], []));
   aspects.push(new Aspect("Crazy-Prepared", 6, "Has a contingency plan for scenarios nobody else imagined.",
@@ -431,7 +436,7 @@ function initAspects() {
   aspects.push(new Aspect("Stepford Smiler", 5, "The smile is permanent, and load-bearing.",
     BPERSONALITY, [TSTEPFORD, TSWEET], [], [TSTOIC, TMEAN, TBLUNT], [], []));
   aspects.push(new Aspect("Shrinking Violet", 5, "Painfully shy; closes up entirely when approached.",
-    BPERSONALITY, [TSHY, TINTROVERT, TINSECURE], [], [THAM, TTALKATIVE, TCHARISMATIC], [], []));
+    BPERSONALITY, [TSHY, TINTROVERT, TINSECURE], [], [THAM, TTALKATIVE, TCHARISMATIC, TNAIVE], [], []));
   aspects.push(new Aspect("The Alcoholic", 5, "The bottle is a fixture of their life, admitted or not.",
     BPERSONALITY, [TALCOHOLIC], [], [], [], []));
   aspects.push(new Aspect("The Chosen One", 5, "Destiny picked them, ready or not.",
@@ -676,11 +681,16 @@ function loadTags() {
 }
 
 // One branch table for every consumer (the form reader below, the roll lab).
+// Personality rolls FIRST so the want and plot pools filter against a
+// personality that already exists — a wise character can't draw Fatal
+// Imprudence, a lazy one can't lead a Revolt, a bruiser can't await rescue.
+// Before V7.7, want/plot rolled first and personality was structurally unable
+// to influence either; the want/plot excludes only bite in this order.
 const DETAIL_BRANCHES = {
-  "detail-sparse": [BWANT, BSINGLEPLOT, BPERSONALITY],
-  "detail-moderate": [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY],
-  "detail-high": [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY, BPERSONALITY],
-  "detail-very-high": [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY, BPERSONALITY, BPERSONALITY],
+  "detail-sparse": [BPERSONALITY, BWANT, BSINGLEPLOT],
+  "detail-moderate": [BPERSONALITY, BPERSONALITY, BWANT, BSINGLEPLOT],
+  "detail-high": [BPERSONALITY, BPERSONALITY, BPERSONALITY, BWANT, BSINGLEPLOT],
+  "detail-very-high": [BPERSONALITY, BPERSONALITY, BPERSONALITY, BPERSONALITY, BWANT, BSINGLEPLOT],
 };
 
 function branchesForDetail(detail) {
@@ -799,9 +809,12 @@ function obtainRoot(roots, c) {
       if (c.tags.has(exclude)) isValid = false;
     });
 
-    // For each t.tag, check that it doesn't match c.exclude
+    // For each t.tag, check that it doesn't match c.exclude.
+    // branchRequirements count too: addTags() turns them into real tags on the
+    // character, so without this an aspect could smuggle an excluded tag past
+    // the gate (e.g. a want adding TBADASS to a rolled Woobie).
     c.excludes.forEach(function (exclude) {
-      if (t.tags.has(exclude)) isValid = false;
+      if (t.tags.has(exclude) || t.branchRequirements.has(exclude)) isValid = false;
     });
 
     return isValid;
@@ -833,9 +846,12 @@ function filterPersonalityFromRoot(personalities, root, c) {
       if (t.tags.has(exclude)) isValid = false;
     });
 
-    // For each t.tag, check that it doesn't match c.exclude
+    // For each t.tag, check that it doesn't match c.exclude.
+    // branchRequirements count too: addTags() turns them into real tags on the
+    // character, so without this an aspect could smuggle an excluded tag past
+    // the gate (e.g. a want adding TBADASS to a rolled Woobie).
     c.excludes.forEach(function (exclude) {
-      if (t.tags.has(exclude)) isValid = false;
+      if (t.tags.has(exclude) || t.branchRequirements.has(exclude)) isValid = false;
     });
 
     return isValid;

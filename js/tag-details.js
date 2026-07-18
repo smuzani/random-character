@@ -582,7 +582,7 @@ function tagToPortrayal(tag) {
         `${p.She} often calls the shots during an team exercise.`]);
     case TFOLLOWER:
       return randomArray([`${p.She} may disagree with the team, but follows consensus without argument.`,
-        `${p.She} follows orders strictly and rarely does her own plans.`]);
+        `${p.She} follows orders strictly and rarely does ${p.his} own plans.`]);
     case TNAIVE:
     case TFAKEDITZ:
       return randomArray([`${p.She} is easily fooled.`,
@@ -657,7 +657,7 @@ function tagToPortrayal(tag) {
         `Everyone makes fun of ${p.sdesc}.`]);
     case THUMBLE:
       return randomArray([`${p.She} is humble.`,
-        `${p.She} never shows off her strengths.`]);
+        `${p.She} never shows off ${p.his} strengths.`]);
     case TARROGANT:
       return randomArray([`${p.She} never admits that ${p.she} is wrong.`,
         `${p.Sdesc} is cocky and arrogant.`]);
@@ -1087,7 +1087,7 @@ function tagToHiddenPersonality(tag) {
       return randomArray([`${p.She} has ambitious goals and often succeeds in style.`,
         `${p.She} has grand plans.`]);
     case TBOSS:
-      return randomArray([`${p.She} is the most powerful of his forces, and far more competent than ${p.his} next in command.`,
+      return randomArray([`${p.She} is the most powerful of ${p.his} forces, and far more competent than ${p.his} next in command.`,
         `${p.She} is terrifyingly competent at what ${p.she} does.`]);
     case TEXPOSITION:
       return randomArray([`${p.Sdesc} provides exposition to the audience.`,

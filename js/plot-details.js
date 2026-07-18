@@ -101,8 +101,11 @@ function plotToDesc(tag) {
     case PREVOLT_WHISTLEBLOWER:
       return `${p.Sdesc} has discovered something wrong and makes the decision to whistleblow. Everyone is making good money but recognises the corruption. ${p.Sdesc} knows ${p.she} will be attacked, but does it for the greater good.`;
     case PDARING:
-    // return randomArray([`In a war, ${p.sdesc} proposes a bold move that is likely to fail, and could result in the loss of many good people, including ${p.sdesc}.`,
-    //   `The clock is running down on an event, and something has to be done quickly. ${p.Sdesc} proposes doing a plan that could very well fail and make things worse, but ${p.she} has little to lose.`,
+      // The bank was fully commented out at some point, which made this case
+      // fall through to PABDUCTION — brave characters rendered as helpless
+      // captives. Restored; the romance variant stays retired.
+      return randomArray([`In a war, ${p.sdesc} proposes a bold move that is likely to fail, and could result in the loss of many good people, including ${p.sdesc}.`,
+        `The clock is running down on an event, and something has to be done quickly. ${p.Sdesc} proposes doing a plan that could very well fail and make things worse, but ${p.she} has little to lose.`]);
     //   `${p.Sdesc} is attracted to a person, who is outside ${p.his} element. The beloved's family creates obstacles to the relationship. ${p.She} perseveres but is exhausted by the obstacles. ${p.She} gives up but the person starts to show interest.`]);
     case PABDUCTION:
       return randomArray([`${p.Sdesc} has been abducted and restrained, waiting for someone to rescue ${p.him}.`,
@@ -325,8 +328,9 @@ function plotToObjective(tag) {
     case PREVOLT_WHISTLEBLOWER:
       return `${p.Sdesc} has discovered something wrong and makes the decision to whistleblow. Everyone is making good money but recognises the corruption. ${p.Sdesc} knows ${p.she} will be attacked, but does it for the greater good.`;
     case PDARING:
-    // return randomArray([`In a war, ${p.sdesc} proposes a bold move that is likely to fail, and could result in the loss of many good people, including ${p.sdesc}.`,
-    //   `The clock is running down on an event, and something has to be done quickly. ${p.Sdesc} proposes doing a plan that could very well fail and make things worse, but ${p.she} has little to lose.`,
+      // Same fall-through-to-PABDUCTION bug as the first switch; restored.
+      return randomArray([`In a war, ${p.sdesc} proposes a bold move that is likely to fail, and could result in the loss of many good people, including ${p.sdesc}.`,
+        `The clock is running down on an event, and something has to be done quickly. ${p.Sdesc} proposes doing a plan that could very well fail and make things worse, but ${p.she} has little to lose.`]);
     //   `${p.Sdesc} is attracted to a person, who is outside ${p.his} element. The beloved's family creates obstacles to the relationship. ${p.She} perseveres but is exhausted by the obstacles. ${p.She} gives up but the person starts to show interest.`]);
     case PABDUCTION:
       return randomArray([`${p.Sdesc} has been abducted and restrained, and is waiting for someone to rescue ${p.him}.`,
@@ -488,7 +492,7 @@ function initPlots() {
   drama.push(new Aspect("Supplication", 10, "I'll do anything if you forgive me.",
     BSINGLEPLOT, [PSUPPLICATION], [], [], [], []));
   drama.push(new Aspect("Deliverance", 10, "Somebody save me!",
-    BSINGLEPLOT, [PDELIVERANCE, TDISTRESSED], [], [], [], []));
+    BSINGLEPLOT, [PDELIVERANCE, TDISTRESSED], [], [TBADASS, TSTRONG, TTOUGH], [], []));
   drama.push(new Aspect("Revenge following a crime", 10, "This time it's personal.",
     BSINGLEPLOT, [PREVCRIME], [], [], [], []));
   drama.push(new Aspect("Revenge within family", 10, "This time it's personal, you traitor.",
@@ -500,11 +504,11 @@ function initPlots() {
   drama.push(new Aspect("Cruelty and Misfortune", 10, "There is nothing I can do.",
     BSINGLEPLOT, [PCRUELTY, TWOOBIE], [], [TBADASS], [], []));
   drama.push(new Aspect("Revolt", 10, "The oppressors must be stopped.",
-    BSINGLEPLOT, [PREVOLT, TBRAVE], [], [TCOWARD, TPOWERFUL], [], []));
+    BSINGLEPLOT, [PREVOLT, TBRAVE], [], [TCOWARD, TPOWERFUL, TLAZY], [], []));
   // drama.push(new Aspect("Whistleblower", 2, "Revolt - whistleblower",
   //   BSINGLEPLOT, [PREVOLT_WHISTLEBLOWER], [], [], [TBRAVE, TNOBLE], [TCOWARD, TIGNOBLE]));
   drama.push(new Aspect("Daring Enterprise", 10, "It could fail, but what else do we have to lose?",
-    BSINGLEPLOT, [PDARING, TBRAVE], [], [TCOWARD], [], []));
+    BSINGLEPLOT, [PDARING, TBRAVE], [], [TCOWARD, TLAZY], [], []));
   // drama.push(new Aspect("Abduction", 10, "Someone has captured me and does whatever he wants to me.",
   //   BSINGLEPLOT, [PABDUCTION, TDISTRESSED], [TSUPPORT], [], [], []));
   drama.push(new Aspect("The Enigma", 10, "I must know what's going on.",

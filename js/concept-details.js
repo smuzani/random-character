@@ -105,8 +105,9 @@ const conceptGenderWords = {
 
 // tag → words that bias the draw (2× weight). Keys are V7 tag/want/plot
 // constants; entries whose tag V7 lacks were dropped rather than remapped to
-// something dishonest. TLAZY and WLAZY share the string 'lazy', so Bolt's two
-// entries merge into one here.
+// something dishonest. TLAZY and WLAZY used to share the string 'lazy', which
+// merged their entries — and also made a lazy personality trope fire the lazy
+// WANT's whole motivation paragraph (V7.7 renamed the want values 'want-*').
 const conceptMap = {
   // Personality
   [TEVIL]: { adjectives: ['dark', 'sinister', 'wicked', 'malevolent', 'twisted', 'corrupt', 'ruthless', 'cruel'], nouns: ['villain', 'monster', 'tyrant'] },
@@ -127,6 +128,7 @@ const conceptMap = {
   [TCOWARD]: { adjectives: ['timid', 'craven', 'cowardly'], nouns: ['coward'] },
   [TDETERMINED]: { adjectives: ['relentless', 'unstoppable', 'determined', 'driven', 'obsessed'], nouns: ['juggernaut', 'force'] },
   [TLAZY]: { adjectives: ['slow', 'lazy', 'slothful'], nouns: ['slacker', 'layabout'] },
+  [WLAZY]: { adjectives: ['slow', 'lazy', 'slothful'], nouns: ['slacker', 'layabout'] },
   [THAM]: { adjectives: ['loudmouthed', 'dramatic', 'grandiose', 'hammy', 'loud'], nouns: ['diva'] },
   [TSNARKY]: { adjectives: ['sardonic', 'witty', 'sarcastic', 'snarky'] },
   [TFAKEDITZ]: { adjectives: ['deceptive', 'ditzy'], nouns: ['ditz', 'savant'] },
