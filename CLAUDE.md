@@ -55,9 +55,11 @@ The generator uses a **weighted procedural system** based on TV Tropes archetype
 3. **Generation flow**:
    - User selects Role (Heroic/Villainous/Support/Any), Gender, Detail level
    - `loadTags()` → initial tags from form inputs
-   - `loadInitialBranches()` → branch sequence based on detail level (e.g. `[BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY]`)
+   - `loadInitialBranches()` → branch sequence based on detail level (e.g. `[BPERSONALITY, BPERSONALITY, BWANT, BSINGLEPLOT]` — personality first, so want/plot excludes can see who the character is)
    - `createCharacter()` → iterates branches, rolling weighted aspects that match tag requirements
-   - `displayCharacter()` → renders results into DOM sections
+   - `resolveCharacter()` → pure: appearance, clothing, palette seed, concept
+   - `characterSections()` → pure: every section as `{ text, src: {bank, tag, via} }` data
+   - `displayCharacter()` → DOM only, renders from `characterSections()`
 
 ### Tag System
 
@@ -94,6 +96,7 @@ This prevents conflicts (e.g. a pacifist won't also be a sadist).
 | `js/plugins.js` | Browser console safety shim |
 | `css/main.css` | Custom styles (H5BP-based) |
 | `css/fonts.css` | Font-face declarations |
+| `lab/` | Roll lab: `roll.js` (Node CLI: `node lab/roll.js --n=20 --seed=1 --src` — seeded, diffable batches with provenance), `build.js` (bundles engine + `lab-ui.html` into one self-contained page for the private artifact), `lab-core.js` (`buildCharacter(opts) → data` — the pure contract any engine rewrite must keep) |
 
 ### Pages
 
