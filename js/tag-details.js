@@ -565,8 +565,8 @@ function tagToPortrayal(tag) {
       return randomArray([`${p.She} is eager to put others down and make them look bad.`,
         `${p.She} often yells and insults others, for no purpose other than showing that ${p.she} is superior.`]);
     case TSWEET:
-      return randomArray([`${p.She} is cheerful and friendly.`,
-        `${p.She} is polite and gentle.`]);
+      return randomArray([`${p.She} greets people by name, including the ones nobody else bothers with.`,
+        `${p.She} notices when someone has gone quiet, and asks them about it.`]);
     case TNURTURER:
       return randomArray([`${p.She} often tries to motivate the rest of the team.`,
         `${p.She} makes sure that everyone in the team is looked after.`]);
@@ -585,8 +585,8 @@ function tagToPortrayal(tag) {
         `${p.She} follows orders strictly and rarely does ${p.his} own plans.`]);
     case TNAIVE:
     case TFAKEDITZ:
-      return randomArray([`${p.She} is easily fooled.`,
-        `${p.She} is oafish and chatty.`,
+      return randomArray([`${p.She} takes people at their word, and has been burned for it more than once.`,
+        `${p.She} volunteers information nobody asked for, including things ${p.she} was told to keep quiet.`,
         `${p.She} tends to get into trouble, resulting from ${p.his} own stupidity.`,
         `Most jokes go above ${p.his} head.`]);
     case TSMART:
@@ -605,11 +605,11 @@ function tagToPortrayal(tag) {
         `${p.Sdesc} goes out of ${p.his} way to help the helpless ones.`,
         `${p.She} acts as the moral anchor to keep the team from becoming too corrupted.`]);
     case TEVERYMAN:
-      return randomArray([`${p.She} is content with ${p.his} life.`,
-        `${p.She} is friendly and unambitious.`]);
+      return randomArray([`${p.She} has turned down chances to move up, and meant it.`,
+        `${p.She} talks about ${p.his} weekend more than the work in front of ${p.him}.`]);
     case THAM:
       return randomArray([`${p.She} doesn't have an indoor voice. Everything ${p.she} says is in loud volumes.`,
-        `${p.She} is dramatic and loud.`,
+        `${p.She} announces ${p.his} own entrances.`,
         `${p.She} is often the center of attention because of ${p.his} loud words and loud actions.`]);
     case TMODEST:
       return randomArray([`${p.She} is approachable, down-to-earth, and comfortable to be around.`,
@@ -622,11 +622,13 @@ function tagToPortrayal(tag) {
     // case TWEAK:
     case TCHARISMATIC:
       return randomArray([`${p.She} easily convinces others.`,
-        `${p.She} is charismatic and fun to be around.`, `${p.She} is polite and respectful.`,
-        `${p.She} is nice and likeable.`]);
+        `Strangers tell ${p.him} things they haven't told their friends.`,
+        `${p.She} remembers the small details people mention in passing, and brings them up later.`]);
     case TUNCHARISMATIC:
-      return randomArray([`${p.She} seems irritating.`, `${p.She} seems creepy and weird.`,
-        `${p.She} pushes everyone away from being emotionally close.`, `${p.She} seems way too clingy.`]);
+      return randomArray([`Conversations with ${p.him} end a little sooner than they should.`,
+        `${p.She} stands a bit too close, and doesn't notice people stepping back.`,
+        `${p.She} pushes everyone away from being emotionally close.`,
+        `${p.She} lingers after everyone else has left, looking for one more exchange.`]);
     case TPOWERFUL:
       return randomArray([`${p.She} stands straight and moves about confidently.`,
         `Others quiet down when ${p.she} speaks and pay attention and few talk back to what ${p.she} says.`]);
@@ -645,10 +647,11 @@ function tagToPortrayal(tag) {
         `${p.Sdesc} is egoistic and acts as if the whole world revolves around ${p.him}.`]);
     case TTEAMPLAYER:
       return randomArray([`${p.Sdesc} happily and eagerly follows orders.`,
-        `${p.She} is a team player.`]);
+        `${p.She} picks up the jobs nobody else volunteers for.`]);
     case TBRAVE:
       return randomArray([`${p.Sdesc} inspires the team with ${p.his} bravery.`,
-        `${p.Sdesc} is calm when facing danger.`, `${p.Sdesc} is a risk taker.`]);
+        `${p.Sdesc} is calm when facing danger.`,
+        `${p.She} volunteers for the part of the plan with the worst odds.`]);
     // case TBADASS:
     //   return randomArray([``,
     //     ``]);
@@ -656,11 +659,11 @@ function tagToPortrayal(tag) {
       return randomArray([`${p.She} is often the target of demeaning jokes.`,
         `Everyone makes fun of ${p.sdesc}.`]);
     case THUMBLE:
-      return randomArray([`${p.She} is humble.`,
+      return randomArray([`${p.She} redirects credit to whoever was standing nearest.`,
         `${p.She} never shows off ${p.his} strengths.`]);
     case TARROGANT:
       return randomArray([`${p.She} never admits that ${p.she} is wrong.`,
-        `${p.Sdesc} is cocky and arrogant.`]);
+        `${p.She} corrects people who were not wrong.`]);
     case TWISE:
       return randomArray([`${p.She} often gives good advice.`,
         `${p.She} is mature, and many people respect ${p.him} for it.`]);
@@ -675,17 +678,19 @@ function tagToPortrayal(tag) {
         `${p.Sdesc} far outclasses the protagonist and their team.`]);
     case TBITCH:
       return randomArray([`Many people hate ${p.sdesc} and talk behind ${p.his} back, but most are cooperative in person.`,
-        `Everyone hates ${p.sdesc}.`]);
+        `Rooms go quiet when ${p.she} walks in, and start up again ${p.his} way once ${p.she} leaves.`,
+        `People are careful around ${p.him} — not out of respect, but because crossing ${p.him} has a cost.`,
+        `${p.Sdesc} gets agreement in the meeting and resistance everywhere else.`]);
     case TLOVABLE:
-      return randomArray([`${p.She} is fun to be around.`,
+      return randomArray([`People invent reasons to sit near ${p.him}.`,
         `The mood of the room lightens up when ${p.she} is around.`,
-        `${p.She} is adorable.`,]);
+        `Even ${p.his} mistakes get retold later as fond stories.`,]);
     case TLOAD:
       return randomArray([`${p.Sdesc} is dead weight who makes things harder for everyone else`,
         `${p.She} is a burden on the team, often resulting from ${p.his} own laziness.`]);
     case TOBSTRUCTIVE:
       return randomArray([`${p.Sdesc} uses ${p.his} position to make things difficult for others.`,
-        `${p.She} is being purposely obstructive.`]);
+        `${p.She} raises a fresh objection each time the last one is answered.`]);
     case TCONTRARIAN:
       return randomArray([`${p.Sdesc} actively pokes holes in the plans of others, opposing them, and complain about everything they do.`,
         `${p.She} can be an annoying advisor who offers excessive criticism and proposes nothing helpful.`]);
@@ -693,18 +698,18 @@ function tagToPortrayal(tag) {
       return randomArray([`${p.Sdesc} is quick to agree to everything ${p.his} boss proposes.`,
         `Whatever your religious or political opinion, ${p.sdesc} agrees with it.`]);
     case TMYSTERIOUS:
-      return randomArray([`${p.His} identity is obscured.`,
-        `Little is publicly known about ${p.him}.`]);
+      return randomArray([`${p.She} answers questions about ${p.herself} with questions.`,
+        `Little is publicly known about ${p.him}, and ${p.she} keeps it that way.`]);
     case TIDEALISTIC:
       return randomArray([`${p.Sdesc} repays cruelty with kindness.`,
         `${p.She} will repay cruelty with kindness, and anger with calm.`,
-        `${p.She} is relentlessly optimistic and cheerful.`]);
+        `${p.She} keeps looking for the reading of events in which nobody meant any harm.`]);
     case TCYNICAL:
-      return randomArray([`${p.Sdesc} is cynical of others.`,
+      return randomArray([`${p.She} asks what someone stands to gain before ${p.she} asks anything else.`,
         `${p.She} is distrustful of human sincerity.`]);
     case TSTOIC:
       return randomArray([`${p.Sdesc} shows no reaction to any provocation or humor.`,
-        `${p.She} shows no emotion.`]);
+        `People read ${p.his} mood by guesswork, and get it wrong.`]);
     case THOTBLOODED:
       return randomArray([`${p.She} is extremely passionate about everything ${p.she} does and gives it 110%.`,
         `${p.She} never does anything half-hearted. Everything ${p.she} does is taken to the extreme.`]);
@@ -715,20 +720,21 @@ function tagToPortrayal(tag) {
       return randomArray([`When angry, ${p.she} will simply vent ${p.his} frustration in polite words.`,
         `When angry, ${p.she} never shouts or slams ${p.his} fists down, but politely expresses ${p.his} rage.`]);
     case TSNARKY:
-      return randomArray([`${p.Sdesc} is often snarky and bitter.`,
+      return randomArray([`${p.She} answers sincere questions with a joke at the asker's expense.`,
         `Every response by ${p.sdesc} is snarky and sarcastic.`]);
     case TOBVIOUS:
       return randomArray([`${p.Sdesc} states the obvious. Sometimes for story exposition purposes.`,
         `${p.Sdesc} will often say obvious things to make the plot clear.`]);
     case TCOLD:
       return randomArray([`${p.She} doesn't get along with people, and finds them annoying.`,
-        `${p.She} is distrustful and avoids being attached to others.`, `${p.She} is unfriendly and says little.`]);
+        `${p.She} is distrustful and avoids being attached to others.`,
+        `${p.She} lets a question sit unanswered until someone else fills the silence.`]);
     case TWARM:
-      return randomArray([`${p.She} is kind-hearted and loving.`,
-        `${p.She} is cheerful and friendly.`]);
+      return randomArray([`${p.She} remembers what people are worried about and checks back on it.`,
+        `${p.She} makes room for whoever arrived last.`]);
     case TSTERN:
       return randomArray([`${p.She} has an intimidating, stern tone.`,
-        `${p.Sdesc} is strict and gruff.`]);
+        `${p.She} names the rule that was broken before ${p.she} asks why.`]);
     case TEATER:
       return randomArray([`${p.Sdesc} eats more than the rest of ${p.his} team combined.`,
         `${p.Sdesc} will finish several plates per meal, chomping it all down quickly.`]);
