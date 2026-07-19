@@ -579,7 +579,7 @@ function tagToPortrayal(tag) {
         `${p.She} has the opinion that those who are unsuccessful have deserved to be so.`]);
     case TLEADER:
       return randomArray([`When the team's opinion is split, others often expect ${p.him} to make the decision.`,
-        `${p.She} often calls the shots during an team exercise.`]);
+        `${p.She} often calls the shots during a team exercise.`]);
     case TFOLLOWER:
       return randomArray([`${p.She} may disagree with the team, but follows consensus without argument.`,
         `${p.She} follows orders strictly and rarely does ${p.his} own plans.`]);

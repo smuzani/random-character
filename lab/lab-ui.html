@@ -260,7 +260,13 @@
     text-decoration: underline;
     flex: 0 0 auto;
   }
-  .drawer-actions { display: flex; gap: 0.6rem; margin-top: 0.8rem; }
+  .drawer .hint {
+    font-size: 0.7rem;
+    line-height: 1.5;
+    color: var(--muted);
+    margin: 0.6rem 0 0;
+  }
+  .drawer-actions { display: flex; gap: 0.6rem; margin-top: 0.8rem; flex-wrap: wrap; }
   .drawer-actions button {
     font: inherit; font-size: 0.75rem; font-weight: 600;
     letter-spacing: 0.05em; text-transform: uppercase;
@@ -334,12 +340,39 @@
   initAspects(); initTeams(); initPlots(); initWants();
 
   const LS_KEY = 'rcg-lab-flags-v1';
+  // Short hash of the engine source, stamped in by lab/build.js. Seeds only
+  // replay identically against the engine they were rolled on, so the desk
+  // warns instead of silently showing a different character.
+  const ENGINE_STAMP = '__STAMP__';
   let current = null;
   let flags = [];
   try { flags = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch (e) { flags = []; }
 
   const $id = (x) => document.getElementById(x);
   const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  // navigator.clipboard needs a secure context and can still reject on mobile;
+  // fall back to a selected textarea so the text is never trapped in the page.
+  function copy(text, label) {
+    const done = () => toast('Copied ' + label);
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(done, () => fallback(text));
+      return;
+    }
+    fallback(text);
+  }
+  function fallback(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:1rem;left:1rem;right:1rem;height:8rem;z-index:99';
+    document.body.appendChild(ta);
+    ta.select();
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    if (ok) { document.body.removeChild(ta); toast('Copied'); }
+    else { toast('Select the text above and copy'); setTimeout(() => ta.remove(), 15000); }
+  }
 
   function newSeed() {
     return (Date.now() % 2147483647) ^ Math.floor(Math.random() * 0xffff);
@@ -455,8 +488,12 @@
         '</div><button class="rm" data-rm="' + i + '">remove</button></li>';
     });
     html += '</ul><div class="drawer-actions">' +
-      '<button id="copyBtn">Copy JSON</button>' +
-      '<button id="clearBtn">Clear all</button></div>';
+      '<button id="copyBtn">Copy for desk</button>' +
+      '<button id="copyFullBtn">Copy full</button>' +
+      '<button id="clearBtn">Clear all</button></div>' +
+      '<p class="hint">"Copy for desk" sends seeds only \u2014 small enough to paste in chat, ' +
+      'and the desk replays the exact characters. "Copy full" carries the rendered text, ' +
+      'for when the engine has changed since you rolled.</p>';
     d.innerHTML = html;
 
     d.querySelectorAll('.note-input').forEach(function (inp) {
@@ -471,10 +508,24 @@
         saveFlags();
       });
     });
+    // Seeds-only: every roll is deterministic from (seed, opts), so the desk
+    // regenerates the exact character. ~120 bytes a flag instead of ~2.5 KB.
     d.querySelector('#copyBtn').addEventListener('click', function () {
-      navigator.clipboard.writeText(JSON.stringify(flags, null, 2)).then(
-        () => toast('Copied ' + flags.length + ' flag' + (flags.length === 1 ? '' : 's')),
-        () => toast('Copy failed \u2014 select manually'));
+      const payload = {
+        engine: ENGINE_STAMP,
+        flags: flags.map(f => ({
+          seed: f.data.seed,
+          role: f.data.opts.role,
+          detail: f.data.opts.detail,
+          note: f.note,
+          was: f.data.name + ' \u2014 ' + (f.data.concept || '')
+        }))
+      };
+      copy(JSON.stringify(payload), flags.length + ' flag' + (flags.length === 1 ? '' : 's') + ' (seeds)');
+    });
+    d.querySelector('#copyFullBtn').addEventListener('click', function () {
+      copy(JSON.stringify({ engine: ENGINE_STAMP, flags: flags }, null, 2),
+        flags.length + ' flag' + (flags.length === 1 ? '' : 's') + ' (full)');
     });
     d.querySelector('#clearBtn').addEventListener('click', function () {
       if (confirm('Clear all ' + flags.length + ' flags?')) { flags = []; saveFlags(); }
