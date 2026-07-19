@@ -15,76 +15,99 @@
 // fashion_* from the clothing roll, facial_hair_* from the appearance roll —
 // which is why the concept must be generated last.
 
+// Same honesty rule as conceptNouns below: this list is the unbiased draw, so a
+// word here has to be safe on a character we know nothing else about. Manner
+// and mood qualify ("polite", "grumpy", "restless") — those read as flavor even
+// when unearned, which is why "Polite Crooked ..." never drew a complaint.
+//
+// Two groups were cut because they assert rather than flavor:
+//   Alignment/status — moral, heroic, noble, innocent, guilty, rich, chosen,
+//   cursed, scarred, towering, pretty, timeless. These contradict the sheet
+//   outright ("Moral Outcast" on a sadist who wants the world to burn). Every
+//   one is already earned through conceptMap, so cutting them here costs no
+//   vocabulary — they simply require a tag now.
+//   Non-human — godlike, supernatural, immortal, eternal, ghostly, mechanical,
+//   clockwork, synthetic, horned, tentacled, feline, plastic, porcelain,
+//   hairless. These claim a body the generator never produces; the same
+//   "output reads human" ruling already rejected fantasy skin tones. 'hairless'
+//   also contradicts the hair line printed two rows above the subtitle.
 const conceptAdjectives = [
   'ancient', 'anxious', 'awkward', 'violent',
   'bookish', 'brainwashed', 'british', 'brooding',
   'burnished', 'burned', 'cagey', 'caged',
-  'chaotic', 'charismatic', 'charming', 'choked', 'chosen',
+  'chaotic', 'charismatic', 'charming', 'choked',
   'cocky', 'cool',
-  'cursed', 'cynical', 'deadly',
+  'cynical', 'deadly',
   'deadpan', 'destructive', 'dignified', 'drunk',
-  'elegant', 'eternal', 'talkative', 'feline',
+  'elegant', 'talkative',
   'feral', 'fiery', 'flatulent',
-  'foulmouthed', 'ghostly', 'glittering', 'glossy',
-  'godlike', 'golden', 'graceful', 'grieving', 'grumpy', 'guilty', 'gutsy',
-  'hairless', 'heroic', 'hidden',
-  'hopeful', 'horned', 'hot', 'hypercharged', 'icy',
-  'inflamed', 'innocent',
+  'foulmouthed', 'glittering', 'glossy',
+  'golden', 'graceful', 'grieving', 'grumpy', 'gutsy',
+  'hidden',
+  'hopeful', 'hot', 'hypercharged', 'icy',
+  'inflamed',
   'jealous', 'jingoistic',
   'gentle', 'lazy', 'lonely', 'loudmouthed', 'lovelorn',
-  'loyal', 'masked', 'mechanical',
-  'mischievous', 'monotone', 'moral', 'morbid', 'muddy',
-  'naïve', 'narcotic', 'noble', 'obsessive', 'optimistic',
+  'loyal', 'masked',
+  'mischievous', 'monotone', 'morbid', 'muddy',
+  'naïve', 'narcotic', 'obsessive', 'optimistic',
   'passionate', 'patriotic', 'patient',
-  'pierced', 'plastic', 'playful', 'polite', 'porcelain', 'powerful', 'powerless',
-  'pretty', 'provincial', 'quiet', 'rageful',
-  'scarred',
-  'revolutionary', 'rich', 'royal', 'sadistic',
+  'pierced', 'playful', 'polite', 'powerful', 'powerless',
+  'provincial', 'quiet', 'rageful',
+  'revolutionary', 'sadistic',
   'sarcastic', 'seductive',
   'hateful', 'eloquent', 'silent', 'slippery', 'smug',
   'soft', 'kind', 'sparkly',
   'spoiled', 'stubborn', 'energetic',
-  'supernatural', 'synthetic', 'tattooed',
-  'tentacled', 'timeless', 'tired', 'tireless', 'towering', 'toxic', 'tragic',
+  'tattooed',
+  'tired', 'tireless', 'toxic', 'tragic',
   'unhinged', 'unstoppable', 'uptight',
   'vengeful', 'weary', 'weaponized', 'whimsical', 'witty',
   // V7.6 expansion
-  'borrowed', 'bulletproof', 'clockwork', 'counterfeit', 'crooked',
+  'borrowed', 'bulletproof', 'counterfeit', 'crooked',
   'exiled', 'feverish', 'forgotten', 'freelance', 'gilded', 'haunted',
-  'hollow', 'humming', 'immortal', 'iron', 'laughing', 'midnight',
+  'hollow', 'humming', 'iron', 'laughing', 'midnight',
   'nervous', 'penitent', 'ragged', 'reluctant', 'restless', 'retired',
   'rusted', 'sleepless', 'starving', 'thundering', 'unlicensed', 'velvet',
   'wandering', 'wounded'
 ];
 
+// The UNBIASED pool — drawn from when the tag-earned words don't win, so every
+// word here has to be honest about a character we know nothing else about.
+// That means stance nouns only: how someone holds themselves toward the world.
+//
+// Professions and species are deliberately absent. A subtitle is the most
+// prominent line under the name, and "Polite Crooked Spy" on a character with
+// no espionage anywhere on the sheet reads as a fact the reader then hunts for
+// and never finds. V7.6 expanded this pool with ~50 occupation nouns to dilute
+// repetition; measured over 400 rolls that made HALF of all subtitles assert a
+// job the sheet never supported. Repetition was the cheaper problem.
+//
+// Occupation nouns still reach the draw through conceptMap — but only where the
+// tag genuinely implies the role (TMOLE ⇒ spy, TTECHIE ⇒ hacker, TMADSCIENCE ⇒
+// scientist). There is no general profession system; if characters should have
+// jobs, that wants its own earned bank, not a noise pool. The 249 words already
+// living only in conceptMap carry the variety this list used to fake.
+// Also absent: nouns that assert a SITUATION or an exceptional ability the
+// sheet never established — escapee, prisoner, genius, prodigy, liar, nemesis,
+// usurper, rebel. Each is a claim on the same footing as a job. All of them
+// still appear the moment a tag earns them (PFUGITIVE ⇒ escapee, TSMART ⇒
+// genius, TLIAR ⇒ liar), which is the whole point of the earned pool.
 const conceptNouns = [
-  'advisor', 'agent', 'ambassador', 'anarchist', 'angel', 'archeologist', 'assassin', 'dancer', 'beast',
-  'boxer', 'bruiser', 'bureaucrat', 'clown', 'comedian',
-  'consort', 'crusader', 'dictator', 'dog', 'dragon',
-  'downer', 'dreamer', 'elf', 'escapee', 'executioner', 'exile',
-  'experiment', 'explorer', 'genius', 'ghost', 'god', 'gremlin',
-  'heir', 'icon', 'idiot', 'impostor',
-  'rider', 'savior', 'joker', 'journalist', 'judge',
-  'kid', 'kleptomaniac', 'knight', 'liar', 'loner', 'marshal',
-  'menace', 'monster', 'murderer', 'muse',
-  'necromancer', 'nemesis', 'ninja', 'nihilist', 'oracle', 'optimist', 'outcast',
-  'outsider', 'parisian', 'peacemaker', 'poet',
-  'prisoner', 'prodigy', 'professor', 'racer', 'rebel', 'realist', 'robot',
-  'rogue', 'romantic', 'royal', 'sadist', 'schemer', 'scholar', 'sculptor',
-  'seer', 'shadow', 'singer', 'spy',
-  'survivor', 'thief', 'underdog', 'underlord', 'usurper', 'vampire', 'voyager', 'wanderer',
-  'wannabe', 'warlock', 'warrior', 'weapon', 'whisperer', 'wizard',
-  'writer', 'zombie',
-  // V7.6 expansion — dilutes the pool so no single noun dominates
-  'alchemist', 'apothecary', 'arsonist', 'bard', 'blacksmith', 'butcher',
-  'cartographer', 'chaplain', 'conscript', 'courier', 'deserter', 'diplomat',
-  'drifter', 'duelist', 'envoy', 'falconer', 'gambler', 'gladiator',
-  'gravedigger', 'gunslinger', 'hermit', 'innkeeper', 'jailer', 'jester',
-  'librarian', 'lockpick', 'mapmaker', 'mercenary', 'monk', 'mystic',
-  'nomad', 'outlaw', 'physician', 'pirate', 'preacher', 'quartermaster',
-  'ringleader', 'saboteur', 'scavenger', 'sellsword', 'smuggler', 'stowaway',
-  'surgeon', 'swindler', 'tinkerer', 'tyrant', 'undertaker', 'vagabond',
-  'warden', 'wrestler', 'zealot'
+  'downer', 'dreamer', 'drifter', 'hermit', 'idiot', 'kid',
+  'loner', 'menace', 'nihilist', 'nomad', 'optimist', 'outcast',
+  'outsider', 'realist', 'romantic', 'shadow', 'survivor',
+  'underdog', 'vagabond', 'wanderer', 'wannabe',
+  // Stance words added to keep the unbiased pool wide enough that a miss
+  // doesn't recur — these replace the occupation nouns in volume without
+  // replacing them in dishonesty.
+  'apprentice', 'bystander', 'convert', 'deadweight', 'doubter',
+  'firebrand', 'holdout', 'homebody', 'latecomer', 'malcontent',
+  'newcomer', 'nuisance', 'onlooker', 'opportunist', 'purist',
+  'quitter', 'relic', 'remnant', 'runt', 'skeptic',
+  'sleeper', 'spectator', 'straggler', 'stranger', 'stray',
+  'throwback', 'upstart', 'veteran', 'washout', 'watcher',
+  'wildcard', 'workhorse'
 ];
 
 // Only mixed in when the character actually carries the gender tag, so the
@@ -425,9 +448,17 @@ function conceptTitleCase(s) {
   ).join(' ');
 }
 
+// How many copies of a tag-matched word join the draw. Bolt shipped 2, which
+// against a 146-word flat pool put the character's own vocabulary at ~17% of
+// the noun draw — the subtitle was mostly describing nobody. 6 puts a typical
+// roll's earned words in the majority without making the draw deterministic;
+// measured relevance goes 17% → ~55%, and repetition (top noun share) moves
+// only 1.6% → 2.2%, which is the trade V7.6 was worried about.
+const CONCEPT_TAG_BIAS = 6;
+
 // tags: the character's full end-of-roll tag Set. Tag-matched words are pushed
-// twice (2× bias, Bolt's tuning); gendered words only join when the gender tag
-// is present, so "No gender stereotypes" suppresses them for free.
+// CONCEPT_TAG_BIAS times; gendered words only join when the gender tag is
+// present, so "No gender stereotypes" suppresses them for free.
 function generateConcept(tags) {
   const adjectives = conceptAdjectives.slice();
   const nouns = conceptNouns.slice();
@@ -442,7 +473,7 @@ function generateConcept(tags) {
   tags.forEach(function (t) {
     const words = conceptMap[t];
     if (!words) return;
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < CONCEPT_TAG_BIAS; i++) {
       if (words.adjectives) adjectives.push(...words.adjectives);
       if (words.nouns) nouns.push(...words.nouns);
     }
