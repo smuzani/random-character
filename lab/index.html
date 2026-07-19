@@ -1,5 +1,10 @@
+<!-- RCG Roll Lab. Source of truth for both builds: served directly at
+     /lab/ on the deployed site (plain script tags, no build step), and
+     inlined into one self-contained file by `node lab/build.js` for the
+     published artifact. Edit this file, not lab/dist/. -->
 <title>RCG Roll Lab</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
 <style>
   :root {
     --paper: #FBF9F4;
@@ -330,8 +335,19 @@
 </div>
 <div class="toast" id="toast"></div>
 
+<script src="lab-shims.js"></script>
+<script src="../js/tag-details.js"></script>
+<script src="../js/plot-details.js"></script>
+<script src="../js/want-details.js"></script>
+<script src="../js/appearance-details.js"></script>
+<script src="../js/clothing-details.js"></script>
+<script src="../js/concept-details.js"></script>
+<script src="../js/palette-details.js"></script>
+<script src="../assets/names.js"></script>
+<script src="../js/generator7.js"></script>
+<script src="lab-core.js"></script>
+<script src="engine-stamp.js"></script>
 <script>
-/*__ENGINE__*/
 
 /* ---------- lab page ---------- */
 (function () {
@@ -343,7 +359,7 @@
   // Short hash of the engine source, stamped in by lab/build.js. Seeds only
   // replay identically against the engine they were rolled on, so the desk
   // warns instead of silently showing a different character.
-  const ENGINE_STAMP = '__STAMP__';
+
   let current = null;
   let flags = [];
   try { flags = JSON.parse(localStorage.getItem(LS_KEY) || '[]'); } catch (e) { flags = []; }
