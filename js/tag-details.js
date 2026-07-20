@@ -679,7 +679,7 @@ function tagToPortrayal(tag) {
     case TBITCH:
       return randomArray([`Many people hate ${p.sdesc} and talk behind ${p.his} back, but most are cooperative in person.`,
         `Rooms go quiet when ${p.she} walks in, and start up again ${p.his} way once ${p.she} leaves.`,
-        `People are careful around ${p.him} — not out of respect, but because crossing ${p.him} has a cost.`,
+        `Meetings get rescheduled the moment someone learns ${p.sdesc} will be there.`,
         `${p.Sdesc} gets agreement in the meeting and resistance everywhere else.`]);
     case TLOVABLE:
       return randomArray([`People invent reasons to sit near ${p.him}.`,
