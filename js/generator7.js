@@ -991,6 +991,8 @@ function characterSections(c) {
 }
 
 function displayCharacter(c) {
+  $('#export-actions').removeClass('hidden');
+  $('#export-status').text('');
   resolveCharacter(c);
   renderPortraitHeader(c.appearance.values, c.paletteSeed, c.concept);
   renderStyle(c.clothing);

@@ -103,6 +103,16 @@
     <!-- Right Column: Character Sheet -->
     <main class="sheet-column">
 
+      <div class="export-actions hidden" id="export-actions">
+        <button type="button" id="copy-character" title="Copy formatted character text" aria-label="Export character: copy formatted text">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 15V3m-4 4 4-4 4 4M5 13v7h14v-7" />
+          </svg>
+          <span>Export</span>
+        </button>
+        <span id="export-status" role="status" aria-live="polite"></span>
+      </div>
+
       <div class="sheet-header">
         <!-- First-load state: plain name, no empty square. Replaced by the card on first generation. -->
         <h2 class="sheet-name" id="display-name-plain">CHARACTER NAME</h2>
@@ -227,6 +237,7 @@
   <script src="assets/names.js"></script>
 
   <script src="js/generator7.js"></script>
+  <script src="js/character-export.js"></script>
 
 
   <!-- Global site tag (gtag.js) - Google Analytics -->

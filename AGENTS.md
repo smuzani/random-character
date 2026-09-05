@@ -29,7 +29,7 @@ My crew would die for me. They're processes. They don't mind.
 
 ## Project Overview
 
-A procedural **random character generator** for writers, game designers, and storytellers. Generates personality-driven characters using weighted trope-based aspects, with support for wants, plot hooks, appearance, and team dynamics. Currently at **V7.4**.
+A procedural **random character generator** for writers, game designers, and storytellers. Generates personality-driven characters using weighted trope-based aspects, with support for wants, plot hooks, appearance, and team dynamics. Currently at **V7.6**.
 
 Live site: Static HTML/JS served directly (no build step, no framework).
 
@@ -48,7 +48,7 @@ Live site: Static HTML/JS served directly (no build step, no framework).
 
 This is a **static site** — open `index.html` directly or serve with any static file server. There is no `package.json`, no bundler, no transpiler.
 
-### Core Engine (`js/generator7.js`, ~1072 lines)
+### Core Engine (`js/generator7.js`)
 
 The generator uses a **weighted procedural system** based on TV Tropes archetypes:
 
@@ -57,7 +57,7 @@ The generator uses a **weighted procedural system** based on TV Tropes archetype
 3. **Generation flow**:
    - User selects Role (Heroic/Villainous/Support/Any), Gender, Detail level
    - `loadTags()` → initial tags from form inputs
-   - `loadInitialBranches()` → branch sequence based on detail level (e.g. `[BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY]`)
+   - `loadInitialBranches()` → branch sequence based on detail level (e.g. `[BPERSONALITY, BPERSONALITY, BWANT, BSINGLEPLOT]`)
    - `createCharacter()` → iterates branches, rolling weighted aspects that match tag requirements
    - `displayCharacter()` → renders results into DOM sections
 
@@ -112,7 +112,7 @@ This prevents conflicts (e.g. a pacifist won't also be a sadist).
 
 ```
 User Input → loadTags() → [TFACE, TMALE, BTEAMONE]
-                        → loadInitialBranches() → [BWANT, BSINGLEPLOT, BPERSONALITY, BPERSONALITY]
+                        → loadInitialBranches() → [BPERSONALITY, BPERSONALITY, BWANT, BSINGLEPLOT]
 
 For each branch:
   1. Filter aspects array by character's current tags (requirements/excludes)
@@ -170,12 +170,8 @@ aspects.push(new Aspect("Trope Name", weight, "Description text",
 
 ## Notes
 
-- `ROADMAP_CHECKLIST.md`: Tracking feature progress and migration tiers.
-- `ARCHITECTURE.md`: Technical plan for V7.5 and V8, including UI overhaul strategy.
-- `js/main.js` is empty
-- `dist/` directory exists but is empty
+- `ROADMAP_CHECKLIST.md`: Remaining features.
+- `ARCHITECTURE.md`: Current architecture and V8 boundaries.
 - `doc/` contains H5BP boilerplate docs, not project-specific documentation
 - The `tags.html` page uses Vue.js (CDN) for a CRUD interface
 - Background texture: `img/cream_texture.png`
-- Version comment in code says "Will be deprecated for V8, once content is always from from server"
-- All 22 previously-stubbed want descriptions (`WGETJOBDONE` through `WSEERUINED`) are now filled and live

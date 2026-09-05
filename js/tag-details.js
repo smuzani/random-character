@@ -784,7 +784,7 @@ function tagToPortrayal(tag) {
         `${p.She} would rather lose clean than win ugly, and salutes a good opponent.`]);
     case TTRANQUILFURY:
       return randomArray([`When truly angry, ${p.she} goes very quiet, and everyone who knows ${p.him} clears the room.`,
-        `${p.His} rage never raises its voice, which makes it far more frightening.`]);
+        `The worse ${p.his} temper gets, the calmer ${p.she} sounds`]);
     case TFAVORITEFOOD:
       return randomArray([`${p.She} is never far from ${p.his} favorite food, and everyone knows what it is.`,
         `${p.She} can be bribed, reliably, with one particular dish.`]);

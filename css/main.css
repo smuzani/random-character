@@ -518,3 +518,43 @@ input[type="text"]:focus, select:focus {
   margin: -0.5rem 0 0.75rem;
   letter-spacing: 0.02em;
 }
+
+/* The export action belongs to the sheet, above the portrait header. */
+.export-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin: -1.5rem 0 0.75rem;
+}
+.export-actions button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0.5rem 0.65rem;
+  font-family: var(--font-ui);
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.export-actions button:hover {
+  color: var(--text-main);
+  background: #f3f4f6;
+}
+.export-actions button:focus-visible {
+  color: var(--text-main);
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+#export-status {
+  order: -1;
+  max-width: 100%;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--text-main);
+}
