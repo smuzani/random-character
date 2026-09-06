@@ -13,11 +13,12 @@
     <section class="intro">
       <h1>Someone worth getting to know.</h1>
       <p>A want. Something in the way. See who turns up.</p>
-      <div class="entrances" aria-label="Ways to create">
-        <button id="discover" class="primary">Discover a character</button>
-        <button id="quick">Make one for me</button>
-        <button id="draw">Give me someone to draw</button>
+      <div class="entrances" role="group" aria-label="Creation mode">
+        <button id="simple" aria-pressed="true">Simple</button>
+        <button id="detailed" aria-pressed="false">Detailed</button>
+        <button id="narrative" aria-pressed="false">Narrative</button>
       </div>
+      <p id="mode-description" class="note"></p>
     </section>
     <div class="workspace">
       <section id="play" aria-labelledby="question"></section>
