@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Character creation sketch</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="creation.js" defer></script>
+</head>
+<body>
+  <header><a href="../index.html">Character Generator</a><span>Creation sketch</span></header>
+  <main>
+    <section class="intro">
+      <h1>Someone worth getting to know.</h1>
+      <p>A want. Something in the way. See who turns up.</p>
+      <div class="entrances" aria-label="Ways to create">
+        <button id="discover" class="primary">Discover a character</button>
+        <button id="quick">Make one for me</button>
+        <button id="draw">Give me someone to draw</button>
+      </div>
+    </section>
+    <div class="workspace">
+      <section id="play" aria-labelledby="question"></section>
+      <aside id="sheet" aria-label="Your character"></aside>
+    </div>
+    <p id="status" role="status"></p>
+    <footer>A small experiment in choosing and discovering. <a href="../index.html">Use the full generator</a></footer>
+  </main>
+</body>
+</html>
