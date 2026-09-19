@@ -1,4 +1,4 @@
-// Read the rendered sheet: the text banks contain random choices, so export
+// Read the rendered sheet: the text banks contain random choices, so sharing
 // must never call the generator or characterSections() again.
 (function () {
   'use strict';
@@ -46,17 +46,46 @@
     return copied;
   }
 
+  const button = byId('share-character');
+  // iPadOS can identify as a Mac. Touch alone must not enable sharing on desktop PCs.
+  const mobile = (navigator.userAgentData && navigator.userAgentData.mobile) ||
+    /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const nativeShare = mobile && window.isSecureContext && typeof navigator.share === 'function';
+  button.title = nativeShare ? 'Share character' : 'Copy character text';
   let statusTimer;
-  byId('copy-character').addEventListener('click', async function () {
+  let busy = false;
+  button.addEventListener('click', async function () {
+    if (busy) return;
+    busy = true;
     clearTimeout(statusTimer);
-    const value = characterText();
-    let copied = false;
-    if (navigator.clipboard && window.isSecureContext) {
-      try { await navigator.clipboard.writeText(value); copied = true; } catch (_) { /* Try the local fallback. */ }
+    const status = byId('export-status');
+    status.textContent = '';
+    try {
+      const value = characterText();
+      const data = { text: value };
+      if (nativeShare) {
+        try {
+          if (!navigator.canShare || navigator.canShare(data)) {
+            await navigator.share(data);
+            return;
+          }
+        } catch (error) {
+          // Dismissing the share sheet must not silently copy to the clipboard.
+          if (error.name === 'AbortError') return;
+          // Unsupported or blocked sharing falls back to copying the same text.
+        }
+      }
+      let copied = false;
+      if (navigator.clipboard && window.isSecureContext) {
+        try { await navigator.clipboard.writeText(value); copied = true; } catch (_) { /* Try the local fallback. */ }
+      }
+      if (!copied) copied = fallbackCopy(value);
+      status.textContent = copied ? 'Copied.' : 'Could not copy. Select and copy the character text.';
+      if (copied) statusTimer = setTimeout(() => { status.textContent = ''; }, 2500);
+    } finally {
+      busy = false;
     }
-    if (!copied) copied = fallbackCopy(value);
-    byId('export-status').textContent = copied ? 'Copied.' : 'Could not copy. Select and copy the character text.';
-    if (copied) statusTimer = setTimeout(() => { byId('export-status').textContent = ''; }, 2500);
   });
 
 }());

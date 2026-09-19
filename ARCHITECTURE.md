@@ -4,7 +4,7 @@ The [public roadmap](roadmap.html) defines feature scope and priorities. This do
 
 ## Current application
 
-V7.8 is a static HTML, CSS, and JavaScript site. The public generator needs no build step or backend.
+V7.9 is a static HTML, CSS, and JavaScript site. The public generator needs no build step or backend.
 
 The engine generates traits, then resolves appearance, clothing, palette seeds, and concepts. `characterSections()` assembles section text. The page renders that text.
 
