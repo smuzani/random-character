@@ -1,8 +1,10 @@
 # Architecture
 
+The [public roadmap](roadmap.html) defines feature scope and priorities. This document records implementation choices and technical boundaries.
+
 ## Current application
 
-V7.6 is a static HTML, CSS, and JavaScript site. The public generator needs no build step or backend.
+V7.8 is a static HTML, CSS, and JavaScript site. The public generator needs no build step or backend.
 
 The engine generates traits, then resolves appearance, clothing, palette seeds, and concepts. `characterSections()` assembles section text. The page renders that text.
 
@@ -22,6 +24,8 @@ V8 uses Next.js for the web application and secure backend routes. It does not u
 
 Accounts, cloud storage, and AI integrations need backend services. Core generation remains available on the client.
 
-Creation Flow adds trait locks and individual rerolls. Dependent appearance, clothing, and concept rules must remain consistent after each change.
+Planned creation controls add trait locks and individual rerolls. Their release version is undecided. Dependent appearance, clothing, and concept rules must remain consistent after each change.
 
-See [ROADMAP_CHECKLIST.md](ROADMAP_CHECKLIST.md) for remaining features.
+The first V8 release scope and dates are not set. Accounts, cloud storage, and AI integrations are longer-term scope, not fixed first-release requirements.
+
+[ROADMAP_CHECKLIST.md](ROADMAP_CHECKLIST.md) tracks remaining work from the public roadmap.

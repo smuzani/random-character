@@ -38,52 +38,60 @@
   <div class="page-content">
     <h1 class="page-title">Roadmap</h1>
 
-    <p><small>Current Version: V7.4 (8 Aug 2023)</small></p>
-    <h2>Roadmap</h2>
+    <p><small>Current version: V7.8 · Roadmap updated 19 September 2026</small></p>
+    <p>Here's where we'd like to take the generator. Some of this is already working, some needs more thought.
+      The order here isn't a release order, and we haven't set a date for V8 yet.</p>
+
+    <h2 id="available">Where we are now</h2>
+    <p>Appearance and palettes are finally in, along with hairstyles, clothing, and a short concept under the name.
+      These build on the personality, wants, plot hooks, and portrayal we already had. You can also copy a character
+      out when you find one you want to keep.</p>
+    <p>We've been trying a different way to make characters in the <a href="sketch/index.html">creation sketch</a>.
+      Simple and Detailed give you different amounts of detail. Narrative lets you make choices along the way.
+      It's separate from the main generator for now, but you can try it and save or copy the results.</p>
+    <p><a href="whatisthis.html">More details in the changelog</a></p>
+
+    <h2 id="generator">Roadmap</h2>
     <p><span class="focused">Resources page</span>: I realize there's a lot of resources that can help others, so we'll
       add a page to link to them. Also a lot of people I'd like to credit.</p>
-    <p><span class="focused">Appearance</span>: This will likely turn out to be another generator in itself, about the
-      same size as the existing one. It'll have to generate hair, skin, size, race, fashion, etc. We'll have to start
-      thinking in what order we want to do this.</p>
-    <p>Are personalities based off appearance or vice versa? Say, you have a kung fu character. They'd bias towards
-      being muscular. But say it's the other way around, where you want a guard, a mook, or a love interest to look a
-      certain way, and then generate their personality.</p>
-    <p><span class="focused">Palette</span>: I'm actually more excited about this than the appearance. One idea is to
-      generate a primary <a href="https://tvtropes.org/pmwiki/pmwiki.php/Main/ColourCodedForYourConvenience">color
-        around a personality</a>. If a character is short-tempered, they'd bias to red. If they were somber, they'd be
-      purple or gray. And so on.</a></p>
-    <p>Then we'd generate complementary colors and such. There's palette algorithms. Primary <span
-        style="color:#D71C1C">red</span>, secondary <span style="color:#008D11">green</span>, with bands of <span
-        style="color:#009BB2">cyan.</span></p>
-    <p>It's possible to generate skin color against that too, e.g. <span style="color:#BB8377">dark</span>, <span
-        style="background-color: #D71C1C"><span style="color:#FFF5F0">light</span>, or <span
-          style="color:#EDE9D0">yellower</span></span>.</p>
-    <p>We can also use these colors to search for similar palettes from <a
-        href="https://lospec.com/palettes/api">Lospec</a> and such.</p>
-    <h2>Survey results</h2>
-    <p>Thanks for those who answered <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a>. After 3 long years,
-      we have finally actually gone through each of them. Here's the results, indexed and ranked by popularity:</p>
-    <img src="img/rcg_requests.png" class="img-fluid" alt="Roadmap"><br><br>
+    <p><span class="focused">Fine control</span>: Sometimes you like most of a character, but one part doesn't fit.
+      We'd like to let you lock the parts you like and reroll the rest. The tricky part is what depends on what.
+      If you change the personality, what happens to the clothes or the portrayal? We still need to work through that,
+      so this doesn't have a version attached to it yet.</p>
+    <p><span class="focused">Obstacles</span>: Wants and plot hooks get us some of the way there. But a plot hook
+      isn't always something that stops this particular character from getting what they want. We'd like to make
+      that connection stronger. Whether obstacles replace plot hooks or sit alongside them is still an open question.</p>
+    <p><span class="focused">Names</span>: We have names, but they're still heavily biased towards the US.
+      We'd like to include more cultures.</p>
+    <p><span class="focused">More depth</span>: More plots, backstories, relationships, likes and dislikes,
+      birthdays, weapons, and job concepts. Also optional details like religion, ethnicity, and sexual orientation.
+      It's not just a matter of filling more boxes. The details need to help you write or play the character,
+      and they need to agree with the rest of the sheet.</p>
+    <p><span class="focused">Consistency</span>: We've fixed some contradictions, but there's more to look for.
+      We'd also like a better way for you to flag things that don't fit.</p>
+
+    <h2 id="v8">V8 and beyond</h2>
+    <p>There's a few things we'd like to do that need a bigger change to the application. Accounts, so you can
+      save characters and pick them up on another device. Custom content, so you can bring your own ideas and settings.
+      And ways to make characters by hand, or work with several characters in the same scenario.</p>
+    <p>Character art and chat are also things we'd like to explore with AI. Those would be optional, and need
+      more work behind the scenes. The core generator should still be quick and work offline.</p>
+    <p>We don't need to finish all of that before releasing V8. The creation sketch gives us something to try
+      while we figure out what belongs in the first version.</p>
+
+    <h2 id="survey">The earlier survey</h2>
+    <p>Thanks to those who answered <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a>.
+      These are the results from the earlier roadmap, ranked by popularity at the time. They're old results now,
+      but it's useful to see what people asked for and how far we've got.</p>
+    <img src="img/rcg_requests.png" class="img-fluid" alt="Historical feature-request survey chart"><br><br>
     <h4>Appearance (100%)</h4>
-    <p>Some examples include: Hair color, eye color, skin color, body type, hair type, clothing</p>
-    <p>There's three challenges here</p>
-    <ul>
-      <li>Consistency. We heavily use tropes here to bias results. Only white people get naturally colorful hair, and
-        things like size is dependent on story trope as well. It's doable, but it's complex and slow because of possible
-        conflicts.</li>
-      <li>Setting: We don't cater for orcs and elves yet, and that would be a whole new expansion. Even natural human
-        bias might be different; if you have something based in Arabian deserts or a desert planet, people would be
-        darker skinned.</li>
-      <li>Palette: We think palette matters more than the actual colors. For example, we could make badass villains
-        brighter or, say, fiery colored hotheaded characters. I'd love to make an alpha orc villain with bright blue
-        tattoos and colors, denoting rank like a mandrill. This would take first priority when we do appearance, but we
-        have to take care that it doesn't conflict with the other things. A lot of people gave feedback that they use
-        this tool for drawing; we'd like to cater for that.</li>
-    </ul>
+    <p>Hair color, eye color, skin color, body type, hairstyles, clothing, and palettes are in now.
+      A lot of people said they used the tool for drawing, so this was a big part of the work.</p>
+    <p>Different settings still need more thought. We don't cater for orcs and elves yet, and letting you bring
+      your own setting would open up a lot more than adding a few fantasy options.</p>
     <h4>Name generation (40%)</h4>
     <p>DONE. It's basing off the <a href="https://www.gutenberg.org/ebooks/3201">Moby Word List, Grady Ward</a>. It
-      could still be improved, currently heavily biased towards US names. But characters don't have races yet, so we'll
-      revisit this later.</p>
+      could still be improved, currently heavily biased towards US names. We'd like to broaden that.</p>
     <h4>More Depth (33.3%)</h4>
     <p>Users have shown requested things like: likes/dislikes, birthdays, personality traits, preferred weapons,
       ethnicity, religion, or sexual orientation</p>
@@ -93,7 +101,7 @@
       make sure that it doesn't conflict with the wants. We have to make sure that the things we add actually improve
       the character, and that they don't conflict with each other.</p>
     <h4>More Plots (26.7%)</h4>
-    <p>We can expand this and we'll look into ways to make it combo well with ChatGPT.</p>
+    <p>We'd like more variety here, and more hooks that connect to what the character wants.</p>
     <h4>Back Story (20%)</h4>
     <p>This is one reason I started this tool. There's been some amazing outcomes doing this with AI, but I'd like to
       look for a way without paying AI to generate them.</p>
@@ -101,36 +109,18 @@
     <p>This should be reduced with engine tweaks, but we'll monitor this. Likely we'll have a button so you can flag
       inconsistencies.</p>
     <h4>Character Art (13.3%)</h4>
-    <p>Visual stuff. Pre-requisite for this is appearance. A lot of people submitted this in the survey before AI art
-      was a thing; I'm not sure if it's still relevant.</p>
+    <p>Visual stuff. Appearance is in now, so we have more to work with. Art is still something to explore for a later version.</p>
     <h4>Miscellaneous (6.7%)</h4>
     <p>Several features like clearer results, relationships, job concepts, nonbinary options, and magic have been
       highlighted. Please bring things like this up if you feel strongly about them.</p>
 
-    <h3>Things we won't do (yet)</h3>
-    <p>There's some nice suggestions here, but they won't be in version 7 because of the difficulty of implementation
-      with the current engine.</p>
-    <ul>
-      <li>Moddability. This is top of the list because it's easier for us to develop in the future as well. Likely this
-        will be done after Appearances, Back Story, and Palette generation</li>
-      <li>Settings: Should be solvable with moddable content</li>
-      <li>Dialogue</li>
-      <li>World generator: planet, biomes, scifi, towns, shops</li>
-      <li>Fine control: fill in your own details, select traits to lock or reroll</li>
-      <li>Combat</li>
-      <li>Writing prompt for first encounter. I love this idea, but it's not in high demand and challenging without AI.
-      </li>
-      <li>Fictional languages</li>
-      <li>Poetry</li>
-      <li>Fandom generator</li>
-      <li>Using older versions of this generator</li>
-    </ul>
-    <p>Please let us know what you'd like to see in <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a></p>
+    <h3 id="ideas">Things we won't do (yet)</h3>
+    <p>There's still a lot of nice suggestions we haven't found room for: world generation, combat, writing prompts
+      for a first encounter, fictional languages, poetry, fandom generators, and using older versions of the generator.</p>
+    <p>I'd still like to see where some of these go. For now, they're ideas rather than things we're promising
+      for the next release.</p>
+    <p>Please let us know what you'd like to see in <a href="https://forms.gle/rytBfiTH7N8arwgY6">the survey</a>.</p>
   </div>
-  </div>
-  </div>
-
-
 
 </main>
 
