@@ -1,6 +1,6 @@
 # Architecture
 
-The [public roadmap](roadmap.html) defines feature scope and priorities. This document records implementation choices and technical boundaries.
+The [public roadmap](roadmap.html) summarizes feature plans. [V8_SPEC.md](V8_SPEC.md) defines the agreed V8 scope. This document records implementation choices and technical boundaries.
 
 ## Current application
 
@@ -22,10 +22,18 @@ The roll lab uses the same engine through `buildCharacter(opts)`. Seed replay su
 
 V8 uses Next.js for the web application and secure backend routes. It does not use Vite or the Bolt architecture.
 
-Accounts, cloud storage, and AI integrations need backend services. Core generation remains available on the client.
+Datasets, login, and ownership are the core V8 changes. The database stores generation content and rules. The client downloads published versions and generates characters locally.
+
+Dataset selections pin versions and include declared dependencies. Explicit updates validate a complete dependency set before the client switches versions.
+
+Anonymous accounts support initial use and authoring. Linked logins provide access across devices. The backend stores characters, presets, datasets, permissions, and reviewed changes.
+
+Saved characters retain rendered text and exact source variants. Dataset updates do not regenerate saved text.
+
+Shared tags come from a maintainer-controlled base dependency. Dataset forks retain those tag references. Existing attribute types and generation behavior remain the baseline.
 
 Planned creation controls add trait locks and individual rerolls. Their release version is undecided. Dependent appearance, clothing, and concept rules must remain consistent after each change.
 
-The first V8 release scope and dates are not set. Accounts, cloud storage, and AI integrations are longer-term scope, not fixed first-release requirements.
+The first V8 release scope is recorded in [V8_SPEC.md](V8_SPEC.md). No release date is set. AI integrations remain later scope.
 
 [ROADMAP_CHECKLIST.md](ROADMAP_CHECKLIST.md) tracks remaining work from the public roadmap.
