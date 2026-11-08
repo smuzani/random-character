@@ -9,6 +9,7 @@ let script=[{type:'action',text:'Rain ticks against a ventilation duct. MARCUS k
 
 const sceneFields = ['location', 'start', 'end', 'tone', 'length'];
 const characterFields = ['name', 'voice', 'want', 'obstacle'];
+const maxCastSize = 6;
 const selected = new Set();
 let sceneIndex = 0;
 let scriptLocation = scenes[0].location;
@@ -18,13 +19,13 @@ let busy = false;
 
 function sceneCharacters() {
   const library = CharacterLibrary.list();
-  const examples = scenes[sceneIndex].characters.map((character, index) => ({
+  const examples = scenes.flatMap((scene, sceneNumber) => scene.characters.map((character, index) => ({
     name: character.name,
     voice: character.voice,
     want: character.want,
     obstacle: character.obstacle,
-    id: 'sample-' + sceneIndex + '-' + index
-  }));
+    id: 'sample-' + sceneNumber + '-' + index
+  })).filter(character => sceneNumber === sceneIndex || selected.has(character.id)));
   const savedIds = new Set(library.map(character => character.id));
   return [...library, ...examples.filter(character => !savedIds.has(character.id))];
 }
@@ -38,8 +39,9 @@ function fillSetup() {
 function updateCastCount() {
   $('cast-count').textContent = '(' + selected.size + ')';
   for (const checkbox of $('characters').querySelectorAll('input[type="checkbox"]')) {
-    checkbox.disabled = selected.size >= 6 && !checkbox.checked;
+    checkbox.disabled = selected.size >= maxCastSize && !checkbox.checked;
   }
+  $('cast-status').textContent = selected.size >= maxCastSize ? 'The scene has reached its limit of six characters.' : '';
 }
 
 function renderCast() {
@@ -88,7 +90,6 @@ function renderCast() {
       if (checkbox.checked) selected.add(character.id);
       else selected.delete(character.id);
       updateCastCount();
-      $('cast-status').textContent = selected.size === 6 ? 'The scene has reached its limit of six characters.' : '';
     });
 
     row.append(avatar, edit, checkbox);
@@ -182,6 +183,7 @@ $('character-form').onsubmit = event => {
     return;
   }
 
+  if (!editing && selected.size < maxCastSize) selected.add(character.id);
   $('character-dialog').close();
   renderCast();
   const editButton = [...$('characters').querySelectorAll('.character-edit')]
