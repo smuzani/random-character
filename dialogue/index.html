@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Random Dialogue Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap">
+  <link rel="stylesheet" href="style.css">
+  <script src="../js/tag-details.js" defer></script>
+  <script src="../js/plot-details.js" defer></script>
+  <script src="../js/want-details.js" defer></script>
+  <script src="../js/generator7.js" defer></script>
+  <script src="../js/character-library.js" defer></script>
+  <script src="character-rolls.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="top-header">
+    <div class="header-container">
+      <a class="site-brand" href="../" aria-label="Random Character Generator">RCG</a>
+      <nav class="main-nav">
+        <a href="../">Create</a>
+        <a href="./" aria-current="page">Dialogue</a>
+        <a href="../whatisthis.html">About</a>
+        <a href="../roadmap.html">Roadmap</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="app-layout">
+    <h1>Dialogue Generator</h1>
+    <div class="scene-actions">
+      <button id="open-setup" type="button" aria-haspopup="dialog">Scene setup</button>
+      <button id="open-cast" type="button" aria-haspopup="dialog">Characters <span id="cast-count"></span></button>
+      <button id="generate" class="primary" type="button">Generate dialogue</button>
+    </div>
+    <p id="status" role="status"></p>
+
+    <section class="preview" aria-label="Screenplay preview">
+      <div class="preview-toolbar">
+        <span id="draft-label">Sample scene</span>
+        <div>
+          <button id="copy" type="button">Copy</button>
+          <button id="download" type="button">Download .txt</button>
+        </div>
+      </div>
+      <article id="screenplay"></article>
+    </section>
+  </main>
+
+  <dialog id="setup-dialog" aria-labelledby="setup-title">
+    <form id="scene-form">
+      <div class="section-heading">
+        <h2 id="setup-title">Scene setup</h2>
+        <button type="button" class="close-dialog" data-close aria-label="Close scene setup">×</button>
+      </div>
+      <label for="location">Where they meet</label>
+      <input id="location" maxlength="160" required>
+      <label for="start">Starting point</label>
+      <textarea id="start" rows="3" maxlength="700" required></textarea>
+      <label for="end">Where it ends</label>
+      <textarea id="end" rows="3" maxlength="700" required></textarea>
+      <div class="options">
+        <div>
+          <label for="tone">Tone</label>
+          <select id="tone">
+            <option>Thriller</option><option>Comedy</option><option>Drama</option>
+            <option>Romance</option><option>Fantasy</option><option>Science fiction</option>
+          </select>
+        </div>
+        <div>
+          <label for="length">Length</label>
+          <select id="length"><option value="short">Short</option><option value="medium" selected>Medium</option></select>
+        </div>
+      </div>
+      <div class="dialog-actions">
+        <button type="button" id="randomize">Randomize</button>
+        <button type="submit" class="primary">Done</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="cast-dialog" aria-labelledby="cast-title">
+    <div class="section-heading">
+      <h2 id="cast-title">Characters</h2>
+      <button type="button" class="close-dialog" data-close aria-label="Close characters">×</button>
+    </div>
+    <div id="characters"></div>
+    <p id="cast-status" class="dialog-status" role="status"></p>
+    <div class="dialog-actions">
+      <button type="button" id="add-character">Add character</button>
+      <button type="button" class="primary" data-close>Done</button>
+    </div>
+  </dialog>
+
+  <dialog id="character-dialog" aria-labelledby="character-title">
+    <form id="character-form">
+      <div class="section-heading">
+        <h2 id="character-title">Edit character</h2>
+        <button type="button" class="close-dialog" data-close aria-label="Close character editor">×</button>
+      </div>
+      <label for="character-name">Name</label>
+      <input id="character-name" maxlength="60" required>
+      <label for="character-voice">Voice / temperament</label>
+      <textarea id="character-voice" maxlength="200" required></textarea>
+      <div class="field-heading">
+        <label for="character-want">What they want</label>
+        <button type="button" data-roll="want">Roll want</button>
+      </div>
+      <textarea id="character-want" rows="3" maxlength="400" required></textarea>
+      <div class="field-heading">
+        <label for="character-obstacle">What gets in their way</label>
+        <button type="button" data-roll="obstacle">Roll obstacle</button>
+      </div>
+      <textarea id="character-obstacle" rows="3" maxlength="400" required></textarea>
+      <p id="character-status" class="dialog-status" role="status"></p>
+      <div class="dialog-actions">
+        <button type="button" data-close>Cancel</button>
+        <button type="submit" class="primary">Save character</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

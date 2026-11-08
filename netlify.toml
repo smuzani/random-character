@@ -1,10 +1,11 @@
 [build]
-  publish = "public"
-  functions = "netlify/functions"
+  command = "node dialogue/build-site.mjs"
+  publish = "dialogue/dist"
+  functions = "dialogue/netlify/functions"
 [functions]
   node_bundler = "esbuild"
 [[headers]]
-  for = "/*"
+  for = "/dialogue/*"
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "same-origin"

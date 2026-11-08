@@ -717,6 +717,7 @@ function getTeamSize() {
 function generate(c) {
   generateCharacter(c);
   displayCharacter(c);
+  if (typeof setDialogueCharacter === "function") setDialogueCharacter(c);
   return c;
 }
 
@@ -724,6 +725,9 @@ function generateCharacter(c) {
   let len = c.branches.length;
   while (len > 0) {
     let branch = c.branches[0];
+    if (!c.dialogueProfile && (branch === BWANT || branch === BSINGLEPLOT)) {
+      c.dialogueProfile = { tags: [...c.tags], excludes: [...c.excludes] };
+    }
     switch (branch) {
       case BPERSONALITY:
         generateAspects(c);
@@ -1127,7 +1131,6 @@ function displayCharacter(c) {
 }
 
 const showDetails = true;
-const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
 function rollRole(array) {
   if (array.length < 1) {
@@ -1135,8 +1138,7 @@ function rollRole(array) {
     return;
   }
 
-  const getWeight = R.pluck('weight');
-  const totalWeight = getWeight(array).reduce(reducer);
+  const totalWeight = array.reduce((total, aspect) => total + aspect.weight, 0);
 
   let r = roll(1, totalWeight);
   let search = 1;
@@ -1194,13 +1196,11 @@ function roll(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-const addTag = R.curry((c, tag) => c.tags.add(tag));
-const addExcludes = R.curry((c, tag) => c.excludes.add(tag));
 function addTags(c, aspect) {
-  aspect.tags.forEach(addTag(c));
-  aspect.branchRequirements.forEach(addTag(c));
-  aspect.excludes.forEach(addExcludes(c));
-  aspect.branchExcludes.forEach(addExcludes(c));
+  aspect.tags.forEach(tag => c.tags.add(tag));
+  aspect.branchRequirements.forEach(tag => c.tags.add(tag));
+  aspect.excludes.forEach(tag => c.excludes.add(tag));
+  aspect.branchExcludes.forEach(tag => c.excludes.add(tag));
 }
 
 function capitalizeFirstLetter(string) {
@@ -1289,9 +1289,9 @@ function generatePronouns(gender, name = p.sdesc) {
   }
 }
 
-$(document).ready(function () {
-  init();
-});
+if (typeof $ === 'function' && typeof document !== 'undefined') {
+  $(document).ready(init);
+}
 
 function init() {
   if (showDetails) {

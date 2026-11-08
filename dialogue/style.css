@@ -1,4 +1,4 @@
-/* Match the character generator's editorial theme. Dialogue publishes separately. */
+/* Match the character generator's editorial theme. */
 :root {
   color-scheme: light;
   --bg-color: #fafafa;
@@ -67,33 +67,38 @@ button:disabled { opacity: 0.55; cursor: default; }
 }
 
 .site-brand {
+  color: inherit;
   font: 700 1.5rem/1.6 var(--font-heading);
   letter-spacing: 0.1em;
+  text-decoration: none;
 }
 
-.prototype {
+.main-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem 1.5rem;
+}
+
+.main-nav a {
   color: var(--text-muted);
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.05em;
+  text-decoration: none;
   text-transform: uppercase;
 }
 
+.main-nav a[aria-current="page"] { color: var(--text-main); }
+
 .app-layout {
-  max-width: 1400px;
-  min-height: calc(100vh - 72px);
+  width: min(100%, 52rem);
   margin: 0 auto;
+  padding: 2.5rem 1.5rem;
 }
-
-.editor, .preview {
-  min-width: 0;
-  padding: 3rem 2rem;
-}
-
-.editor { border-bottom: 1px solid var(--panel-border); }
 
 h1 {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   font-size: 1.75rem;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -101,8 +106,20 @@ h1 {
   text-transform: uppercase;
 }
 
-.controls-panel, dialog {
-  padding: 2rem;
+.scene-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.scene-actions button:not(.primary) {
+  border-color: var(--field-border);
+  color: var(--text-main);
+}
+
+dialog {
+  padding: 1.5rem;
   border: 1px solid var(--panel-border);
   border-radius: 4px;
   background: var(--panel-bg);
@@ -153,16 +170,20 @@ textarea {
   gap: 0.875rem;
 }
 
-.cast, .generate-panel {
-  margin-top: 1.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--panel-border);
-}
-
-#cast-count, #status, .preview-toolbar, .paper-meta {
+#cast-count, #status, .preview-toolbar, .dialog-status {
   color: var(--text-muted);
   font-size: 0.85rem;
 }
+
+.field-heading {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.field-heading label { margin: 0; }
 
 .character {
   display: flex;
@@ -212,9 +233,6 @@ textarea {
   accent-color: var(--text-main);
 }
 
-.add, #remove-character { border-color: var(--field-border); }
-.add { width: 100%; }
-
 .primary {
   padding: 0.75rem 1rem;
   border: 0;
@@ -228,37 +246,30 @@ textarea {
   color: #fff;
 }
 
-#generate {
-  width: 100%;
-  padding: 1.25rem 0.75rem;
-  font-size: 0.95rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+#generate { letter-spacing: 0.05em; }
+
+#status { margin: 0.5rem 0 0; text-align: center; }
+#status:empty, .dialog-status:empty { display: none; }
+
+.preview {
+  margin-top: 1.5rem;
+  padding: 1rem clamp(1rem, 5vw, 3rem) 3rem;
+  border: 1px solid var(--panel-border);
+  background: var(--panel-bg);
 }
 
-#status { margin: 0.75rem 0 0; }
-#status:empty { margin: 0; }
-
-.preview { background: var(--panel-bg); }
-
-.preview-toolbar, .paper-meta {
+.preview-toolbar {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 0.25rem 0.75rem;
-}
-
-.preview-toolbar { margin-bottom: 1.25rem; }
-.preview-toolbar > div { display: flex; flex-wrap: wrap; gap: 0.25rem; }
-
-.paper { min-width: 0; }
-
-.paper-meta {
-  padding-bottom: 0.75rem;
   margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--panel-border);
 }
+
+.preview-toolbar > div { display: flex; flex-wrap: wrap; gap: 0.25rem; }
 
 #screenplay {
   max-width: 66ch;
@@ -279,7 +290,8 @@ textarea {
 .speech p { margin: 0; }
 
 dialog {
-  width: min(460px, calc(100% - 2rem));
+  width: min(32rem, calc(100% - 2rem));
+  max-height: calc(100dvh - 2rem);
   color: var(--text-main);
 }
 
@@ -294,18 +306,21 @@ dialog::backdrop { background: rgb(17 24 39 / 45%); }
 }
 
 .dialog-actions .primary { margin-left: auto; }
-#close-dialog { min-width: 44px; padding: 0; font-size: 1.25rem; }
-
-@media (min-width: 1024px) {
-  .app-layout { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .editor { padding-right: 4rem; border-right: 1px solid var(--panel-border); border-bottom: 0; }
-  .preview { padding-left: 4rem; }
-}
+.close-dialog { min-width: 44px; padding: 0; font-size: 1.25rem; }
 
 @media (max-width: 599px) {
-  .header-container { padding: 0 1rem; }
-  .editor, .preview { padding: 2rem 1rem; }
-  .controls-panel, dialog { padding: 1rem; }
+  .header-container { flex-direction: column; gap: 0.75rem; padding: 0 1rem; }
+  .app-layout { padding: 1.5rem 1rem; }
   h1 { font-size: 1.5rem; }
   #screenplay { font-size: 0.9rem; }
+
+  dialog {
+    inset: auto 0 0;
+    width: 100%;
+    max-width: none;
+    max-height: 90dvh;
+    margin: 0;
+    padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom));
+    border-radius: 12px 12px 0 0;
+  }
 }
