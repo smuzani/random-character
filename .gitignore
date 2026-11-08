@@ -1,2 +1,5 @@
 .DS_Store
 bolt-random-character
+
+# Local Netlify folder
+.netlify
