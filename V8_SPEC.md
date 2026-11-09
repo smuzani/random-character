@@ -134,7 +134,7 @@ For example, “Ulm campaign” retains Person v1, Fantasy v3, and Ulm v2. Anoth
 
 Existing ideas for manual creation, multiple-character scenarios, AI art, and character chat remain outside the first V8 release.
 
-Trait locks and individual rerolls still have no assigned release. The creation sketch does not define V8 scope.
+Trait locks and individual rerolls still have no assigned release.
 
 ## Open implementation decisions
 

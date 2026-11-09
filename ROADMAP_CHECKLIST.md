@@ -34,7 +34,6 @@ This checklist tracks remaining work. List order does not indicate priority. Rel
 - [ ] Add optional AI art and character chat through a backend.
 
 Direct editing of generated character text is outside V8 scope. Tags are not forkable in V8.
-The separate creation prototype explores Simple, Detailed, and Narrative modes. It does not define V8 scope.
 
 ## Outside the current release scope
 

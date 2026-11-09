@@ -11,7 +11,7 @@ for (const file of readdirSync(source(''), { withFileTypes: true })) {
     cpSync(source(file.name), output(file.name));
   }
 }
-for (const directory of ['assets', 'css', 'fonts', 'img', 'js', 'lab', 'sketch']) {
+for (const directory of ['assets', 'css', 'fonts', 'img', 'js', 'lab']) {
   cpSync(source(directory), output(directory), {
     recursive: true,
     filter: path => !/(^|\/)(\.[^/]+|dist|tests)(\/|$)/.test(path.slice(source(directory).pathname.length)),
