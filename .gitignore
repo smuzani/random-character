@@ -3,3 +3,9 @@ bolt-random-character
 
 # Local Netlify folder
 .netlify
+
+# Local budget alert state
+.local/dialogue-budget-alerts.json
+
+# Supabase CLI cache
+/supabase/.temp/
