@@ -20,6 +20,8 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/generator-layout.css">
+  <script src="js/generator-layout.js" defer></script>
 </head>
 
 <body>
@@ -38,15 +40,18 @@
   </header>
 
   <!-- Layout Container -->
-  <div class="app-layout">
+  <div class="app-layout generator-layout">
 
-    <!-- Left Column: Controls & Hero -->
-    <section class="hero-column">
-      <div class="hero-content">
+    <div class="generator-toolbar">
+      <button type="button" class="generator-toggle" data-controls-toggle aria-controls="generator-controls" aria-expanded="true" aria-label="Character settings" hidden>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div>
         <h1 class="hero-title">CHARACTER GENERATOR</h1>
-        <p class="hero-desc">Generate a character for your game or story.</p>
+        <p class="generator-subtitle">Set the role, gender, and level of detail, then roll a character.</p>
       </div>
-
+    </div>
+    <section class="hero-column generator-controls" id="generator-controls" aria-label="Character controls">
       <div class="controls-panel">
         <button id="generate" class="btn-primary">GENERATE NEW CHARACTER</button>
 
@@ -102,7 +107,7 @@
     </section>
 
     <!-- Right Column: Character Sheet -->
-    <main class="sheet-column">
+    <main class="sheet-column generator-result">
 
       <div class="export-actions hidden" id="export-actions">
         <button type="button" id="share-character" title="Share character" aria-label="Share character">

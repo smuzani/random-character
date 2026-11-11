@@ -92,9 +92,10 @@ button:disabled { opacity: 0.55; cursor: default; }
 .main-nav a[aria-current="page"] { color: var(--text-main); }
 
 .app-layout {
-  width: min(100%, 52rem);
+  width: min(100%, 76rem);
   margin: 0 auto;
   padding: 2.5rem 1.5rem;
+  gap: 1rem;
 }
 
 h1 {
@@ -109,7 +110,7 @@ h1 {
 .scene-actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
   gap: 0.5rem;
 }
 
@@ -252,7 +253,6 @@ textarea {
 #status:empty, .dialog-status:empty { display: none; }
 
 .preview {
-  margin-top: 1.5rem;
   padding: 1rem clamp(1rem, 5vw, 3rem) 3rem;
   border: 1px solid var(--panel-border);
   background: var(--panel-bg);

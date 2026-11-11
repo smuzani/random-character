@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../css/generator-layout.css">
+  <script src="../js/generator-layout.js" defer></script>
   <script src="../js/tag-details.js" defer></script>
   <script src="../js/plot-details.js" defer></script>
   <script src="../js/want-details.js" defer></script>
@@ -32,22 +34,31 @@
     </div>
   </header>
 
-  <main class="app-layout">
-    <h1>Dialogue Generator</h1>
-    <div class="scene-actions">
-      <button id="open-setup" type="button" aria-haspopup="dialog">Scene setup</button>
-      <button id="open-cast" type="button" aria-haspopup="dialog">Characters <span id="cast-count"></span></button>
-      <button id="generate" class="primary" type="button">Generate dialogue</button>
+  <main class="app-layout generator-layout">
+    <div class="generator-toolbar">
+      <button type="button" class="generator-toggle" data-controls-toggle aria-controls="generator-controls" aria-expanded="true" aria-label="Dialogue settings" hidden>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+      <div>
+        <h1>Dialogue Generator</h1>
+        <p class="generator-subtitle">Set the scene, pick your cast, and generate a screenplay.</p>
+      </div>
     </div>
-    <div id="account-controls" hidden>
-      <label for="model">Model</label>
-      <select id="model" aria-describedby="scene-price"></select>
-      <span id="scene-price" role="status"></span>
-      <button id="open-account" type="button">Sign in</button>
-    </div>
-    <p id="status" role="status"></p>
-
-    <section class="preview" aria-label="Screenplay preview">
+    <section class="generator-controls" id="generator-controls" aria-label="Scene controls">
+      <div class="scene-actions">
+        <button id="open-setup" type="button" aria-haspopup="dialog">Scene setup</button>
+        <button id="open-cast" type="button" aria-haspopup="dialog">Characters <span id="cast-count"></span></button>
+        <button id="generate" class="primary" type="button">Generate dialogue</button>
+      </div>
+      <div id="account-controls" hidden>
+        <label for="model">Model</label>
+        <select id="model" aria-describedby="scene-price"></select>
+        <span id="scene-price" role="status"></span>
+        <button id="open-account" type="button">Sign in</button>
+      </div>
+    </section>
+    <section class="preview generator-result" aria-label="Screenplay preview">
+      <p id="status" role="status"></p>
       <div class="preview-toolbar">
         <span id="draft-label">Sample scene</span>
         <div>
