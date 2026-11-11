@@ -1,0 +1,3 @@
+project_id = "random-character"
+[functions.dialogue]
+verify_jwt = false

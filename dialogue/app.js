@@ -230,16 +230,20 @@ $('generate').onclick = async () => {
   $('generate').disabled = true;
   status.textContent = 'Writing your scene…';
   try {
+    let data;
+    if (window.DialogueAccount) data = await window.DialogueAccount.generate(payload);
+    else {
     const response = await fetch('/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
       signal: AbortSignal.timeout(55000)
     });
-    const data = await response.json().catch(() => ({
+    data = await response.json().catch(() => ({
       error: response.status === 429 ? 'Too many requests. Try again in a minute.' : 'Generation failed. Please try again.'
     }));
     if (!response.ok || !Array.isArray(data.blocks)) throw new Error(data.error || 'Generation failed. Please try again.');
+    }
     script = data.blocks;
     scriptLocation = payload.location;
     renderScript();

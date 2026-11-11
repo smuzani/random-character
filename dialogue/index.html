@@ -15,6 +15,9 @@
   <script src="../js/character-library.js" defer></script>
   <script src="character-rolls.js" defer></script>
   <script src="app.js" defer></script>
+  <script src="public-config.js" defer></script>
+  <script src="vendor/supabase-2.119.0.js" defer></script>
+  <script src="account.js" defer></script>
 </head>
 <body>
   <header class="top-header">
@@ -35,6 +38,12 @@
       <button id="open-setup" type="button" aria-haspopup="dialog">Scene setup</button>
       <button id="open-cast" type="button" aria-haspopup="dialog">Characters <span id="cast-count"></span></button>
       <button id="generate" class="primary" type="button">Generate dialogue</button>
+    </div>
+    <div id="account-controls" hidden>
+      <label for="model">Model</label>
+      <select id="model" aria-describedby="scene-price"></select>
+      <span id="scene-price" role="status"></span>
+      <button id="open-account" type="button">Sign in</button>
     </div>
     <p id="status" role="status"></p>
 
@@ -76,7 +85,7 @@
         </div>
         <div>
           <label for="length">Length</label>
-          <select id="length"><option value="short">Short</option><option value="medium" selected>Medium</option></select>
+          <select id="length"><option value="short">Short</option><option id="medium-length" value="medium" selected>Medium</option></select>
         </div>
       </div>
       <div class="dialog-actions">
@@ -125,6 +134,20 @@
         <button type="submit" class="primary">Save character</button>
       </div>
     </form>
+  </dialog>
+  <dialog id="account-dialog" aria-labelledby="account-title">
+    <div class="section-heading">
+      <h2 id="account-title">Account</h2>
+      <button type="button" class="close-dialog" data-close aria-label="Close account">×</button>
+    </div>
+    <form id="sign-in-form">
+      <label for="account-email">Email</label>
+      <input id="account-email" type="email" autocomplete="email" required>
+      <button id="send-link" type="submit">Send sign-in link</button>
+    </form>
+    <p id="account-balance"></p>
+    <button id="sign-out" type="button" hidden>Sign out</button>
+    <p id="account-status" role="status"></p>
   </dialog>
 </body>
 </html>
