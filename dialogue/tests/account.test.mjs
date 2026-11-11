@@ -69,6 +69,14 @@ test('failed sign-in email remains retryable without displaying service errors',
  assert.equal(b.element('send-link').disabled,false);
  assert.equal(b.element('account-status').textContent.includes('secret'),false);
 });
+test('invalid email input does not request a sign-in email',async()=>{
+ const b=browser();await tick();
+ b.element('account-email').value='bob';
+ b.element('account-email').reportValidity=()=>false;
+ await b.element('sign-in-form').onsubmit({preventDefault(){}});
+ assert.equal(b.signIns.length,0);
+ assert.equal(b.element('send-link').disabled,false);
+});
 test('proxy preserves the verified session and request ID without forwarding cookies',async t=>{
  const previous=process.env.DIALOGUE_SUPABASE_URL;
  process.env.DIALOGUE_SUPABASE_URL='https://example.supabase.co';

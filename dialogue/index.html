@@ -157,7 +157,7 @@
     </div>
     <form id="sign-in-form" hidden>
       <label for="account-email">Email</label>
-      <input id="account-email" type="email" autocomplete="email" required>
+      <input id="account-email" type="email" autocomplete="email" maxlength="254" pattern="[^\s@]+@[^\s@]+\.[^\s@]+" title="Enter an email address such as name@example.com." required>
       <button id="send-link" type="submit">Send sign-in link</button>
     </form>
     <p id="account-balance" role="status"></p>
