@@ -20,6 +20,7 @@
   <script src="public-config.js" defer></script>
   <script src="vendor/supabase-2.119.0.js" defer></script>
   <script src="account.js" defer></script>
+  <link rel="stylesheet" href="../css/account.css">
 </head>
 <body>
   <header class="top-header">
@@ -31,6 +32,10 @@
         <a href="../whatisthis.html">About</a>
         <a href="../roadmap.html">Roadmap</a>
       </nav>
+      <button id="open-account" class="header-account" type="button" aria-haspopup="dialog" aria-controls="account-dialog" hidden>
+        <span id="account-label">Account</span>
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m3 4.5 3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
   </header>
 
@@ -54,7 +59,6 @@
         <label for="model">Model</label>
         <select id="model" aria-describedby="scene-price"></select>
         <span id="scene-price" role="status"></span>
-        <button id="open-account" type="button">Sign in</button>
       </div>
     </section>
     <section class="preview generator-result" aria-label="Screenplay preview">
@@ -147,16 +151,16 @@
     </form>
   </dialog>
   <dialog id="account-dialog" aria-labelledby="account-title">
-    <div class="section-heading">
+    <div class="account-dialog-heading">
       <h2 id="account-title">Account</h2>
-      <button type="button" class="close-dialog" data-close aria-label="Close account">×</button>
+      <button type="button" id="close-account" aria-label="Close account">×</button>
     </div>
-    <form id="sign-in-form">
+    <form id="sign-in-form" hidden>
       <label for="account-email">Email</label>
       <input id="account-email" type="email" autocomplete="email" required>
       <button id="send-link" type="submit">Send sign-in link</button>
     </form>
-    <p id="account-balance"></p>
+    <p id="account-balance" role="status"></p>
     <button id="sign-out" type="button" hidden>Sign out</button>
     <p id="account-status" role="status"></p>
   </dialog>

@@ -5,20 +5,20 @@ import {readFileSync} from 'node:fs';
 import proxy from '../netlify/functions/account.mjs';
 const code=readFileSync(new URL('../account.js',import.meta.url),'utf8');
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
-function browser({signedIn=false,sendError=null}={}) {
+function browser({signedIn=false,sendError=null,dialogue=true}={}) {
  const fields=new Map();
  const element=id=>{
-  if(!fields.has(id)) fields.set(id,{value:id==='length'?'medium':id==='account-email'?'test@example.com':'',hidden:false,disabled:false,textContent:'',reportValidity:()=>true,showModal(){this.open=true;},addEventListener(){},replaceChildren(...children){this.children=children;}});
+  if(!fields.has(id)) fields.set(id,{value:id==='length'?'medium':id==='account-email'?'test@example.com':'',hidden:false,disabled:false,textContent:'',reportValidity:()=>true,showModal(){this.open=true;},setAttribute(){},addEventListener(){},replaceChildren(...children){this.children=children;}});
   return fields.get(id);
  };
- let session=signedIn?{access_token:'user-token'}:null;
+ let session=signedIn?{access_token:'user-token',user:{id:'test-user'}}:null;
  const requests=[],signIns=[],storage=new Map();
  let settings,authListener;
  const sdk={createClient:(url,key,options)=>{
   settings={url,key,options};
   return {auth:{getSession:async()=>({data:{session},error:null}),signInWithOtp:async input=>{signIns.push(input);return {error:sendError};},signOut:async()=>{session=null;return {error:null};},onAuthStateChange:fn=>{authListener=fn;}}};
  }};
- const context={window:{DIALOGUE_CONFIG:{url:'https://example.supabase.co',key:'sb_publishable_test'},supabase:sdk},document:{getElementById:element},location:{href:'https://example.netlify.app/dialogue/'},URL,AbortSignal,setTimeout,Option:function(label,value){this.label=label;this.value=value;},sessionStorage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v)},fetch:async(url,options)=>{
+ const context={window:{DIALOGUE_CONFIG:{url:'https://example.supabase.co',key:'sb_publishable_test'},supabase:sdk},document:{getElementById:id=>!dialogue && id==='model'?null:element(id)},location:{href:'https://example.netlify.app'+(dialogue?'/dialogue/':'/')},URL,AbortSignal,setTimeout,Option:function(label,value){this.label=label;this.value=value;},sessionStorage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v)},fetch:async(url,options)=>{
   requests.push({url,...options});
   const body=JSON.parse(options.body);
   if(body.action==='catalog') return Response.json({enabled:true,models:[{id:'gemini',label:'Gemini',guestDefault:true,shortPrice:2,mediumPrice:2,shortOutput:2200,mediumOutput:2200}],balance:session?{welcome:100,purchased:0}:null});
@@ -44,12 +44,23 @@ test('uses PKCE, keeps guest generation anonymous, and sends sign-in links to th
 test('signed-in sessions show usable credits and sign out returns to guest controls',async()=>{
  const b=browser({signedIn:true});await tick();
  assert.equal(b.requests[0].headers.Authorization,'Bearer user-token');
- assert.equal(b.element('account-balance').textContent,'Credits: 100');
+ assert.equal(b.element('account-label').textContent,'100 credits');
+ assert.equal(b.element('account-balance').textContent,'Dialogue credits: 100');
  assert.equal(b.element('model').disabled,false);
  await b.element('sign-out').onclick();
  assert.equal(b.element('sign-in-form').hidden,false);
  assert.equal(b.element('model').disabled,true);
  assert.equal(b.element('account-balance').textContent,'');
+});
+test('Character Generator shares the Dialogue account without loading guest models',async()=>{
+ const b=browser({signedIn:true,dialogue:false});await tick();
+ assert.equal(b.element('account-label').textContent,'100 credits');
+ assert.equal(b.context.window.DialogueAccount,undefined);
+ await b.element('sign-out').onclick();
+ assert.equal(b.element('account-label').textContent,'Sign in');
+ assert.equal(b.requests.length,1);
+ await b.element('sign-in-form').onsubmit({preventDefault(){}});
+ assert.equal(b.signIns[0].options.emailRedirectTo,'https://example.netlify.app/dialogue/');
 });
 test('failed sign-in email remains retryable without displaying service errors',async()=>{
  const b=browser({sendError:{status:500,message:'internal secret'}});await tick();
