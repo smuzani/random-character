@@ -14,6 +14,7 @@
   <script src="../js/tag-details.js" defer></script>
   <script src="../js/plot-details.js" defer></script>
   <script src="../js/want-details.js" defer></script>
+  <script src="../js/appearance-details.js" defer></script>
   <script src="../js/generator7.js" defer></script>
   <script src="../js/character-library.js" defer></script>
   <script src="character-rolls.js" defer></script>
@@ -111,7 +112,10 @@
       </div>
       <label for="character-name">Name</label>
       <input id="character-name" maxlength="60" required>
-      <label for="character-voice">Voice / temperament</label>
+      <div class="field-heading">
+        <label for="character-voice">Voice / temperament</label>
+        <button type="button" data-roll="voice">Roll voice</button>
+      </div>
       <textarea id="character-voice" maxlength="200" required></textarea>
       <div class="field-heading">
         <label for="character-want">What they want</label>
