@@ -53,6 +53,7 @@
   }
   async function load() {
     const version=++loadVersion;
+    if(modelSelect && !modelSelect.options.length) modelSelect.setAttribute('aria-busy','true');
     try {
       const current=await readSession();
       if(version!==loadVersion) return;
@@ -77,6 +78,7 @@
       $('account-status').textContent=error.message;
       if(modelSelect) $('status').textContent=error.message;
     }
+    modelSelect?.removeAttribute('aria-busy');
     renderAccount();
     price();
   }
