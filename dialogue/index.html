@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../css/site-header.css">
   <link rel="stylesheet" href="../css/generator-layout.css">
   <script src="../js/generator-layout.js" defer></script>
   <script src="../js/tag-details.js" defer></script>
@@ -23,31 +24,11 @@
   <link rel="stylesheet" href="../css/account.css">
 </head>
 <body>
-  <header class="top-header">
-    <div class="header-container">
-      <a class="site-brand" href="../" aria-label="Random Character Generator">RCG</a>
-      <nav class="main-nav">
-        <a href="../">Create</a>
-        <a href="./" aria-current="page">Dialogue</a>
-        <a href="../whatisthis.html">About</a>
-        <a href="../roadmap.html">Roadmap</a>
-      </nav>
-      <button id="open-account" class="header-account" type="button" aria-haspopup="dialog" aria-controls="account-dialog" hidden>
-        <span id="account-label">Account</span>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m3 4.5 3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-  </header>
+  <header class="top-header" data-generator-page="dialogue"></header>
 
   <main class="app-layout generator-layout">
     <div class="generator-toolbar">
-      <button type="button" class="generator-toggle" data-controls-toggle aria-controls="generator-controls" aria-expanded="true" aria-label="Dialogue settings" hidden>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
-      <div>
-        <h1>Dialogue Generator</h1>
-        <p class="generator-subtitle">Set the scene, pick your cast, and generate a screenplay.</p>
-      </div>
+      <h1>Dialogue Generator</h1>
     </div>
     <section class="generator-controls" id="generator-controls" aria-label="Scene controls">
       <div class="scene-actions">
@@ -64,7 +45,6 @@
     <section class="preview generator-result" aria-label="Screenplay preview">
       <p id="status" role="status"></p>
       <div class="preview-toolbar">
-        <span id="draft-label">Sample scene</span>
         <div>
           <button id="copy" type="button">Copy</button>
           <button id="download" type="button">Download .txt</button>

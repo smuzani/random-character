@@ -13,7 +13,6 @@ const maxCastSize = 6;
 const selected = new Set();
 let sceneIndex = 0;
 let scriptLocation = scenes[0].location;
-let draft = 0;
 let editing;
 let busy = false;
 
@@ -247,7 +246,6 @@ $('generate').onclick = async () => {
     script = data.blocks;
     scriptLocation = payload.location;
     renderScript();
-    $('draft-label').textContent = 'Draft ' + (++draft);
     status.textContent = 'Scene generated.';
   } catch (error) {
     status.textContent = error.name === 'TimeoutError' ? 'Generation timed out. Please try again.' : error.message;

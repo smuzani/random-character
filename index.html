@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
     rel="stylesheet">
 
   <!-- Custom CSS -->
@@ -31,33 +31,13 @@
 <body>
 
   <!-- Top Header -->
-  <header class="top-header">
-    <div class="header-container">
-      <div class="site-brand">RCG</div>
-      <nav class="main-nav">
-        <a href="index.html" class="active">CREATE</a>
-        <a href="dialogue/">DIALOGUE</a>
-        <a href="whatisthis.html">ABOUT</a>
-        <a href="roadmap.html">ROADMAP</a>
-      </nav>
-      <button id="open-account" class="header-account" type="button" aria-haspopup="dialog" aria-controls="account-dialog" hidden>
-        <span id="account-label">Account</span>
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="m3 4.5 3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-    </div>
-  </header>
+  <header class="top-header" data-generator-page="create"></header>
 
   <!-- Layout Container -->
   <div class="app-layout generator-layout">
 
     <div class="generator-toolbar">
-      <button type="button" class="generator-toggle" data-controls-toggle aria-controls="generator-controls" aria-expanded="true" aria-label="Character settings" hidden>
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
-      <div>
-        <h1 class="hero-title">CHARACTER GENERATOR</h1>
-        <p class="generator-subtitle">Set the role, gender, and level of detail, then roll a character.</p>
-      </div>
+      <h1>Character Generator</h1>
     </div>
     <section class="hero-column generator-controls" id="generator-controls" aria-label="Character controls">
       <div class="controls-panel">

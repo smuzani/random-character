@@ -52,59 +52,24 @@ button:disabled { opacity: 0.55; cursor: default; }
   outline-offset: 2px;
 }
 
-.top-header {
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--panel-border);
+.generator-controls {
+  margin: 1rem 0.5rem 1rem 1rem;
+  min-width: 0;
 }
 
-.header-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 2rem;
+.generator-result {
+  margin: 1rem 1rem 1rem 0.5rem;
 }
 
-.site-brand {
-  color: inherit;
-  font: 700 1.5rem/1.6 var(--font-heading);
-  letter-spacing: 0.1em;
-  text-decoration: none;
+@media (max-width: 899px) {
+  .generator-controls,
+  .generator-result {
+    margin-inline: 1rem;
+  }
 }
 
-.main-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.75rem 1.5rem;
-}
-
-.main-nav a {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-.main-nav a[aria-current="page"] { color: var(--text-main); }
-
-.app-layout {
-  width: min(100%, 76rem);
-  margin: 0 auto;
-  padding: 2.5rem 1.5rem;
-  gap: 1rem;
-}
-
-h1 {
-  margin-bottom: 1rem;
-  font-size: 1.75rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-align: center;
-  text-transform: uppercase;
+.generator-layout.controls-hidden .generator-result {
+  margin-inline: 1rem;
 }
 
 .scene-actions {
@@ -309,9 +274,6 @@ dialog::backdrop { background: rgb(17 24 39 / 45%); }
 .close-dialog { min-width: 44px; padding: 0; font-size: 1.25rem; }
 
 @media (max-width: 599px) {
-  .header-container { flex-direction: column; gap: 0.75rem; padding: 0 1rem; }
-  .app-layout { padding: 1.5rem 1rem; }
-  h1 { font-size: 1.5rem; }
   #screenplay { font-size: 0.9rem; }
 
   dialog {
