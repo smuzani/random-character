@@ -49,6 +49,14 @@
   color: var(--text-main);
 }
 
+.generator-toggle[aria-expanded="true"] .generator-toggle-caret {
+  transform: rotate(180deg);
+}
+
+.generator-toggle-sidebar {
+  display: none;
+}
+
 .generator-controls[hidden] {
   display: none;
 }
@@ -58,6 +66,14 @@
 }
 
 @media (min-width: 900px) {
+  .generator-toggle-caret {
+    display: none;
+  }
+
+  .generator-toggle-sidebar {
+    display: block;
+  }
+
   .generator-layout:not(.controls-hidden) {
     grid-template-columns: minmax(17rem, 1fr) minmax(0, 2fr);
   }
