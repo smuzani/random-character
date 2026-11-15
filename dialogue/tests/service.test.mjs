@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {createService} from '../../supabase/functions/_shared/service.mjs';
+import {createRpc, createService, hashGuest} from '../../supabase/functions/_shared/service.mjs';
 import {generateScene} from '../../supabase/functions/_shared/generation.mjs';
 const scene={location:'A roof',start:'They meet',end:'They leave',tone:'Drama',length:'short',characters:[{name:'A',voice:'Quiet',want:'Leave',obstacle:'B'},{name:'B',voice:'Loud',want:'Stay',obstacle:'A'}]};
 const complete=[{type:'action',text:'Rain.'},{type:'dialogue',speaker:'A',text:'Go.'},{type:'dialogue',speaker:'B',text:'No.'}];
@@ -38,4 +38,18 @@ test('budget denial prevents a provider call and keeps the actionable error',asy
  let fetched=false;
  await assert.rejects(generateScene(scene,{key:'secret',beforeCall:async()=>{throw Object.assign(new Error('budget'),{publicMessage:'Guest generation is unavailable. Sign in to continue.'});},fetchProvider:async()=>{fetched=true;}}),error=>!!error.publicMessage);
  assert.equal(fetched,false);
+});
+test('guest catalogs look up the remaining scenes using the hashed session token',async()=>{
+ const guestToken='a'.repeat(64);
+ const guestHash=await hashGuest(guestToken);
+ const rpc=createRpc('https://example.supabase.co','test-key',async(url,options)=>{
+  if(url.endsWith('/dialogue_service')) return Response.json({models:[]});
+  assert.ok(url.endsWith('/dialogue_guest_remaining'));
+  const {p_guest_hash}=JSON.parse(options.body);
+  assert.ok(p_guest_hash===null || p_guest_hash===guestHash);
+  return Response.json(p_guest_hash===null ? 10 : 0);
+ });
+ const {handler}=setup({rpc});
+ assert.equal((await (await handler(request({action:'catalog'}))).json()).guestRemaining,10);
+ assert.equal((await (await handler(request({action:'catalog',guestToken}))).json()).guestRemaining,0);
 });

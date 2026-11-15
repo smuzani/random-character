@@ -13,6 +13,7 @@ function browser({signedIn=false,sendError=null,dialogue=true}={}) {
  };
  let session=signedIn?{access_token:'user-token',user:{id:'test-user'}}:null;
  const requests=[],signIns=[],storage=new Map();
+ let guestRemaining=10;
  let settings,authListener;
  const sdk={createClient:(url,key,options)=>{
   settings={url,key,options};
@@ -21,7 +22,8 @@ function browser({signedIn=false,sendError=null,dialogue=true}={}) {
  const context={window:{DIALOGUE_CONFIG:{url:'https://example.supabase.co',key:'sb_publishable_test'},supabase:sdk},document:{getElementById:id=>!dialogue && id==='model'?null:element(id)},location:{href:'https://example.netlify.app'+(dialogue?'/dialogue/':'/')},URL,AbortSignal,setTimeout,Option:function(label,value){this.label=label;this.value=value;},sessionStorage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v)},fetch:async(url,options)=>{
   requests.push({url,...options});
   const body=JSON.parse(options.body);
-  if(body.action==='catalog') return Response.json({enabled:true,models:[{id:'gemini',label:'Gemini',guestDefault:true,shortPrice:2,mediumPrice:2,shortOutput:2200,mediumOutput:2200}],balance:session?{welcome:100,purchased:0}:null});
+  if(body.action==='catalog') return Response.json({enabled:true,models:[{id:'gemini',label:'Gemini',guestDefault:true,shortPrice:2,mediumPrice:2,shortOutput:2200,mediumOutput:2200}],balance:session?{welcome:100,purchased:0}:null,guestRemaining:body.guestToken ? guestRemaining : 10});
+  guestRemaining=Math.max(0,guestRemaining-1);
   return Response.json({blocks:[],guestToken:'a'.repeat(64),requestId:'test-request'});
  }};
  vm.runInNewContext(code,context);
@@ -33,6 +35,7 @@ test('uses PKCE, keeps guest generation anonymous, and sends sign-in links to th
  assert.equal(b.element('model').disabled,true);
  assert.equal(b.requests[0].url,'/api/dialogue');
  assert.equal(b.requests[0].headers.Authorization,undefined);
+ assert.equal(b.element('scene-price').textContent,'10 guest scenes left');
  await b.element('sign-in-form').onsubmit({preventDefault(){}});
  assert.equal(b.signIns[0].email,'test@example.com');
  assert.equal(b.signIns[0].options.emailRedirectTo,'https://example.netlify.app/dialogue/');
@@ -40,6 +43,14 @@ test('uses PKCE, keeps guest generation anonymous, and sends sign-in links to th
  await b.context.window.DialogueAccount.generate({length:'short'});
  assert.equal(JSON.parse(b.requests[1].body).quotedPrice,2);
  assert.equal(b.storage.get('rcg-dialogue-guest'),'a'.repeat(64));
+ await tick();
+ assert.equal(JSON.parse(b.requests[2].body).guestToken,'a'.repeat(64));
+ assert.equal(b.element('scene-price').textContent,'9 guest scenes left');
+ for(let i=8;i>=0;i--) {
+  await b.context.window.DialogueAccount.generate({length:'short'});
+  await tick();
+ }
+ assert.equal(b.element('scene-price').textContent,'0 guest scenes left. Sign in to continue.');
 });
 test('signed-in sessions show usable credits and sign out returns to guest controls',async()=>{
  const b=browser({signedIn:true});await tick();

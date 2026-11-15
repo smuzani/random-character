@@ -7,6 +7,10 @@
     auth:{flowType:'pkce',storageKey:'rcg-auth-session-v1',detectSessionInUrl:true,persistSession:true,autoRefreshToken:true}
   });
   let session=null, catalog=null, loadVersion=0;
+  function readGuestToken() {
+    try {return sessionStorage.getItem('rcg-dialogue-guest');}
+    catch {return null;}
+  }
   async function readSession() {
     const {data,error}=await client.auth.getSession();
     if(error) throw new Error('The sign-in link expired or could not be verified. Request a new link in this browser.');
@@ -34,7 +38,15 @@
     if(!modelSelect) return;
     const model=catalog?.models.find(m=>m.id===modelSelect.value);
     const amount=model?.[$('length').value+'Price'];
-    $('scene-price').textContent=model ? (session ? `${amount} credits per scene` : 'Guest generation: up to 10 scenes per session') : 'Generation is unavailable.';
+    const remaining=catalog?.guestRemaining;
+    let message='Generation is unavailable.';
+    if(model && session) message=`${amount} credits per scene`;
+    if(model && !session && catalog.enabled) {
+      if(remaining===0) message='0 guest scenes left. Sign in to continue.';
+      else if(Number.isInteger(remaining)) message=`${remaining} guest ${remaining===1 ? 'scene' : 'scenes'} left`;
+      else message='Guest scene count unavailable.';
+    }
+    $('scene-price').textContent=message;
     modelSelect.disabled=!session || !model;
     $('medium-length').disabled=!model?.mediumPrice || !model?.mediumOutput;
     if($('medium-length').disabled && $('length').value==='medium') {$('length').value='short';price();}
@@ -48,7 +60,7 @@
       session=current;
       renderAccount();
       if(!modelSelect && !session) return;
-      const next=await call({action:'catalog'},session?.access_token);
+      const next=await call(session ? {action:'catalog'} : {action:'catalog',guestToken:readGuestToken()},session?.access_token);
       if(version!==loadVersion) return;
       catalog=next;
       if(modelSelect) {
@@ -72,10 +84,9 @@
     async generate(payload) {
       if(!catalog?.enabled) throw new Error('Generation is unavailable.');
       const model=catalog.models.find(m=>m.id===$('model').value);
-      let guestToken;try {guestToken=sessionStorage.getItem('rcg-dialogue-guest');}catch {}
       try {
         const current=await readSession();
-        return await call({...payload,model:model?.id,quotedPrice:model?.[payload.length+'Price'],guestToken},current?.access_token);
+        return await call({...payload,model:model?.id,quotedPrice:model?.[payload.length+'Price'],guestToken:current ? undefined : readGuestToken()},current?.access_token);
       } finally {
         void load();
       }

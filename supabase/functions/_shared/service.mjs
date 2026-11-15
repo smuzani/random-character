@@ -31,11 +31,16 @@ export function createService({rpc, authenticate, key, allowedOrigin, log = entr
       const user = request.headers.has('authorization') ? await authenticate(request.headers.get('authorization')) : null;
       if(request.headers.has('authorization') && (!user || user.is_anonymous)) return reply({error:'Sign in again.'},401);
       const userId = user?.id;
+      const suppliedGuestToken = typeof input.guestToken==='string' && /^[a-f0-9]{64}$/.test(input.guestToken)
+        ? input.guestToken : null;
       const action = input.action || 'generate';
       if(action==='catalog') {
         const catalog = await rpc('catalog');
         const balance = userId ? await rpc('account',{userId}) : null;
-        return reply({...catalog,balance});
+        const guestRemaining = userId ? null : await rpc('guest_remaining',{
+          guestHash:suppliedGuestToken ? await hashGuest(suppliedGuestToken) : null
+        });
+        return reply({...catalog,balance,guestRemaining});
       }
       if(action!=='generate') return reply({error:'Unknown action.'},400);
       let scene;
@@ -43,8 +48,7 @@ export function createService({rpc, authenticate, key, allowedOrigin, log = entr
       if(!key) return reply({error:'Generation is unavailable.'},503);
       if(userId) await rpc('account',{userId});
       else {
-        guestToken = typeof input.guestToken==='string' && /^[a-f0-9]{64}$/.test(input.guestToken)
-          ? input.guestToken : [...crypto.getRandomValues(new Uint8Array(32))].map(b=>b.toString(16).padStart(2,'0')).join('');
+        guestToken = suppliedGuestToken || [...crypto.getRandomValues(new Uint8Array(32))].map(b=>b.toString(16).padStart(2,'0')).join('');
       }
       const catalog = await rpc('catalog');
       const model = input.model || catalog.models.find(m=>m.guestDefault)?.id;
@@ -82,9 +86,11 @@ const publicErrors = new Set([
 ]);
 export function createRpc(url, serviceKey, fetcher=fetch) {
   return async (action,data={}) => {
-    const response=await fetcher(`${url}/rest/v1/rpc/dialogue_service`,{
+    const guestLookup=action==='guest_remaining';
+    const endpoint=guestLookup ? 'dialogue_guest_remaining' : 'dialogue_service';
+    const response=await fetcher(`${url}/rest/v1/rpc/${endpoint}`,{
       method:'POST',headers:{apikey:serviceKey,Authorization:`Bearer ${serviceKey}`,'Content-Type':'application/json'},
-      body:JSON.stringify({p_action:action,p_data:data}),signal:AbortSignal.timeout(10000)
+      body:JSON.stringify(guestLookup ? {p_guest_hash:data.guestHash} : {p_action:action,p_data:data}),signal:AbortSignal.timeout(10000)
     });
     const body=await response.json();
     if(!response.ok) {

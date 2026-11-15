@@ -13,6 +13,12 @@ const begin=(requestId,extra={})=>rpc('begin',{requestId,model:'test-model',leng
 test('PostgreSQL ledger: reservations, races, grants, pools, recovery and permissions',{skip:!database},async t=>{
  sql(`insert into auth.users(id,email_confirmed_at) values('${uid}',now()) on conflict do nothing;
  insert into dialogue.models(id,label,enabled,guest_default,input_rate,output_rate,short_price,medium_price,short_output,medium_output) values('test-model','Test',true,true,1000000,1000000,7,10,1000,2000) on conflict do nothing;`);
+ await t.test('guest balance reads existing sessions and is restricted to the service role',()=>{
+  reset();
+  sql("insert into dialogue.guests(token_hash,used) values ('returning',1),('exhausted',10)");
+  assert.equal(sql("set role service_role; select public.dialogue_guest_remaining(null), public.dialogue_guest_remaining('unknown'), public.dialogue_guest_remaining('returning'), public.dialogue_guest_remaining('exhausted')"),'10|10|9|0');
+  assert.equal(sql("select has_function_privilege('anon','public.dialogue_guest_remaining(text)','execute'), has_function_privilege('authenticated','public.dialogue_guest_remaining(text)','execute')"),'f|f');
+ });
  await t.test('simultaneous requests cannot overspend and repeated failure refunds once',async()=>{
   reset();sql(`insert into dialogue.accounts(user_id,welcome,purchased) values('${uid}',5,5)`);
   const ids=[crypto.randomUUID(),crypto.randomUUID()];
