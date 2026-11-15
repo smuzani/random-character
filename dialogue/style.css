@@ -161,22 +161,58 @@ textarea {
   border-radius: 4px;
 }
 
-.avatar {
-  display: grid;
-  place-items: center;
-  flex: 0 0 2.25rem;
-  height: 2.25rem;
+.scene-cast-label {
+  margin-top: 0.5rem;
+  font-weight: 600;
+}
+
+.scene-cast {
+  padding: 0.375rem 0.625rem;
   border: 1px solid var(--panel-border);
   border-radius: 4px;
-  background: #f9fafb;
-  font-family: var(--font-heading);
+}
+
+#scene-characters .character-edit {
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+#scene-characters .character-edit + .character-edit {
+  border-top: 1px solid var(--panel-border);
+}
+
+#add-scene-character {
+  margin-top: 0.25rem;
 }
 
 .character-edit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
   flex: 1;
   min-width: 0;
   padding: 0.375rem 0.5rem;
   text-align: left;
+}
+
+.character-edit::after {
+  content: "";
+  flex: 0 0 0.4rem;
+  height: 0.4rem;
+  margin-right: 0.2rem;
+  border: solid currentColor;
+  border-width: 1px 1px 0 0;
+  transform: rotate(45deg);
+}
+
+.character-edit > span { min-width: 0; }
+
+#scene-characters small {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .character-edit strong { display: block; color: var(--text-main); overflow-wrap: anywhere; }

@@ -63,6 +63,11 @@
       </div>
       <label for="location">Where they meet</label>
       <input id="location" maxlength="160" required>
+      <div id="scene-cast-label" class="scene-cast-label">Characters in this scene</div>
+      <div class="scene-cast" role="group" aria-labelledby="scene-cast-label">
+        <div id="scene-characters"></div>
+        <button type="button" id="add-scene-character" aria-haspopup="dialog">+ Add character</button>
+      </div>
       <label for="start">Starting point</label>
       <textarea id="start" rows="3" maxlength="700" required></textarea>
       <label for="end">Where it ends</label>

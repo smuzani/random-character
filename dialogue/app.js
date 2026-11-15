@@ -46,6 +46,7 @@ function updateCastCount() {
 function renderCast() {
   const root = $('characters');
   root.replaceChildren();
+  $('scene-characters').replaceChildren();
   let characters;
   try {
     characters = sceneCharacters();
@@ -64,23 +65,6 @@ function renderCast() {
     const row = document.createElement('div');
     row.className = 'character';
 
-    const avatar = document.createElement('span');
-    avatar.className = 'avatar';
-    avatar.textContent = Array.from(character.name)[0];
-    avatar.setAttribute('aria-hidden', 'true');
-
-    const edit = document.createElement('button');
-    edit.type = 'button';
-    edit.className = 'character-edit';
-    edit.dataset.id = character.id;
-    edit.setAttribute('aria-label', 'Edit ' + character.name);
-    const name = document.createElement('strong');
-    name.textContent = character.name;
-    const want = document.createElement('small');
-    want.textContent = 'Wants: ' + character.want;
-    edit.append(name, want);
-    edit.addEventListener('click', () => openCharacter(character));
-
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
     checkbox.checked = selected.has(character.id);
@@ -89,12 +73,39 @@ function renderCast() {
       if (checkbox.checked) selected.add(character.id);
       else selected.delete(character.id);
       updateCastCount();
+      renderSceneCast(characters);
     });
 
-    row.append(avatar, edit, checkbox);
+    row.append(characterButton(character), checkbox);
     root.append(row);
   }
   updateCastCount();
+  renderSceneCast(characters);
+}
+
+function characterButton(character) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'character-edit';
+  button.dataset.id = character.id;
+  button.setAttribute('aria-haspopup', 'dialog');
+
+  const summary = document.createElement('span');
+  const name = document.createElement('strong');
+  name.textContent = character.name;
+  const want = document.createElement('small');
+  want.textContent = 'Wants: ' + character.want;
+  summary.append(name, want);
+  button.append(summary);
+  button.addEventListener('click', () => openCharacter(character));
+  return button;
+}
+
+function renderSceneCast(characters) {
+  $('scene-characters').replaceChildren(
+    ...characters.filter(character => selected.has(character.id)).map(characterButton)
+  );
+  $('add-scene-character').disabled = selected.size >= maxCastSize;
 }
 
 function renderScript() {
@@ -134,7 +145,7 @@ $('open-cast').onclick = () => {
   renderCast();
   $('cast-dialog').showModal();
 };
-$('add-character').onclick = () => openCharacter(null);
+$('add-character').onclick = $('add-scene-character').onclick = () => openCharacter(null);
 for (const button of document.querySelectorAll('[data-close]')) {
   button.onclick = () => button.closest('dialog').close();
 }
@@ -185,9 +196,11 @@ $('character-form').onsubmit = event => {
   if (!editing && selected.size < maxCastSize) selected.add(character.id);
   $('character-dialog').close();
   renderCast();
-  const editButton = [...$('characters').querySelectorAll('.character-edit')]
+  const fromSetup = $('setup-dialog').open;
+  const list = $(fromSetup ? 'scene-characters' : 'characters');
+  const editButton = [...list.querySelectorAll('.character-edit')]
     .find(button => button.dataset.id === character.id);
-  (editButton || $('add-character')).focus();
+  (editButton || $(fromSetup ? 'add-scene-character' : 'add-character')).focus();
 };
 
 $('generate').onclick = async () => {
