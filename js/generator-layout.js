@@ -3,6 +3,16 @@
   const toolbar = document.querySelector('.generator-toolbar');
   const controls = document.getElementById('generator-controls');
   const layout = toolbar.closest('.generator-layout');
+  const controlsSlide = document.createElement('div');
+  const controlsClip = document.createElement('div');
+  controlsSlide.className = 'generator-controls-slide';
+  controlsClip.className = 'generator-controls-clip';
+  controls.before(controlsSlide);
+  controlsSlide.append(controlsClip);
+  controlsClip.append(controls);
+  controls.inert = controls.hidden;
+  controls.hidden = false;
+  layout.classList.toggle('controls-hidden', controls.inert);
   const siteRoot = new URL('../', document.currentScript.src);
   const links = [
     ['create', 'Create', 'index.html'],
@@ -30,7 +40,7 @@
   toggle.type = 'button';
   toggle.className = 'generator-toggle';
   toggle.setAttribute('aria-controls', controls.id);
-  toggle.setAttribute('aria-expanded', String(!controls.hidden));
+  toggle.setAttribute('aria-expanded', String(!controls.inert));
   toggle.setAttribute('aria-label', controls.getAttribute('aria-label'));
   // Phosphor Icons (MIT), regular Caret Down and Sidebar Simple.
   toggle.innerHTML = `
@@ -41,9 +51,9 @@
       <path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM40,56H80V200H40ZM216,200H96V56H216V200Z"/>
     </svg>`;
   toggle.addEventListener('click', () => {
-    controls.hidden = !controls.hidden;
-    layout.classList.toggle('controls-hidden', controls.hidden);
-    toggle.setAttribute('aria-expanded', String(!controls.hidden));
+    controls.inert = !controls.inert;
+    layout.classList.toggle('controls-hidden', controls.inert);
+    toggle.setAttribute('aria-expanded', String(!controls.inert));
   });
   toolbar.prepend(toggle);
 })();
