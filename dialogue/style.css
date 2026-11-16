@@ -114,7 +114,7 @@ label {
   text-transform: uppercase;
 }
 
-input:not([type="checkbox"]), textarea, select {
+input:not([type="checkbox"], [type="radio"]), textarea, select {
   width: 100%;
   min-width: 0;
   padding: 0.65rem 0.75rem;
@@ -136,7 +136,7 @@ textarea {
   gap: 0.875rem;
 }
 
-#cast-count, #status, .preview-toolbar, .dialog-status {
+#status, .preview-toolbar, .dialog-status {
   color: var(--text-muted);
   font-size: 0.85rem;
 }
@@ -210,9 +210,42 @@ textarea {
 
 .character-edit > span { min-width: 0; }
 
-#scene-characters small {
-  white-space: normal;
-  overflow-wrap: anywhere;
+.character-gender {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0;
+  border: 0;
+}
+
+.character-gender label {
+  position: relative;
+  margin: 0;
+}
+
+.character-gender input {
+  position: absolute;
+  opacity: 0;
+}
+
+.character-gender span {
+  display: grid;
+  place-items: center;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border: 1px solid var(--panel-border);
+  border-radius: 4px;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.character-gender input:checked + span {
+  background: var(--text-main);
+  color: white;
+}
+
+.character-gender input:focus-visible + span {
+  outline: 2px solid var(--text-main);
+  outline-offset: 2px;
 }
 
 .character-edit strong { display: block; color: var(--text-main); overflow-wrap: anywhere; }

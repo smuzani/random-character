@@ -15,6 +15,7 @@
   <script src="../js/plot-details.js" defer></script>
   <script src="../js/want-details.js" defer></script>
   <script src="../js/appearance-details.js" defer></script>
+  <script src="../assets/names.js" defer></script>
   <script src="../js/generator7.js" defer></script>
   <script src="../js/character-library.js" defer></script>
   <script src="character-rolls.js" defer></script>
@@ -34,7 +35,6 @@
     <section class="generator-controls" id="generator-controls" aria-label="Scene controls">
       <div class="scene-actions">
         <button id="open-setup" type="button" aria-haspopup="dialog">Scene setup</button>
-        <button id="open-cast" type="button" aria-haspopup="dialog">Characters <span id="cast-count"></span></button>
         <button id="generate" class="primary" type="button">Generate dialogue</button>
       </div>
       <div id="account-controls" hidden>
@@ -104,7 +104,7 @@
     <div id="characters"></div>
     <p id="cast-status" class="dialog-status" role="status"></p>
     <div class="dialog-actions">
-      <button type="button" id="add-character">Add character</button>
+      <button type="button" id="add-character">+ New Character</button>
       <button type="button" class="primary" data-close>Done</button>
     </div>
   </dialog>
@@ -115,7 +115,16 @@
         <h2 id="character-title">Edit character</h2>
         <button type="button" class="close-dialog" data-close aria-label="Close character editor">×</button>
       </div>
-      <label for="character-name">Name</label>
+      <fieldset class="character-gender">
+        <legend>Gender</legend>
+        <label><input type="radio" name="character-gender" value="male" aria-label="Male"><span aria-hidden="true">♂</span></label>
+        <label><input type="radio" name="character-gender" value="female" aria-label="Female"><span aria-hidden="true">♀</span></label>
+        <label><input type="radio" name="character-gender" value="" aria-label="Any" checked><span aria-hidden="true">⚥</span></label>
+      </fieldset>
+      <div class="field-heading">
+        <label for="character-name">Name</label>
+        <button type="button" data-roll="name">Roll name</button>
+      </div>
       <input id="character-name" maxlength="60" required>
       <div class="field-heading">
         <label for="character-voice">Voice / temperament</label>

@@ -14,6 +14,15 @@ const selected = new Set();
 let sceneIndex = 0;
 let scriptLocation = scenes[0].location;
 let editing;
+const rolledDescriptions = new Map();
+const genderOptions = document.querySelectorAll('[name="character-gender"]');
+const selectedGender = () => $('character-form').elements['character-gender'].value;
+
+function characterTags(gender) {
+  const tags = (editing?.tags ?? []).filter(tag => tag !== TMALE && tag !== TFEMALE);
+  if (gender) tags.push(gender);
+  return tags;
+}
 let busy = false;
 
 function sceneCharacters() {
@@ -35,8 +44,7 @@ function fillSetup() {
   }
 }
 
-function updateCastCount() {
-  $('cast-count').textContent = '(' + selected.size + ')';
+function updateCastLimit() {
   for (const checkbox of $('characters').querySelectorAll('input[type="checkbox"]')) {
     checkbox.disabled = selected.size >= maxCastSize && !checkbox.checked;
   }
@@ -72,14 +80,14 @@ function renderCast() {
     checkbox.addEventListener('change', () => {
       if (checkbox.checked) selected.add(character.id);
       else selected.delete(character.id);
-      updateCastCount();
+      updateCastLimit();
       renderSceneCast(characters);
     });
 
     row.append(characterButton(character), checkbox);
     root.append(row);
   }
-  updateCastCount();
+  updateCastLimit();
   renderSceneCast(characters);
 }
 
@@ -105,7 +113,6 @@ function renderSceneCast(characters) {
   $('scene-characters').replaceChildren(
     ...characters.filter(character => selected.has(character.id)).map(characterButton)
   );
-  $('add-scene-character').disabled = selected.size >= maxCastSize;
 }
 
 function renderScript() {
@@ -134,18 +141,21 @@ function renderScript() {
 
 function openCharacter(character) {
   editing = character;
-  $('character-title').textContent = character ? 'Edit character' : 'Add character';
+  rolledDescriptions.clear();
+  const gender = character?.tags?.find(tag => tag === TMALE || tag === TFEMALE) ?? '';
+  for (const option of genderOptions) option.checked = option.value === gender;
+  $('character-title').textContent = character ? 'Edit character' : 'New Character';
   for (const key of characterFields) $('character-' + key).value = character?.[key] ?? '';
   $('character-status').textContent = '';
   $('character-dialog').showModal();
 }
 
 $('open-setup').onclick = () => $('setup-dialog').showModal();
-$('open-cast').onclick = () => {
+$('add-scene-character').onclick = () => {
   renderCast();
   $('cast-dialog').showModal();
 };
-$('add-character').onclick = $('add-scene-character').onclick = () => openCharacter(null);
+$('add-character').onclick = () => openCharacter(null);
 for (const button of document.querySelectorAll('[data-close]')) {
   button.onclick = () => button.closest('dialog').close();
 }
@@ -161,22 +171,54 @@ $('randomize').onclick = () => {
   renderCast();
 };
 
+function rollEditorField(field) {
+  const gender = selectedGender();
+  if (field === 'name') return randomName(gender || randomArray([TMALE, TFEMALE]));
+  return rollDialogueField(field, {
+    ...editing,
+    tags: characterTags(gender),
+    name: $('character-name').value
+  });
+}
+
 for (const button of document.querySelectorAll('[data-roll]')) {
   button.onclick = () => {
     const field = button.dataset.roll;
-    const value = rollDialogueField(field, { ...editing, name: $('character-name').value });
+    const value = rollEditorField(field);
     if (value) {
       const input = $('character-' + field);
       input.value = value;
+      if (field !== 'name') rolledDescriptions.set(field, value);
       input.focus();
     }
     $('character-status').textContent = value ? '' : 'No compatible roll. You can enter your own.';
   };
 }
 
+for (const option of genderOptions) {
+  option.addEventListener('change', () => {
+    $('character-status').textContent = '';
+    for (const [field, previous] of rolledDescriptions) {
+      const input = $('character-' + field);
+      if (input.value !== previous) {
+        rolledDescriptions.delete(field);
+        continue;
+      }
+      const value = rollEditorField(field);
+      input.value = value;
+      rolledDescriptions.set(field, value);
+      if (!value) $('character-status').textContent = 'No compatible roll. You can enter your own.';
+    }
+  });
+}
+
 $('character-form').onsubmit = event => {
   event.preventDefault();
-  const character = { ...editing, id: editing?.id ?? CharacterLibrary.newId() };
+  const character = {
+    ...editing,
+    id: editing?.id ?? CharacterLibrary.newId(),
+    tags: characterTags(selectedGender())
+  };
   for (const key of characterFields) {
     const input = $('character-' + key);
     character[key] = input.value.trim();
@@ -196,7 +238,7 @@ $('character-form').onsubmit = event => {
   if (!editing && selected.size < maxCastSize) selected.add(character.id);
   $('character-dialog').close();
   renderCast();
-  const fromSetup = $('setup-dialog').open;
+  const fromSetup = !$('cast-dialog').open;
   const list = $(fromSetup ? 'scene-characters' : 'characters');
   const editButton = [...list.querySelectorAll('.character-edit')]
     .find(button => button.dataset.id === character.id);
@@ -227,13 +269,15 @@ $('generate').onclick = async () => {
 
   if (payload.characters.length < 2) {
     status.textContent = 'Check at least two characters.';
-    $('open-cast').click();
+    $('setup-dialog').showModal();
+    $('add-scene-character').click();
     $('cast-status').textContent = status.textContent;
     return;
   }
   if (new Set(payload.characters.map(character => character.name.toLowerCase())).size !== payload.characters.length) {
     status.textContent = 'Give each checked character a different name.';
-    $('open-cast').click();
+    $('setup-dialog').showModal();
+    $('add-scene-character').click();
     $('cast-status').textContent = status.textContent;
     return;
   }
