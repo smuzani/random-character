@@ -26,3 +26,15 @@
   from = "/api/generate"
   to = "/.netlify/functions/generate"
   status = 200
+
+[[redirects]]
+  from = "/ai-policy.html"
+  to = "/terms.html#ai-usage"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/refunds.html"
+  to = "/pricing.html#refund-policy"
+  status = 301
+  force = true

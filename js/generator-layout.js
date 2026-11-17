@@ -17,8 +17,8 @@
   const links = [
     ['create', 'Create', 'index.html'],
     ['dialogue', 'Dialogue', siteRoot.protocol === 'file:' ? 'dialogue/index.html' : 'dialogue/'],
-    ['about', 'About', 'whatisthis.html'],
     ['roadmap', 'Roadmap', 'roadmap.html'],
+    ['about', 'About', 'whatisthis.html'],
   ];
 
   header.innerHTML = `
