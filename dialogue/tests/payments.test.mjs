@@ -84,6 +84,9 @@ test('signed delayed completed events re-fetch payment and dispatch only verifie
  assert.equal(calls[0].action,'fulfill');
  assert.equal(calls[0].data.total,'1060');
  assert.equal(calls[0].data.purchaseId,purchaseId);
+ const maxOrder=transaction();
+ maxOrder.items[0].quantity=100;
+ assert.equal(transactionDetails(maxOrder).quantity,100);
 });
 test('unpaid, invalid, altered and recurring payments cannot fulfill',async()=>{
  const calls=[];
@@ -93,7 +96,7 @@ test('unpaid, invalid, altered and recurring payments cannot fulfill',async()=>{
  assert.equal((await handler(webhookRequest())).status,503);
  assert.equal((await handler(webhookRequest({...event(),event_type:'transaction.paid'}))).status,200);
  assert.equal(calls.length,0);
- for(const mutate of [t=>t.items[0].quantity=11,t=>t.items[0].price.billing_cycle={interval:'month'},t=>t.discount_id=id('dsc'),t=>t.custom_data.purchase_id='forged',t=>t.items=[]]) {
+ for(const mutate of [t=>t.items[0].quantity=101,t=>t.items[0].price.billing_cycle={interval:'month'},t=>t.discount_id=id('dsc'),t=>t.custom_data.purchase_id='forged',t=>t.items=[]]) {
   const tx=transaction();mutate(tx);assert.throws(()=>transactionDetails(tx));
  }
 });

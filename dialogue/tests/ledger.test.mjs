@@ -124,11 +124,11 @@ test('PostgreSQL payments: atomic grants, ownership, retries and holds',{skip:!d
  });
  await t.test('multiple paid packs grant 100 credits per unit and reject underpayment',()=>{
   resetPayments();const purchaseId=create();
-  assert.throws(()=>sql(complete(purchaseId,{quantity:10,total:1000})));
-  sql(complete(purchaseId,{quantity:10,total:10000}));
-  sql(complete(purchaseId,{quantity:10,total:10000}));
-  assert.equal(sql('select purchased from dialogue.accounts'),'1000');
-  assert.equal(sql('select fulfilled_quantity from dialogue.purchases'),'10');
+  assert.throws(()=>sql(complete(purchaseId,{quantity:100,total:1000})));
+  sql(complete(purchaseId,{quantity:100,total:100000}));
+  sql(complete(purchaseId,{quantity:100,total:100000}));
+  assert.equal(sql('select purchased from dialogue.accounts'),'10000');
+  assert.equal(sql('select fulfilled_quantity from dialogue.purchases'),'100');
  });
  await t.test('stale quotes, unverified identities and browser roles cannot create purchases',()=>{
   resetPayments();
@@ -145,7 +145,7 @@ test('PostgreSQL payments: atomic grants, ownership, retries and holds',{skip:!d
  });
  await t.test('invalid and unpaid payments roll back both event receipt and grant',()=>{
   resetPayments();const purchaseId=create();
-  for(const extra of [{status:'paid'},{priceId:'pri_'+ 'x'.repeat(26)},{currency:'EUR'},{amount:999},{quantity:11},{purchaseId:crypto.randomUUID()},{total:999},{total:null},{environment:'production'}]) {
+  for(const extra of [{status:'paid'},{priceId:'pri_'+ 'x'.repeat(26)},{currency:'EUR'},{amount:999},{quantity:101,total:101000},{purchaseId:crypto.randomUUID()},{total:999},{total:null},{environment:'production'}]) {
    assert.throws(()=>sql(complete(purchaseId,extra)));
   }
   assert.equal(sql('select count(*) from dialogue.payment_events'),'0');

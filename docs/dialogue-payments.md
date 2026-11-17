@@ -28,10 +28,10 @@ Use a separate staging Supabase project and a Netlify preview. Sandbox credits m
 
 1. Apply all repository migrations to the staging database.
 2. Create a Paddle sandbox account.
-3. Create one active product and a US$1.00 one-time price with a minimum quantity of 1 and maximum of 10. Each unit grants 100 credits.
+3. Create one active product and a US$1.00 one-time price with a minimum quantity of 1 and maximum of 100. Each unit grants 100 credits.
 4. Disable regional price overrides and discounts for this launch offer.
 5. Set the Paddle default payment link to the staging Dialogue URL.
-6. Create an API key with transaction read/write and adjustment read access.
+6. Create an API key with `transaction.write` and `adjustment.read`. Transaction write includes read access.
 7. Create a sandbox client-side token.
 8. Create a webhook destination for these events:
    - `transaction.completed`
@@ -162,9 +162,9 @@ The webhook returns a retryable error when verification or fulfillment fails. Ap
 
 If transaction creation succeeds but binding fails, the browser receives no checkout transaction. The unpaid Paddle draft can remain orphaned. Each buyer can start ten checkout attempts per hour. No server action automatically charges a card.
 
-For production, create separate live credentials, a live price, and a live webhook destination. Complete Paddle account and domain approval. Set the environment to `production` and use a `live_…` client token. Never change a staging database into the production billing ledger.
+For production, create separate live credentials, a live price, and a live webhook destination. Use a dedicated runtime API key with only `transaction.write` and `adjustment.read`. Complete Paddle account and domain approval. Set the environment to `production` and use a `live_…` client token. Never change a staging database into the production billing ledger.
 
-The existing live pack uses price `pri_01m7k9kbqqrp6n2zr7460ygm1e`. Use this ID with `paddle_environment=production` when configuring the disabled live offer. The application currently accepts up to 10 packs per order.
+The existing live pack uses price `pri_01m7k9kbqqrp6n2zr7460ygm1e`. Use this ID with `paddle_environment=production` when configuring the disabled live offer. The application currently accepts up to 100 packs per order.
 
 Use the root `.env.example` for live Edge Function settings. The live webhook checks the signed request against the IP list from `https://api.paddle.com/ips`. It caches the list for five minutes and denies requests with missing or unlisted source IPs. Before enabling live delivery, verify in staging that the hosted gateway supplies and overwrites `CF-Connecting-IP` on every path to the function.
 

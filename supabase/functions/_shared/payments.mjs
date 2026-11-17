@@ -38,7 +38,7 @@ export function createPaddleApi({environment, apiKey, fetcher = fetch}) {
 // Never use client-provided prices, ownership, balances, or checkout callbacks as proof of payment.
 export function transactionDetails(transaction) {
   const item = transaction?.items?.[0];
-  if (!paddleId(transaction?.id, 'txn') || transaction.items?.length !== 1 || !Number.isInteger(item?.quantity) || item.quantity < 1 || item.quantity > 10 ||
+  if (!paddleId(transaction?.id, 'txn') || transaction.items?.length !== 1 || !Number.isInteger(item?.quantity) || item.quantity < 1 || item.quantity > 100 ||
       !paddleId(item.price?.id, 'pri') || item.price.billing_cycle !== null || transaction.subscription_id ||
       transaction.discount_id || transaction.collection_mode !== 'automatic' ||
       !uuid.test(transaction.custom_data?.purchase_id || '') ||
