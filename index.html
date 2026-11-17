@@ -25,6 +25,7 @@
   <link rel="stylesheet" href="css/account.css">
   <script src="dialogue/public-config.js" defer></script>
   <script src="dialogue/vendor/supabase-2.119.0.js" defer></script>
+  <script src="dialogue/payments.js" defer></script>
   <script src="dialogue/account.js" defer></script>
 </head>
 
@@ -204,7 +205,7 @@
 
   <footer class="site-footer">
     <div class="footer-container">
-      <div class="footer-links">
+      <div class="footer-links flex-wrap">
         <a href="blog.html">Blog</a>
         <a href="pricing.html">Pricing</a>
       <a href="terms.html">Terms of Service</a>
@@ -214,6 +215,10 @@
       </div>
       <div class="footer-copy">
         &copy; Random Character Generator 2019-2026
+      </div>
+      <div class="footer-links align-self-end align-self-md-center">
+        <a href="contact.html">Contact</a>
+        <a href="https://forms.gle/rytBfiTH7N8arwgY6">Survey</a>
       </div>
     </div>
   </footer>
@@ -259,6 +264,13 @@
       <button id="send-link" type="submit">Send sign-in link</button>
     </form>
     <p id="account-balance" role="status"></p>
+    <section id="credit-pack" hidden aria-label="Buy Dialogue credits">
+      <p id="pack-price"></p>
+      <p id="pack-terms"></p>
+      <button id="buy-credits" type="button">Buy credits</button>
+    </section>
+    <p id="payment-status" role="status"></p>
+    <button id="check-payment" type="button" hidden>Check payment</button>
     <button id="sign-out" type="button" hidden>Sign out</button>
     <p id="account-status" role="status"></p>
   </dialog>
