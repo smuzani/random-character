@@ -2,7 +2,7 @@
 
 Issue #22 moves generation, accounts, credit reservations, and tracing to Supabase. Netlify serves the static site. Payment integration belongs to [#23](https://github.com/smuzani/random-character/issues/23).
 
-The local Paddle implementation and staging procedure are in [Dialogue payments](dialogue-payments.md). Purchases remain disabled until configuration and staging verification are complete.
+Credit purchases are currently unavailable.
 
 ## Project status
 

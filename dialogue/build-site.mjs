@@ -17,7 +17,7 @@ for (const directory of ['assets', 'css', 'fonts', 'img', 'js', 'lab']) {
     filter: path => !/(^|\/)(\.[^/]+|dist|tests)(\/|$)/.test(path.slice(source(directory).pathname.length)),
   });
 }
-for (const file of ['index.html', 'app.js', 'style.css', 'character-rolls.js', 'account.js', 'payments.js', 'public-config.js']) {
+for (const file of ['index.html', 'app.js', 'style.css', 'character-rolls.js', 'account.js', 'public-config.js']) {
   cpSync(source('dialogue/' + file), output('dialogue/' + file));
 }
 

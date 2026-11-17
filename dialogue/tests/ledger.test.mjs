@@ -8,7 +8,7 @@ const args=['-X','-qAt','-v','ON_ERROR_STOP=1','-d',database || ''];
 function sql(query) {return execFileSync('psql',[...args,'-c',query],{encoding:'utf8'}).trim();}
 const uid='00000000-0000-4000-8000-000000000001';
 function rpc(action,data={}) {return `select public.dialogue_service('${action}','${JSON.stringify(data)}'::jsonb)`;}
-const reset=()=>sql(`truncate dialogue.payment_events, dialogue.payment_holds, dialogue.purchases; truncate dialogue.attempts, dialogue.requests, dialogue.guests, dialogue.accounts, dialogue.months; update dialogue.settings set enabled=true,monthly_cap=1000000,guest_allocation=500000,welcome_allocation=500000,welcome_credits=0,welcome_cost=0;`);
+const reset=()=>sql(`truncate dialogue.attempts, dialogue.requests, dialogue.guests, dialogue.accounts, dialogue.months; update dialogue.settings set enabled=true,monthly_cap=1000000,guest_allocation=500000,welcome_allocation=500000,welcome_credits=0,welcome_cost=0;`);
 const begin=(requestId,extra={})=>rpc('begin',{requestId,model:'test-model',length:'short',quotedPrice:7,userId:uid,...extra});
 test('PostgreSQL ledger: reservations, races, grants, pools, recovery and permissions',{skip:!database},async t=>{
  sql(`insert into auth.users(id,email_confirmed_at) values('${uid}',now()) on conflict do nothing;
@@ -95,111 +95,4 @@ test('PostgreSQL ledger: reservations, races, grants, pools, recovery and permis
    assert.throws(()=>sql(`set role ${role}; select * from dialogue.accounts`));
   }
  });
-});
-
-test('PostgreSQL payments: atomic grants, ownership, retries and holds',{skip:!database},async t=>{
- const payment=(action,data={})=>`select public.dialogue_payments('${action}','${JSON.stringify(data)}'::jsonb)`;
- const packId='00000000-0000-4000-8000-000000000023';
- const priceId='pri_'+ 'a'.repeat(26), transactionId='txn_'+ 'b'.repeat(26);
- const terms='One-time credits. No expiry. Taxes calculated at checkout.';
- const quote={packId,userId:uid,environment:'sandbox',amount:1000,currency:'USD',credits:100,terms};
- const resetPayments=()=>{
-  sql('truncate dialogue.payment_events, dialogue.payment_holds, dialogue.purchases, dialogue.credit_packs');
-  reset();
-  sql(`insert into dialogue.credit_packs(id,enabled,environment,price_id,amount,currency,credits,terms) values('${packId}',true,'sandbox','${priceId}',1000,'USD',100,'${terms}')`);
- };
- const create=(extra={})=>{
-  const purchaseId=crypto.randomUUID();
-  sql(payment('create',{...quote,purchaseId,...extra}));
-  sql(payment('bind',{purchaseId,transactionId}));
-  return purchaseId;
- };
- const complete=(purchaseId,extra={})=>payment('fulfill',{purchaseId,transactionId,eventId:'evt_'+ 'c'.repeat(26),environment:'sandbox',status:'completed',priceId,amount:1000,currency:'USD',quantity:1,total:1060,...extra});
- await t.test('concurrent duplicate events and different events for one purchase grant once',async()=>{
-  resetPayments();const purchaseId=create();
-  await Promise.all(Array.from({length:8},(_,i)=>run('psql',[...args,'-c',complete(purchaseId,{eventId:'evt_'+String(i%2).repeat(26)})])));
-  assert.equal(sql(`select purchased from dialogue.accounts where user_id='${uid}'`),'100');
-  assert.equal(sql('select count(*) from dialogue.payment_events'),'2');
-  assert.equal(JSON.parse(sql(payment('status',{purchaseId,userId:uid}))).status,'fulfilled');
- });
- await t.test('multiple paid packs grant 100 credits per unit and reject underpayment',()=>{
-  resetPayments();const purchaseId=create();
-  assert.throws(()=>sql(complete(purchaseId,{quantity:100,total:1000})));
-  sql(complete(purchaseId,{quantity:100,total:100000}));
-  sql(complete(purchaseId,{quantity:100,total:100000}));
-  assert.equal(sql('select purchased from dialogue.accounts'),'10000');
-  assert.equal(sql('select fulfilled_quantity from dialogue.purchases'),'100');
- });
- await t.test('stale quotes, unverified identities and browser roles cannot create purchases',()=>{
-  resetPayments();
-  for(const extra of [{credits:10000},{currency:'EUR'},{amount:1},{terms:'altered'},{environment:'production'},{userId:crypto.randomUUID()}]) {
-   assert.throws(()=>sql(payment('create',{...quote,purchaseId:crypto.randomUUID(),...extra})));
-  }
-  for(const role of ['anon','authenticated']) {
-   assert.throws(()=>sql(`set role ${role}; ${payment('catalog',{environment:'sandbox'})}`));
-   assert.throws(()=>sql(`set role ${role}; select * from dialogue.purchases`));
-  }
-  assert.equal(sql("select has_function_privilege('service_role','public.dialogue_payments(text,jsonb)','execute')"),'t');
-  assert.equal(sql("select has_function_privilege('anon','public.dialogue_service(text,jsonb)','execute'), has_function_privilege('authenticated','public.dialogue_service(text,jsonb)','execute')"),'f|f');
-  assert.equal(sql("select bool_and(relrowsecurity) from pg_class where oid in ('dialogue.purchases'::regclass,'dialogue.credit_packs'::regclass,'dialogue.payment_events'::regclass,'dialogue.payment_holds'::regclass)"),'t');
- });
- await t.test('invalid and unpaid payments roll back both event receipt and grant',()=>{
-  resetPayments();const purchaseId=create();
-  for(const extra of [{status:'paid'},{priceId:'pri_'+ 'x'.repeat(26)},{currency:'EUR'},{amount:999},{quantity:101,total:101000},{purchaseId:crypto.randomUUID()},{total:999},{total:null},{environment:'production'}]) {
-   assert.throws(()=>sql(complete(purchaseId,extra)));
-  }
-  assert.equal(sql('select count(*) from dialogue.payment_events'),'0');
-  assert.equal(sql('select purchased from dialogue.accounts'),'0');
-  sql(complete(purchaseId));assert.equal(sql('select purchased from dialogue.accounts'),'100');
- });
- await t.test('delayed events retain purchased terms after offer edits or disablement',()=>{
-  resetPayments();const purchaseId=create();
-  sql("update dialogue.credit_packs set enabled=false,credits=200,amount=2000");
-  sql(complete(purchaseId));assert.equal(sql('select purchased from dialogue.accounts'),'100');
-  const otherId=crypto.randomUUID();
-  sql(`insert into auth.users(id,email_confirmed_at) values('${otherId}',now())`);
-  assert.throws(()=>sql(payment('status',{purchaseId,userId:otherId})));
-  assert.throws(()=>sql(payment('bind',{purchaseId,transactionId:'txn_'+ 'x'.repeat(26)})));
- });
- await t.test('purchased credits fund generation only after welcome credits',()=>{
-  resetPayments();const purchaseId=create();sql(complete(purchaseId));
-  sql('update dialogue.accounts set welcome=5');
-  const requestId=crypto.randomUUID();sql(begin(requestId));
-  assert.equal(sql('select welcome||\',\'||purchased from dialogue.accounts'),'0,98');
-  sql(rpc('finish',{requestId,success:false}));
-  assert.equal(sql('select welcome||\',\'||purchased from dialogue.accounts'),'5,100');
- });
- await t.test('refund before fulfillment holds the account despite delayed payment',()=>{
-  resetPayments();const purchaseId=create();
-  sql(payment('hold',{transactionId,environment:'sandbox',eventId:'evt_'+ 'd'.repeat(26),reason:'refund'}));
-  sql(complete(purchaseId));
-  assert.equal(JSON.parse(sql(payment('status',{purchaseId,userId:uid}))).status,'review');
-  assert.throws(()=>sql(begin(crypto.randomUUID())));
-  assert.throws(()=>sql(payment('create',{...quote,purchaseId:crypto.randomUUID()})));
-  assert.equal(sql('select purchased from dialogue.accounts'),'100');
- });
- await t.test('refund after reservation still blocks spending credits returned by a failed request',()=>{
-  resetPayments();const purchaseId=create();sql(complete(purchaseId));
-  const requestId=crypto.randomUUID();sql(begin(requestId));
-  sql(payment('hold',{transactionId,environment:'sandbox',eventId:'evt_'+ 'e'.repeat(26),reason:'chargeback'}));
-  sql(rpc('finish',{requestId,success:false}));
-  assert.equal(sql('select purchased from dialogue.accounts'),'100');
-  assert.throws(()=>sql(begin(crypto.randomUUID())));
- });
- await t.test('missing accounts cannot leave a fulfilled purchase without a credit grant',()=>{
-  resetPayments();const purchaseId=create();sql('delete from dialogue.accounts');
-  assert.throws(()=>sql(complete(purchaseId)));
-  assert.equal(sql('select count(*) from dialogue.payment_events'),'0');
-  assert.equal(sql('select count(*) from dialogue.purchases where fulfilled_at is not null'),'0');
- });
- await t.test('a grant failure rolls back receipt so a retry can fulfill',()=>{
-  resetPayments();const purchaseId=create();
-  sql(`update dialogue.accounts set purchased=9223372036854775800 where user_id='${uid}'`);
-  assert.throws(()=>sql(complete(purchaseId)));
-  assert.equal(sql('select count(*) from dialogue.payment_events'),'0');
-  assert.equal(sql('select count(*) from dialogue.purchases where fulfilled_at is not null'),'0');
-  sql('update dialogue.accounts set purchased=0');sql(complete(purchaseId));
-  assert.equal(sql('select purchased from dialogue.accounts'),'100');
- });
- resetPayments();
 });
