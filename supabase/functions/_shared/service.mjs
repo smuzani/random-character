@@ -79,6 +79,7 @@ export function createService({rpc, authenticate, key, allowedOrigin, log = entr
 }
 
 const publicErrors = new Set([
+  'Your payment needs review. Contact support.',
   'Sign in first.','Verify your email first.','Generation is unavailable.','Choose an available model.',
   'Choose a valid scene length.','Choose an available length.','Sign in to select this model.',
   'Guest limit reached. Sign in to continue.','The price changed. Review the new price.','Not enough credits.',

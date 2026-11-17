@@ -9,3 +9,4 @@ bolt-random-character
 
 # Supabase CLI cache
 /supabase/.temp/
+/supabase/.branches/

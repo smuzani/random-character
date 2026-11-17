@@ -8,7 +8,7 @@ const tick=()=>new Promise(resolve=>setImmediate(resolve));
 function browser({signedIn=false,sendError=null,dialogue=true}={}) {
  const fields=new Map();
  const element=id=>{
-  if(!fields.has(id)) fields.set(id,{value:id==='length'?'medium':id==='account-email'?'test@example.com':'',hidden:false,disabled:false,textContent:'',reportValidity:()=>true,showModal(){this.open=true;},setAttribute(){},addEventListener(){},replaceChildren(...children){this.children=children;}});
+  if(!fields.has(id)) fields.set(id,{value:id==='length'?'medium':id==='account-email'?'test@example.com':'',hidden:false,disabled:false,options:[],textContent:'',reportValidity:()=>true,showModal(){this.open=true;},setAttribute(){},removeAttribute(){},addEventListener(){},replaceChildren(...children){this.children=children;this.options=children;}});
   return fields.get(id);
  };
  let session=signedIn?{access_token:'user-token',user:{id:'test-user'}}:null;

@@ -1,3 +1,7 @@
 project_id = "random-character"
 [functions.dialogue]
 verify_jwt = false
+[functions.dialogue-payments]
+verify_jwt = false
+[functions.dialogue-paddle-webhook]
+verify_jwt = false

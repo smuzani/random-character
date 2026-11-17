@@ -7,6 +7,7 @@
     auth:{flowType:'pkce',storageKey:'rcg-auth-session-v1',detectSessionInUrl:true,persistSession:true,autoRefreshToken:true}
   });
   let session=null, catalog=null, loadVersion=0;
+  const payments=window.DialoguePayments?.({readSession,refresh:load});
   function readGuestToken() {
     try {return sessionStorage.getItem('rcg-dialogue-guest');}
     catch {return null;}
@@ -24,6 +25,7 @@
     return data;
   }
   function renderAccount() {
+    payments?.setSession(session);
     const balance=session && catalog?.balance;
     const credits=balance ? balance.welcome + balance.purchased : null;
     const label=credits===null ? 'Account' : `${credits.toLocaleString()} ${credits===1 ? 'credit' : 'credits'}`;

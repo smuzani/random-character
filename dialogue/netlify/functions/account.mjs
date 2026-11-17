@@ -2,7 +2,8 @@ const reply=(body,status)=>Response.json(body,{status,headers:{'Cache-Control':'
 
 // Keep browser requests on the site's origin, including Netlify deploy previews.
 // Supabase still validates identities and owns all spending decisions.
-export default async function handler(request) {
+export function createProxy(endpoint='dialogue') {
+return async function handler(request) {
   const requestId=crypto.randomUUID();
   if(request.method!=='POST') return reply({error:'Use POST.',requestId},405);
   const origin=request.headers.get('origin');
@@ -15,11 +16,13 @@ export default async function handler(request) {
   const authorization=request.headers.get('authorization');
   if(authorization) headers.Authorization=authorization;
   try {
-    const response=await fetch(`${url}/functions/v1/dialogue`,{method:'POST',headers,body:raw,signal:AbortSignal.timeout(55000)});
+    const response=await fetch(`${url}/functions/v1/${endpoint}`,{method:'POST',headers,body:raw,signal:AbortSignal.timeout(55000)});
     return new Response(response.body,{status:response.status,headers:{'Content-Type':'application/json','Cache-Control':'no-store','X-Request-ID':response.headers.get('X-Request-ID') || requestId}});
   } catch {
     console.error(JSON.stringify({event:'dialogue_proxy_failed',requestId}));
-    return reply({error:'The request could not reach the generation service. Please try again.',requestId},503);
+    return reply({error:'The request could not reach the service. Please try again.',requestId},503);
   }
 }
+}
+export default createProxy();
 export const config={path:'/api/dialogue',rateLimit:{windowLimit:20,windowSize:60,aggregateBy:['ip','domain']}};
