@@ -49,7 +49,7 @@ The project supplies `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to Edge Func
 
 ## Launch settings
 
-New installations start disabled. The live project is enabled with the approved allocations and 100 welcome credits (US$1 liability) per eligible verified account. Its default model is `gemini-3.1-flash-lite`: 2 credits per scene, 2,200 output tokens, and input/output rates of `250000`/`1500000`.
+New installations start disabled. The live project is enabled with the approved allocations and 100 welcome credits (US$1 liability) per eligible verified account. Its default model is `gemini-3.1-flash-lite`: 1 credit per scene, 2,200 output tokens, and input/output rates of `250000`/`1500000`.
 
 Set these database values before enabling generation:
 
