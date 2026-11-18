@@ -1,7 +1,7 @@
 import {readFileSync, writeFileSync} from 'node:fs';
 import {createRequire} from 'node:module';
 import {pathToFileURL} from 'node:url';
-const {parse} = createRequire(import.meta.url)('./fountain-parser.js');
+const {parse} = createRequire(import.meta.url)('../supabase/functions/_shared/fountain-parser.js');
 
 // One classic script works over HTTP and file://, without fetching local files.
 export function sampleBundle() {

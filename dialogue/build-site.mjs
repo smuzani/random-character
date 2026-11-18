@@ -18,9 +18,12 @@ for (const directory of ['assets', 'css', 'fonts', 'img', 'js', 'lab']) {
     filter: path => !/(^|\/)(\.[^/]+|dist|tests)(\/|$)/.test(path.slice(source(directory).pathname.length)),
   });
 }
-for (const file of ['index.html', 'fountain-parser.js', 'app.js', 'style.css', 'character-rolls.js', 'account.js', 'public-config.js']) {
+for (const file of ['index.html', 'app.js', 'style.css', 'character-rolls.js', 'account.js', 'public-config.js']) {
   cpSync(source('dialogue/' + file), output('dialogue/' + file));
 }
+const parser = 'supabase/functions/_shared/fountain-parser.js';
+mkdirSync(output('supabase/functions/_shared/'), {recursive: true});
+cpSync(source(parser), output(parser));
 
 cpSync(source('dialogue/vendor'), output('dialogue/vendor'), {recursive:true});
 

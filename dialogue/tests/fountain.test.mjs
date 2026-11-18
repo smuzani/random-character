@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {createRequire} from 'node:module';
-const {parse} = createRequire(import.meta.url)('../fountain-parser.js');
+const {parse} = createRequire(import.meta.url)('../../supabase/functions/_shared/fountain-parser.js');
 import {screenplay as source} from './fixtures.mjs';
 
 test('parser preserves setup, cast and all screenplay blocks', () => {

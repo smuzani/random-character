@@ -1,3 +1,9 @@
 // Small synthetic scripts for parser and loader behavior, independent of product samples.
 export const screenplay = "Title: Parser fixture\n\n[[rdg\nTone: Standoff\nStart: A visitor reaches a locked door.\nEnd: The visitor asks for a key.\n]]\n\n[[character: Agent Vance\nVoice: Brief and direct.\nWant: Keep the door closed.\nObstacle: Marcus needs to enter.\n]]\n\n[[character: Marcus\nVoice: Polite questions.\nWant: Enter the room.\nObstacle: The door is locked.\n]]\n\nINT. ROOM - DAY\n\nA visitor tries the door.\n\nAGENT VANCE\nThe lift is locked.\n\nMARCUS\nMay I have the key?\n";
 export const setupOnly = screenplay.replace("Tone: Standoff", "Tone: Sitcom").split("\n\nA visitor tries the door.")[0] + "\n";
+
+export function fountainBody(blocks) {
+  return blocks.map(block => block.type === 'dialogue'
+    ? `@${block.speaker}\n${block.text}`
+    : `!${block.text}`).join('\n\n');
+}

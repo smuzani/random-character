@@ -24,7 +24,7 @@ async function page(entries, files = {}) {
       requests.push(url);
       throw new Error('Local file fetch is blocked');
     }});
-  vm.runInContext(read('fountain-parser.js'), context);
+  vm.runInContext(read('../supabase/functions/_shared/fountain-parser.js'), context);
   // Run the real application with network fetch blocked, as on file://.
   await vm.runInContext(read('app.js').replace(/loadSamples\(\);\s*$/, 'loadSamples()'), context);
   return {node, requests, context, genderOptions};
@@ -114,7 +114,8 @@ test('switching to a setup-only sample clears the previous screenplay and select
 test('checked-in preload matches Fountain sources and page loads it before the app', () => {
   assert.equal(read('samples.js'), sampleBundle());
   const html = read('index.html');
-  assert.ok(html.indexOf('src="fountain-parser.js"') < html.indexOf('src="samples.js"'));
+  const parserIndex = html.indexOf('src="../supabase/functions/_shared/fountain-parser.js"');
+  assert.ok(parserIndex >= 0 && parserIndex < html.indexOf('src="samples.js"'));
   assert.ok(html.indexOf('src="samples.js"') < html.indexOf('src="app.js"'));
   const bundleContext = vm.createContext({window:{}});
   vm.runInContext(read('samples.js'), bundleContext);

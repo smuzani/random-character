@@ -1,3 +1,6 @@
+import './fountain-parser.js';
+
+const {parseBody} = globalThis.FountainParser;
 const masterPrompt = `Every character wants something and will stop at nothing to get it.
 
 Establish a tight clothesline: make their intentions, obstacles, and stakes unmistakably clear. The situation should be strong enough to hold the story together however far the conversation wanders.
@@ -72,18 +75,12 @@ export function validate(input){
   return result;
 }
 export function parseScene(raw,characters){
-  const data=JSON.parse(raw);
-  if(!Array.isArray(data.blocks)||data.blocks.length<3||data.blocks.length>60)throw new Error('Invalid scene');
-  const names=new Map(characters.map(c=>[c.name.toLowerCase(),c.name]));
-  const blocks=data.blocks.map(b=>{
-    if(!['action','dialogue'].includes(b.type)||typeof b.text!=='string'||!b.text.trim()||b.text.length>2000)throw new Error('Invalid block');
-    if (b.type === 'dialogue') {
-      const speaker = typeof b.speaker === 'string' && names.get(b.speaker.trim().toLowerCase());
-      if (!speaker) throw new Error('Invalid speaker');
-      return {type:b.type,text:b.text.trim(),speaker};
-    }
-    return {type:b.type,text:b.text.trim()};
-  });
+  const blocks = parseBody(raw, characters);
+  if (blocks.length < 3 || blocks.length > 60) throw new Error('Invalid scene');
+  for (const block of blocks) {
+    block.text = block.text.trim();
+    if (!block.text || block.text.length > 2000) throw new Error('Invalid block');
+  }
   const speakers = new Set(blocks.filter(b => b.type === 'dialogue').map(b => b.speaker));
   const missing = characters.filter(c => !speakers.has(c.name)).map(c => c.name);
   if (missing.length) throw new MissingCastError(missing);
@@ -123,8 +120,8 @@ export async function generateScene(scene, {
                   ? 'Reach the supplied ending through a credible change.'
                   : 'Invent a surprising ending that follows from what the characters want and what they choose to do. Let the final beat show what has changed.',
                 'Only use supplied characters on screen. If the setup names someone outside the cast, adapt the setup to the cast while keeping its key events.',
-                'Use the exact supplied name in each speaker field. The app renders character cues in ALL CAPS. Return JSON: {"blocks":[{"type":"action","text":"..."},{"type":"dialogue","speaker":"exact character name","text":"..."}]}.',
-                'No heading in the blocks. Write 8–12 dialogue turns for short, 14–20 for medium. Finish the scene within 500 words.',
+                'Return only the Fountain scene body as plain text. Begin each action block with ! immediately followed by its text. Begin each dialogue block with @ followed by the exact supplied character name on its own line, then the spoken text on the next line. Separate blocks with one blank line. Omit headings, metadata, and code fences.',
+                'Write 8–12 dialogue turns for short, 14–20 for medium. Finish the scene within 500 words.',
                 'Play the tone through the scene without naming or explaining it.',
                 direction,
                 missingSpeakers && 'A previous attempt omitted the speakers listed in missingSpeakers. Write a complete new scene and give them spoken lines too.'
@@ -132,7 +129,7 @@ export async function generateScene(scene, {
             }]
           },
           contents: [{ role: 'user', parts: [{ text: JSON.stringify({ ...scene, missingSpeakers }) }] }],
-          generationConfig: { temperature: 1, maxOutputTokens, responseMimeType: 'application/json' }
+          generationConfig: { temperature: 1, maxOutputTokens, responseMimeType: 'text/plain' }
         })
       });
       trace.providerStatus = response.status;

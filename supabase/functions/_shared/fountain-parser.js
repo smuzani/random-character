@@ -18,9 +18,37 @@
     }
     return result;
   }
-  function parse(source) {
+  function normalize(source) {
     let text = source.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').trim();
-    text = text.replace(/^```[^\n]*\n([\s\S]*?)\n```$/, '$1');
+    return text.replace(/^```[^\n]*\n([\s\S]*?)\n```$/, '$1');
+  }
+  function paragraphs(text) {
+    return text.trim().split(/\n\s*\n/).filter(p => p.trim());
+  }
+  function parseBlock(paragraph, names, forced) {
+    const lines = paragraph.trim().split('\n');
+    const first = forced ? lines[0].trim() : undecorate(lines[0]);
+    if (forced && !/^[@!]/.test(first)) throw new Error('Expected a forced Fountain action or character cue');
+    const name = first.replace(/^@/, '');
+    const cue = forced ? name.trim() : name.replace(/\s*\((?:V\.O\.|O\.S\.|CONT'D)\)$/i, '');
+    const hasCue = first.startsWith('@') || (!forced && cue === cue.toUpperCase());
+    const speaker = hasCue && names.get(forced ? cue.toLowerCase() : cue.toUpperCase());
+    if (speaker) {
+      if (lines.length < 2) throw new Error('Missing dialogue for ' + speaker);
+      return {type: 'dialogue', speaker, text: lines.slice(1).join('\n')};
+    }
+    if (first.startsWith('@') || (!forced && lines.length > 1 && /^[A-Z][A-Z .’'-]*$/.test(first))) {
+      throw new Error('Unknown speaker: ' + first);
+    }
+    if (!forced && /^(?:>|===|#|=)|\^$/.test(first)) throw new Error('Unsupported Fountain layout: ' + first);
+    return {type: 'action', text: paragraph.trim().replace(/^!/, '')};
+  }
+  function parseBody(source, characters) {
+    const names = new Map(characters.map(({name}) => [name.toLowerCase(), name]));
+    return paragraphs(normalize(source)).map(paragraph => parseBlock(paragraph, names, true));
+  }
+  function parse(source) {
+    let text = normalize(source);
     const scene = {title: '', end: '', characters: [], blocks: []};
     let hasSetup = false;
     text = text.replace(/\[\[([\s\S]*?)\]\]/g, (_, note) => {
@@ -51,7 +79,7 @@
       if (names.has(name)) throw new Error('Duplicate character: ' + c.name);
       names.set(name, c.name);
     }
-    for (const paragraph of text.trim().split(/\n\s*\n/).filter(p => p.trim())) {
+    for (const paragraph of paragraphs(text)) {
       const lines = paragraph.trim().split('\n');
       const first = undecorate(lines[0]);
       if (/^Title\s*:/i.test(first) && !scene.location) {
@@ -65,18 +93,7 @@
         continue;
       }
       if (!scene.location) throw new Error('Expected a Fountain scene heading');
-      const cue = first.replace(/^@/, '').replace(/\s*\((?:V\.O\.|O\.S\.|CONT'D)\)$/i, '');
-      const speaker = names.get(cue.toUpperCase());
-      if (speaker && (first.startsWith('@') || cue === cue.toUpperCase())) {
-        if (lines.length < 2) throw new Error('Missing dialogue for ' + speaker);
-        scene.blocks.push({type: 'dialogue', speaker, text: lines.slice(1).join('\n')});
-      } else {
-        if (first.startsWith('@') || (lines.length > 1 && /^[A-Z][A-Z .’'-]*$/.test(first))) {
-          throw new Error('Unknown speaker: ' + first);
-        }
-        if (/^(?:>|===|#|=)|\^$/.test(first)) throw new Error('Unsupported Fountain layout: ' + first);
-        scene.blocks.push({type: 'action', text: paragraph.trim().replace(/^!/, '')});
-      }
+      scene.blocks.push(parseBlock(paragraph, names, false));
     }
     for (const key of ['location', 'tone', 'start']) {
       if (!scene[key]) throw new Error('Missing scene ' + key);
@@ -84,6 +101,6 @@
     if (!scene.characters.length || scene.characters.length > 6) throw new Error('Samples need one to six characters');
     return scene;
   }
-  root.FountainParser = {parse};
-  if (typeof module !== 'undefined') module.exports = {parse};
+  root.FountainParser = {parse, parseBody};
+  if (typeof module !== 'undefined') module.exports = root.FountainParser;
 })(globalThis);
