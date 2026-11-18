@@ -4,7 +4,7 @@ import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 import {sampleBundle} from '../build-samples.mjs';
 const read = path => readFileSync(new URL('../' + path, import.meta.url), 'utf8');
-const rooftop = read('samples/rooftop.fountain');
+const rooftop = "Title: Rooftop\n\n[[rdg\nTone: Standoff\nStart: Vance corners Marcus on the roof, convinced he leaked confidential files.\nEnd: Marcus hands over his passkey and reveals that he was protecting his sister.\n]]\n\n[[character: Agent Vance\nVoice: Controlled, precise. Asks questions already knowing the answer.\nWant: Recover the files before anyone else sees them.\nObstacle: Marcus is the only person who knows where the backup is.\n]]\n\n[[character: Marcus\nVoice: Defensive humor that cracks under pressure.\nWant: Get his sister safely out of the city.\nObstacle: Vance is blocking the only exit.\n]]\n\nEXT. HIGH-RISE ROOFTOP \u2014 RAINY NIGHT\n\nRain ticks against a ventilation duct. MARCUS keeps one hand in his coat. VANCE watches that hand.\n\nAGENT VANCE\nThe lift is locked.\n\nMARCUS\nI noticed. Very welcoming building.\n\nAGENT VANCE\nTake your hand out. Slowly.\n\nMarcus produces a small plastic passkey. He holds it over the edge.\n\nMARCUS\nThere\u2019s a car downstairs. Blue. Engine running.\n\nAGENT VANCE\nYour driver can wait.\n\nMARCUS\nShe\u2019s fourteen. She can\u2019t drive.\n\nVance lowers the radio without switching it on.\n\nAGENT VANCE\nWho else knows she\u2019s there?\n\nMARCUS\nEveryone I stole those files from.\n\nHe sets the passkey on the duct between them. Neither reaches for it.\n";
 function element() {
   return {value:'', children:[], dataset:{}, elements:{'character-gender':{value:''}},
     append(...items) { this.children.push(...items); },
@@ -74,7 +74,7 @@ test('missing bundle, empty bundle and invalid paths leave explicit errors and d
 test('switching to a setup-only sample clears the previous screenplay and selects its cast', async () => {
   const {node,context} = await page([
     {file:'rooftop.fountain', source:rooftop},
-    {file:'laundromat.fountain', source:read('samples/laundromat.fountain')}
+    {file:'laundromat.fountain', source:"Title: laundromat\n\n[[rdg\nTone: Sitcom\nStart: Two strangers discover that each has one half of a torn winning lottery ticket.\nEnd: They agree to split the prize, then notice the draw date is tomorrow.\n]]\n\n[[character: Nora\nVoice: Dry, practical, suspicious of good luck.\nWant: Finish the laundry and avoid getting involved.\nObstacle: The stranger will not give back her half of the ticket.\n]]\n\n[[character: Eli\nVoice: Overconfident, chatty; bargains when nervous.\nWant: Convince Nora they are destined to win.\nObstacle: He has been wrong about every prediction tonight.\n]]\n\nINT. ALL-NIGHT LAUNDROMAT \u2014 3 A.M.\n"}
   ]);
   node('randomize').onclick();
   assert.equal(node('tone').value,'Sitcom');
@@ -90,8 +90,8 @@ test('checked-in preload matches Fountain sources and page loads it before the a
   assert.ok(html.indexOf('src="samples.js"') < html.indexOf('src="app.js"'));
   const bundleContext = vm.createContext({window:{}});
   vm.runInContext(read('samples.js'), bundleContext);
-  assert.equal(bundleContext.window.DIALOGUE_SAMPLES.length, 4);
-  assert.equal(bundleContext.window.DIALOGUE_SAMPLES[0].source, rooftop);
+  assert.equal(bundleContext.window.DIALOGUE_SAMPLES.length, 1);
+  assert.equal(bundleContext.window.DIALOGUE_SAMPLES[0].source, read('samples/the-price-of-the-living.fountain'));
 });
 
 
