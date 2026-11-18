@@ -18,8 +18,8 @@ async function page(entries, files = {}) {
   const genderOptions = ['male', 'female', ''].map(value => ({...element(), value}));
   const context = vm.createContext({TMALE:'male', TFEMALE:'female', document:{getElementById:node, createElement:element,
     querySelectorAll: selector => selector === '[name="character-gender"]' ? genderOptions : []},
-    CharacterLibrary:{list:()=>[]}, window:{DIALOGUE_SAMPLES: entries?.map(entry =>
-      typeof entry === 'string' ? {file:entry, source:files[entry]} : entry)}, console,
+    CharacterLibrary:{list:()=>[]}, window:Object.assign(new EventTarget(), {DIALOGUE_SAMPLES: entries?.map(entry =>
+      typeof entry === 'string' ? {file:entry, source:files[entry]} : entry)}), console,
     fetch: async url => {
       requests.push(url);
       throw new Error('Local file fetch is blocked');
@@ -29,6 +29,20 @@ async function page(entries, files = {}) {
   await vm.runInContext(read('app.js').replace(/loadSamples\(\);\s*$/, 'loadSamples()'), context);
   return {node, requests, context, genderOptions};
 }
+
+test('Generate follows catalog readiness', async () => {
+  const {node, context} = await page([{file:'sample.fountain', source:screenplay}]);
+  let ready = false;
+  context.window.DialogueAccount = {canGenerate: () => ready};
+  context.window.dispatchEvent(new Event('dialogue-catalog-change'));
+  assert.equal(node('generate').disabled, true);
+  ready = true;
+  context.window.dispatchEvent(new Event('dialogue-catalog-change'));
+  assert.equal(node('generate').disabled, false);
+  ready = false;
+  context.window.dispatchEvent(new Event('dialogue-catalog-change'));
+  assert.equal(node('generate').disabled, true);
+});
 
 test('the bundled cast opens with their genders selected and keeps them in Fountain export', async () => {
   const file = 'the-price-of-the-living.fountain';
@@ -125,7 +139,7 @@ test('clearing the sample ending allows generation and Fountain export', async (
   const {node, context} = await page([{file:'fixture.fountain', source:screenplay}]);
   const original = vm.runInContext('FountainParser.parse(window.DIALOGUE_SAMPLES[0].source)', context);
   const requests = [];
-  context.window.DialogueAccount = {async generate(payload) {
+  context.window.DialogueAccount = {canGenerate: () => true, async generate(payload) {
     requests.push(payload);
     return {blocks: original.blocks};
   }};

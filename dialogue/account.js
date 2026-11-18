@@ -34,26 +34,38 @@
     $('sign-in-form').hidden=!!session;
     $('account-balance').textContent=credits===null ? '' : `Dialogue credits: ${credits.toLocaleString()}`;
   }
+  let loading = true;
+  const canGenerate = () => !loading && !!catalog?.enabled &&
+    catalog.models.some(model => model.id === modelSelect.value);
+
   function price() {
     if(!modelSelect) return;
+    modelSelect.setAttribute('aria-busy', String(loading));
+    window.dispatchEvent(new Event('dialogue-catalog-change'));
+    if (loading) {
+      modelSelect.disabled = true;
+      $('scene-price').textContent = '';
+      return;
+    }
     const model=catalog?.models.find(m=>m.id===modelSelect.value);
     const amount=model?.[$('length').value+'Price'];
     const remaining=catalog?.guestRemaining;
     let message='Generation is unavailable.';
-    if(model && session) message=`${amount} credits per scene`;
+    if(model && catalog.enabled && session) message=`${amount} credits per scene`;
     if(model && !session && catalog.enabled) {
       if(remaining===0) message='0 guest scenes left. Sign in to continue.';
       else if(Number.isInteger(remaining)) message=`${remaining} guest ${remaining===1 ? 'scene' : 'scenes'} left`;
       else message='Guest scene count unavailable.';
     }
     $('scene-price').textContent=message;
-    modelSelect.disabled=!session || !model;
+    modelSelect.disabled=!session || !canGenerate();
     $('medium-length').disabled=!model?.mediumPrice || !model?.mediumOutput;
     if($('medium-length').disabled && $('length').value==='medium') {$('length').value='short';price();}
   }
   async function load() {
     const version=++loadVersion;
-    if(modelSelect && !modelSelect.options.length) modelSelect.setAttribute('aria-busy','true');
+    loading = true;
+    price();
     try {
       const current=await readSession();
       if(version!==loadVersion) return;
@@ -76,15 +88,15 @@
       if(version!==loadVersion) return;
       catalog=null;
       $('account-status').textContent=error.message;
-      if(modelSelect) $('status').textContent=error.message;
     }
-    modelSelect?.removeAttribute('aria-busy');
+    loading = false;
     renderAccount();
     price();
   }
   if(modelSelect) window.DialogueAccount={
+    canGenerate,
     async generate(payload) {
-      if(!catalog?.enabled) throw new Error('Generation is unavailable.');
+      if(!canGenerate()) throw new Error('Generation is unavailable.');
       const model=catalog.models.find(m=>m.id===$('model').value);
       try {
         const current=await readSession();
@@ -130,6 +142,7 @@
     if(['SIGNED_IN','SIGNED_OUT','TOKEN_REFRESHED'].includes(event)) {
       if(session?.user.id!==current?.user.id) {
         ++loadVersion;
+        loading = true;
         catalog=null;
         session=current;
         $('account-status').textContent='';

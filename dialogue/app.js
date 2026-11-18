@@ -21,6 +21,13 @@ function characterTags(gender) {
   return tags;
 }
 let busy = false;
+let samplesReady = false;
+
+function updateGenerateButton() {
+  $('generate').disabled = busy || !samplesReady || window.DialogueAccount?.canGenerate() === false;
+}
+
+window.addEventListener('dialogue-catalog-change', updateGenerateButton);
 
 function sceneCharacters() {
   const library = CharacterLibrary.list();
@@ -265,7 +272,7 @@ $('character-form').onsubmit = event => {
 };
 
 $('generate').onclick = async () => {
-  if (busy) return;
+  if ($('generate').disabled) return;
   const status = $('status');
   const payload = {};
   for (const key of sceneFields) {
@@ -305,7 +312,7 @@ $('generate').onclick = async () => {
   }
 
   busy = true;
-  $('generate').disabled = true;
+  updateGenerateButton();
   status.textContent = 'Writing your scene…';
   try {
     let data;
@@ -331,7 +338,7 @@ $('generate').onclick = async () => {
     status.textContent = error.name === 'TimeoutError' ? 'Generation timed out. Please try again.' : error.message;
   } finally {
     busy = false;
-    $('generate').disabled = false;
+    updateGenerateButton();
   }
 };
 
@@ -393,7 +400,8 @@ function applySample() {
 }
 
 function loadSamples() {
-  const controls = ['open-setup', 'generate', 'randomize', 'copy', 'download'];
+  updateGenerateButton();
+  const controls = ['open-setup', 'randomize', 'copy', 'download'];
   controls.forEach(id => $(id).disabled = true);
   $('status').textContent = 'Loading sample scenes…';
   try {
@@ -413,6 +421,8 @@ function loadSamples() {
     if (!scenes.length) throw new Error(errors.map(result => result.reason.message).join(' '));
     controls.forEach(id => $(id).disabled = false);
     applySample();
+    samplesReady = true;
+    updateGenerateButton();
     $('status').textContent = errors.length ? errors.map(result => result.reason.message).join(' ') : '';
   } catch (error) {
     $('status').textContent = 'Samples could not be loaded. ' + error.message + ' Reload to try again.';

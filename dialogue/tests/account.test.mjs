@@ -5,7 +5,7 @@ import {readFileSync} from 'node:fs';
 import proxy from '../netlify/functions/account.mjs';
 const code=readFileSync(new URL('../account.js',import.meta.url),'utf8');
 const tick=()=>new Promise(resolve=>setImmediate(resolve));
-function browser({signedIn=false,sendError=null,dialogue=true}={}) {
+function browser({signedIn=false,sendError=null,dialogue=true,catalogResponse}={}) {
  const fields=new Map();
  const element=id=>{
   if(!fields.has(id)) fields.set(id,{value:id==='length'?'medium':id==='account-email'?'test@example.com':'',hidden:false,disabled:false,options:[],textContent:'',reportValidity:()=>true,showModal(){this.open=true;},setAttribute(){},removeAttribute(){},addEventListener(){},replaceChildren(...children){this.children=children;this.options=children;}});
@@ -19,9 +19,10 @@ function browser({signedIn=false,sendError=null,dialogue=true}={}) {
   settings={url,key,options};
   return {auth:{getSession:async()=>({data:{session},error:null}),signInWithOtp:async input=>{signIns.push(input);return {error:sendError};},signOut:async()=>{session=null;return {error:null};},onAuthStateChange:fn=>{authListener=fn;}}};
  }};
- const context={window:{DIALOGUE_CONFIG:{url:'https://example.supabase.co',key:'sb_publishable_test'},supabase:sdk},document:{getElementById:id=>!dialogue && id==='model'?null:element(id)},location:{href:'https://example.netlify.app'+(dialogue?'/dialogue/':'/')},URL,AbortSignal,setTimeout,Option:function(label,value){this.label=label;this.value=value;},sessionStorage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v)},fetch:async(url,options)=>{
+ const context={window:{DIALOGUE_CONFIG:{url:'https://example.supabase.co',key:'sb_publishable_test'},supabase:sdk,dispatchEvent(){}},Event,document:{getElementById:id=>!dialogue && id==='model'?null:element(id)},location:{href:'https://example.netlify.app'+(dialogue?'/dialogue/':'/')},URL,AbortSignal,setTimeout,Option:function(label,value){this.label=label;this.value=value;},sessionStorage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v)},fetch:async(url,options)=>{
   requests.push({url,...options});
   const body=JSON.parse(options.body);
+  if(body.action==='catalog' && catalogResponse) return catalogResponse;
   if(body.action==='catalog') return Response.json({enabled:true,models:[{id:'gemini',label:'Gemini',guestDefault:true,shortPrice:2,mediumPrice:2,shortOutput:2200,mediumOutput:2200}],balance:session?{welcome:100,purchased:0}:null,guestRemaining:body.guestToken ? guestRemaining : 10});
   guestRemaining=Math.max(0,guestRemaining-1);
   return Response.json({blocks:[],guestToken:'a'.repeat(64),requestId:'test-request'});
@@ -36,6 +37,7 @@ test('uses PKCE, keeps guest generation anonymous, and sends sign-in links to th
  assert.equal(b.requests[0].url,'/api/dialogue');
  assert.equal(b.requests[0].headers.Authorization,undefined);
  assert.equal(b.element('scene-price').textContent,'10 guest scenes left');
+ assert.equal(b.context.window.DialogueAccount.canGenerate(),true);
  await b.element('sign-in-form').onsubmit({preventDefault(){}});
  assert.equal(b.signIns[0].email,'test@example.com');
  assert.equal(b.signIns[0].options.emailRedirectTo,'https://example.netlify.app/dialogue/');
@@ -51,6 +53,15 @@ test('uses PKCE, keeps guest generation anonymous, and sends sign-in links to th
   await tick();
  }
  assert.equal(b.element('scene-price').textContent,'0 guest scenes left. Sign in to continue.');
+});
+test('catalog failure is shown only after loading ends', async () => {
+ const b = browser({catalogResponse: Response.json({error:'Catalog request failed.'}, {status:503})});
+ const account = b.context.window.DialogueAccount;
+ assert.equal(b.element('scene-price').textContent, '');
+ assert.equal(account.canGenerate(), false);
+ await tick();
+ assert.equal(b.element('scene-price').textContent, 'Generation is unavailable.');
+ assert.equal(account.canGenerate(), false);
 });
 test('signed-in sessions show usable credits and sign out returns to guest controls',async()=>{
  const b=browser({signedIn:true});await tick();
