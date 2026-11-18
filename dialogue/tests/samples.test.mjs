@@ -126,3 +126,19 @@ test('download dropdown exports current dialogue in either format and resets for
   assert.match(await blobs[1].text(), /@Marcus\nFreshly generated dialogue\./);
   assert.equal(revoked.length, 3);
 });
+
+test('preview renders Fountain emphasis as safe elements and keeps literal HTML as text', async () => {
+  const {context} = await page([{file:'fixture.fountain', source:screenplay}]);
+  context.document.createElement = tag => ({...element(), tag});
+  const output = vm.runInContext(`(() => {
+    const target = document.createElement('p');
+    appendFountainText(target, 'A **bold** *italic* _underlined_ ***both*** <img src=x>');
+    return target;
+  })()`, context);
+  const formatted = output.children.filter(child => typeof child !== 'string');
+  assert.deepEqual(formatted.map(child => child.tag), ['strong', 'em', 'u', 'strong']);
+  assert.deepEqual(formatted.slice(0, 3).map(child => child.textContent), ['bold', 'italic', 'underlined']);
+  assert.equal(formatted[3].children[0].tag, 'em');
+  assert.equal(formatted[3].children[0].textContent, 'both');
+  assert.equal(output.children.at(-1), ' <img src=x>');
+});

@@ -111,6 +111,27 @@ function renderSceneCast(characters) {
   );
 }
 
+// Build emphasis with DOM nodes so screenplay text never becomes HTML.
+function appendFountainText(element, text) {
+  const emphasis = /\\([*_\\])|\*\*\*([^*\n]+)\*\*\*|\*\*([^*\n]+)\*\*|\*([^*\n]+)\*|_([^_\n]+)_/g;
+  let offset = 0;
+  for (const match of text.matchAll(emphasis)) {
+    element.append(text.slice(offset, match.index));
+    if (match[1]) element.append(match[1]);
+    else {
+      const node = document.createElement(match[2] || match[3] ? 'strong' : match[4] ? 'em' : 'u');
+      if (match[2]) {
+        const italic = document.createElement('em');
+        italic.textContent = match[2];
+        node.append(italic);
+      } else node.textContent = match[3] || match[4] || match[5];
+      element.append(node);
+    }
+    offset = match.index + match[0].length;
+  }
+  element.append(text.slice(offset));
+}
+
 function renderScript() {
   const root = $('screenplay');
   const heading = document.createElement('h2');
@@ -125,11 +146,11 @@ function renderScript() {
       speaker.className = 'speaker';
       speaker.textContent = block.speaker;
       const line = document.createElement('p');
-      line.textContent = block.text;
+      appendFountainText(line, block.text);
       element.append(speaker, line);
     } else {
       element.className = 'action';
-      element.textContent = block.text;
+      appendFountainText(element, block.text);
     }
     root.append(element);
   }

@@ -320,6 +320,7 @@ textarea {
 .scene-heading {
   margin: 0 0 16pt;
   font: inherit;
+  font-weight: 700;
   text-transform: uppercase;
 }
 
