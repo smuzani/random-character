@@ -12,7 +12,7 @@ const reset=()=>sql(`truncate dialogue.attempts, dialogue.requests, dialogue.gue
 const begin=(requestId,extra={})=>rpc('begin',{requestId,model:'test-model',length:'short',quotedPrice:7,userId:uid,...extra});
 test('PostgreSQL ledger: reservations, races, grants, pools, recovery and permissions',{skip:!database},async t=>{
  sql(`insert into auth.users(id,email_confirmed_at) values('${uid}',now()) on conflict do nothing;
- insert into dialogue.models(id,label,enabled,guest_default,input_rate,output_rate,short_price,medium_price,short_output,medium_output) values('test-model','Test',true,true,1000000,1000000,7,10,1000,2000) on conflict do nothing;`);
+ insert into dialogue.models(id,label,enabled,guest_default,input_rate,output_rate,credit_price,short_output,medium_output) values('test-model','Test',true,true,1000000,1000000,7,1000,2000) on conflict do nothing;`);
  await t.test('guest balance reads existing sessions and is restricted to the service role',()=>{
   reset();
   sql("insert into dialogue.guests(token_hash,used) values ('returning',1),('exhausted',10)");
@@ -74,13 +74,33 @@ test('PostgreSQL ledger: reservations, races, grants, pools, recovery and permis
   assert.equal(sql('select welcome||\',\'||purchased from dialogue.accounts'),'5,5');
   assert.equal(JSON.parse(sql(rpc('finish',{requestId,success:true}))).status,'failed');
  });
- await t.test('stale quotes and underfunded scene prices cannot reserve credits',()=>{
+ await t.test('one model price controls catalog quotes and reservations for both lengths',()=>{
   reset();sql(`insert into dialogue.accounts(user_id,welcome,purchased) values('${uid}',10,0)`);
-  assert.throws(()=>sql(begin(crypto.randomUUID(),{quotedPrice:6})));
-  sql("update dialogue.models set short_price=1 where id='test-model'");
-  assert.throws(()=>sql(begin(crypto.randomUUID(),{quotedPrice:1})));
+  sql("update dialogue.models set credit_price=1 where id='test-model'");
+  try {
+   const model=JSON.parse(sql(rpc('catalog'))).models.find(model=>model.id==='test-model');
+   assert.equal(model.shortPrice,1);
+   assert.equal(model.mediumPrice,1);
+   assert.throws(()=>sql(begin(crypto.randomUUID())));
+   for(const length of ['short','medium']) {
+    sql(begin(crypto.randomUUID(),{length,quotedPrice:1}));
+   }
+   assert.equal(sql('select welcome from dialogue.accounts'),'8');
+  } finally {
+   sql("update dialogue.models set credit_price=7 where id='test-model'");
+  }
+ });
+ await t.test('signed-in provider attempts use the spending cap independently of the credit price',()=>{
+  reset();
+  sql(`insert into dialogue.accounts(user_id,welcome,purchased) values('${uid}',10,0)`);
+  sql('update dialogue.settings set welcome_allocation=41999');
+  const requestId=crypto.randomUUID();
+  sql(begin(requestId));
+  sql(rpc('reserve_call',{requestId,attempt:0}));
+  assert.throws(()=>sql(rpc('reserve_call',{requestId,attempt:1})));
+  sql(rpc('finish',{requestId,success:false}));
+  assert.equal(sql('select signed_in_spent from dialogue.months'),'21000');
   assert.equal(sql('select welcome from dialogue.accounts'),'10');
-  sql("update dialogue.models set short_price=7 where id='test-model'");
  });
  await t.test('in-flight requests retain their original rates and output ceiling',()=>{
   reset();const requestId=crypto.randomUUID();sql(begin(requestId,{userId:null,guestHash:'c'.repeat(64)}));

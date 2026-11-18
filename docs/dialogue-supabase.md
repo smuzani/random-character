@@ -22,11 +22,11 @@ The global guest pool takes priority. New sessions, private windows, and other d
 
 Only the Edge Function can call the billing dispatcher. Anonymous and authenticated browser roles have no access to billing tables. The dispatcher serializes financial operations with a transaction lock.
 
-Credits are integer units. Each credit permits at most US$0.01 of provider liability. Model prices must cover two calls at their maximum input and output limits. Welcome grants reserve this liability when granted, even if the user spends those credits in a later month.
+Each model has one credit price per scene. The catalog displays this price, and the dispatcher uses it to reserve credits for a signed-in request.
 
-USD costs use integer millionths of a dollar. The monthly cap covers guest reservations and welcome grants. Purchased credit funding remains separate for #23.
+Provider costs use integer millionths of a US dollar. Each call reserves its maximum cost before it contacts Gemini. A retry needs its own reservation. Guest calls use the guest allocation, and signed-in calls use the welcome allocation.
 
-A guest call reserves its full cost ceiling before contacting Gemini. The retry requires another reservation. Reservations remain spent when usage is missing or a process stops. This conservative rule can exhaust the guest pool before actual provider costs reach the allocation.
+Welcome grants also count against the welcome allocation at grant time. The monthly cap counts guest call reservations plus the higher of welcome grant costs and signed-in call reservations.
 
 Signed-in requests reserve welcome credits first, then purchased credits. A validated scene consumes the reservation once. A failed request returns the reservation once. Requests older than ten minutes expire during the next ledger operation. Run `reconcile` periodically to release reservations without user traffic.
 
@@ -56,13 +56,13 @@ Set these database values before enabling generation:
 | Table | Values |
 | --- | --- |
 | `dialogue.settings` | Monthly cap, guest allocation, welcome allocation, welcome credits, welcome cost |
-| `dialogue.models` | Gemini API model ID, label, token rates, fixed scene prices, output limits, enabled state |
+| `dialogue.models` | Gemini API model ID, label, token rates, credit price, output limits, enabled state |
 
 Token rates use USD millionths per million tokens. For example, US$0.25 per million tokens becomes `250000`. Use current provider rates, including the relevant input tier. The reservation assumes at most 20,000 input tokens. The Edge adapter limits the incoming request to 12,000 UTF-8 bytes. Shared instructions fit within the remaining bound.
 
 Set exactly one enabled model as `guest_default`. Use `gemini-3.1-flash-lite` to retain the current default. Additional model IDs must support the Gemini `generateContent` API and JSON output. Other provider protocols need another adapter.
 
-Set `medium_price` and `medium_output` to NULL to disable medium scenes. Short scenes require both a price and an output limit. Prices must cover the initial call and one retry. Welcome cost must cover `welcome_credits * 10000`.
+Change `dialogue.models.credit_price` to set the price for all supported scene lengths. Set `medium_output` to NULL to disable medium scenes. Set the welcome cost to at least `welcome_credits * 10000`.
 
 Keep the monthly allocations within the monthly cap. Set `enabled=true` only after staging checks pass.
 
