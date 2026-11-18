@@ -9,13 +9,15 @@ function element() {
   return {value:'', children:[], dataset:{}, elements:{'character-gender':{value:''}},
     append(...items) { this.children.push(...items); },
     replaceChildren(...items) { this.children = items; },
-    setAttribute() {}, addEventListener() {}, querySelectorAll() { return []; }};
+    setAttribute() {}, addEventListener() {}, showModal() {}, querySelectorAll() { return []; }};
 }
 async function page(entries, files = {}) {
   const nodes = new Map();
   const node = id => { if (!nodes.has(id)) nodes.set(id, element()); return nodes.get(id); };
   const requests = [];
-  const context = vm.createContext({document:{getElementById:node, querySelectorAll:()=>[], createElement:element},
+  const genderOptions = ['male', 'female', ''].map(value => ({...element(), value}));
+  const context = vm.createContext({TMALE:'male', TFEMALE:'female', document:{getElementById:node, createElement:element,
+    querySelectorAll: selector => selector === '[name="character-gender"]' ? genderOptions : []},
     CharacterLibrary:{list:()=>[]}, window:{DIALOGUE_SAMPLES: entries?.map(entry =>
       typeof entry === 'string' ? {file:entry, source:files[entry]} : entry)}, console,
     fetch: async url => {
@@ -25,8 +27,20 @@ async function page(entries, files = {}) {
   vm.runInContext(read('fountain-parser.js'), context);
   // Run the real application with network fetch blocked, as on file://.
   await vm.runInContext(read('app.js').replace(/loadSamples\(\);\s*$/, 'loadSamples()'), context);
-  return {node, requests, context};
+  return {node, requests, context, genderOptions};
 }
+
+test('the bundled cast opens with their genders selected and keeps them in Fountain export', async () => {
+  const file = 'the-price-of-the-living.fountain';
+  const {context, genderOptions} = await page([file], {[file]:read('samples/' + file)});
+  const expected = {Huang:'male', 'Overseer Lila':'female', 'Dr Nick':'male', Arif:'male', Guard:'male'};
+  for (const [name, gender] of Object.entries(expected)) {
+    vm.runInContext(`openCharacter(sceneCharacters().find(character => character.name === ${JSON.stringify(name)}))`, context);
+    assert.deepEqual(genderOptions.filter(option => option.checked).map(option => option.value), [gender]);
+  }
+  const exported = vm.runInContext('FountainParser.parse(fountainText())', context);
+  assert.deepEqual(Object.fromEntries(exported.characters.map(character => [character.name, character.gender])), expected);
+});
 
 test('local-file loader works with fetch blocked and fills setup, preview, cast and download control', async () => {
   const {node,requests,context} = await page(['fixture.fountain'], {'fixture.fountain':screenplay});

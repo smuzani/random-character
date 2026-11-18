@@ -13,6 +13,7 @@ let editing;
 const rolledDescriptions = new Map();
 const genderOptions = document.querySelectorAll('[name="character-gender"]');
 const selectedGender = () => $('character-form').elements['character-gender'].value;
+const characterGender = character => character?.tags?.find(tag => tag === TMALE || tag === TFEMALE);
 
 function characterTags(gender) {
   const tags = (editing?.tags ?? []).filter(tag => tag !== TMALE && tag !== TFEMALE);
@@ -28,6 +29,7 @@ function sceneCharacters() {
     voice: character.voice,
     want: character.want,
     obstacle: character.obstacle,
+    tags: character.gender ? [character.gender] : [],
     id: 'sample-' + sceneNumber + '-' + index
   })).filter(character => sceneNumber === sceneIndex || selected.has(character.id)));
   const savedIds = new Set(library.map(character => character.id));
@@ -38,6 +40,7 @@ function fillSetup() {
   for (const key of sceneFields) {
     if (key !== 'length') $(key).value = scenes[sceneIndex][key];
   }
+  if (!$('tone').value) $('tone').selectedIndex = 0;
 }
 
 function updateCastLimit() {
@@ -159,7 +162,7 @@ function renderScript() {
 function openCharacter(character) {
   editing = character;
   rolledDescriptions.clear();
-  const gender = character?.tags?.find(tag => tag === TMALE || tag === TFEMALE) ?? '';
+  const gender = characterGender(character) ?? '';
   for (const option of genderOptions) option.checked = option.value === gender;
   $('character-title').textContent = character ? 'Edit character' : 'New Character';
   for (const key of characterFields) $('character-' + key).value = character?.[key] ?? '';
@@ -277,7 +280,10 @@ $('generate').onclick = async () => {
   }
   try {
     payload.characters = sceneCharacters().filter(character => selected.has(character.id))
-      .map(({ name, voice, want, obstacle }) => ({ name, voice, want, obstacle }));
+      .map(character => {
+        const {name, voice, want, obstacle} = character;
+        return {name, voice, want, obstacle, gender: characterGender(character)};
+      });
   } catch (_) {
     status.textContent = 'Could not read the character library. Check whether browser storage is available.';
     return;
@@ -351,7 +357,8 @@ function fountainText() {
     key[0].toUpperCase() + key.slice(1) + ': ' + noteText(scriptScene[key])), ']]'].join('\n');
   const cast = scriptScene.characters.map(character => [
     '[[character: ' + noteText(character.name),
-    ...['voice', 'want', 'obstacle'].map(key => key[0].toUpperCase() + key.slice(1) + ': ' + noteText(character[key])),
+    ...['gender', 'voice', 'want', 'obstacle'].filter(key => character[key])
+      .map(key => key[0].toUpperCase() + key.slice(1) + ': ' + noteText(character[key])),
     ']]'
   ].join('\n'));
   const blocks = script.map(block => block.type === 'dialogue'

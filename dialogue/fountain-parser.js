@@ -31,8 +31,13 @@
         hasSetup = true;
         Object.assign(scene, fields(lines.join('\n'), ['tone', 'start', 'end', 'length']));
       } else if (/^character\s*:/i.test(header)) {
+        const details = fields(lines.join('\n'), ['gender', 'voice', 'want', 'obstacle']);
+        if (Object.hasOwn(details, 'gender')) {
+          details.gender = details.gender.toLowerCase();
+          if (!['male', 'female'].includes(details.gender)) throw new Error('Invalid character gender');
+        }
         scene.characters.push({name: header.replace(/^character\s*:\s*/i, ''),
-          ...fields(lines.join('\n'), ['voice', 'want', 'obstacle']), active: true});
+          ...details, active: true});
       }
       return '';
     });

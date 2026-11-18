@@ -32,7 +32,7 @@ test('retries an omitted third speaker once and never returns a partial cast', a
   if (oldKey === undefined) delete process.env.GEMINI_API_KEY;
   else process.env.GEMINI_API_KEY = oldKey;
  });
- const trio = {...scene, tone: 'Interrogation', characters: [...scene.characters, {name: 'C', voice: 'Direct', want: 'Get an answer', obstacle: 'A is stalling'}]};
+ const trio = {...scene, tone: 'Interrogation', characters: [...scene.characters, {name: 'C', gender: 'female', voice: 'Direct', want: 'Get an answer', obstacle: 'A is stalling'}]};
  const partial = [{type: 'action', text: 'C watches the exit.'}, {type: 'dialogue', speaker: 'A', text: 'Go.'}, {type: 'dialogue', speaker: 'B', text: 'No.'}];
  const complete = [...partial, {type: 'dialogue', speaker: 'C', text: 'The exit is locked.'}];
  for (const recovers of [true, false]) {
