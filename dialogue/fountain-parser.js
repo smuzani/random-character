@@ -21,7 +21,7 @@
   function parse(source) {
     let text = source.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n').trim();
     text = text.replace(/^```[^\n]*\n([\s\S]*?)\n```$/, '$1');
-    const scene = {title: '', characters: [], blocks: []};
+    const scene = {title: '', end: '', characters: [], blocks: []};
     let hasSetup = false;
     text = text.replace(/\[\[([\s\S]*?)\]\]/g, (_, note) => {
       const lines = note.trim().split('\n');
@@ -78,7 +78,7 @@
         scene.blocks.push({type: 'action', text: paragraph.trim().replace(/^!/, '')});
       }
     }
-    for (const key of ['location', 'tone', 'start', 'end']) {
+    for (const key of ['location', 'tone', 'start']) {
       if (!scene[key]) throw new Error('Missing scene ' + key);
     }
     if (!scene.characters.length || scene.characters.length > 6) throw new Error('Samples need one to six characters');

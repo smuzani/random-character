@@ -121,6 +121,25 @@ test('Fountain export contains the displayed script and its matching setup, even
   assert.equal(exported.location, original.location);
 });
 
+test('clearing the sample ending allows generation and Fountain export', async () => {
+  const {node, context} = await page([{file:'fixture.fountain', source:screenplay}]);
+  const original = vm.runInContext('FountainParser.parse(window.DIALOGUE_SAMPLES[0].source)', context);
+  const requests = [];
+  context.window.DialogueAccount = {async generate(payload) {
+    requests.push(payload);
+    return {blocks: original.blocks};
+  }};
+  node('length').value = 'short';
+  node('end').value = '';
+  await node('generate').onclick();
+  assert.equal(requests.length, 1);
+  assert.equal(requests[0].end, '');
+  assert.equal(node('status').textContent, 'Scene generated.');
+  const exported = vm.runInContext('FountainParser.parse(fountainText())', context);
+  assert.equal(exported.end, '');
+  assert.deepEqual(exported.blocks, original.blocks);
+});
+
 test('download dropdown exports current dialogue in either format and resets for repeat downloads', async () => {
   const {node,context} = await page([{file:'fixture.fountain', source:screenplay}]);
   const blobs = [], downloads = [], revoked = [];

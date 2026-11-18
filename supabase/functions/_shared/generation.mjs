@@ -47,8 +47,10 @@ export function validate(input){
   if(!input || typeof input!=='object')throw new Error('Enter a scene setup.');
   const result={};
   for(const [key,max] of Object.entries({location:160,start:700,end:700,tone:40,length:10})){
-    if(typeof input[key]!=='string'||!input[key].trim()||input[key].length>max)throw new Error(`Check the ${key} field.`);
-    result[key]=input[key].trim();
+    const value = key === 'end' && input[key] === undefined ? '' : input[key];
+    if(typeof value!=='string'||value.length>max)throw new Error(`Check the ${key} field.`);
+    result[key]=value.trim();
+    if(key!=='end'&&!result[key])throw new Error(`Check the ${key} field.`);
   }
   if(!['short','medium'].includes(result.length))throw new Error('Choose a valid scene length.');
   if(!Array.isArray(input.characters)||input.characters.length<2||input.characters.length>6)throw new Error('Include between two and six characters.');
@@ -116,7 +118,10 @@ export async function generateScene(scene, {
                 'Use the supplied voice and any specified gender for each character.',
                 `All ${scene.characters.length} supplied characters are in the scene. Give each at least one spoken line under their exact name. Mentioning a character in action or another character’s line does not count.`,
                 scene.characters.length > 2 && 'Let each character affect what another character says or does. Shift who speaks to whom as interests collide. If the setup or tone centers on a pair, give the rest a stake and let their choices change the exchange.',
-                'Start at the supplied starting point and reach the supplied ending through a credible change.',
+                'Start at the supplied starting point.',
+                scene.end
+                  ? 'Reach the supplied ending through a credible change.'
+                  : 'Invent a surprising ending that follows from what the characters want and what they choose to do. Let the final beat show what has changed.',
                 'Only use supplied characters on screen. If the setup names someone outside the cast, adapt the setup to the cast while keeping its key events.',
                 'Use the exact supplied name in each speaker field. The app renders character cues in ALL CAPS. Return JSON: {"blocks":[{"type":"action","text":"..."},{"type":"dialogue","speaker":"exact character name","text":"..."}]}.',
                 'No heading in the blocks. Write 8–12 dialogue turns for short, 14–20 for medium. Finish the scene within 500 words.',

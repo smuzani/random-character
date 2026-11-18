@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import handler,{validate,parseScene} from '../netlify/functions/generate.mjs';
+import {generateScene} from '../../supabase/functions/_shared/generation.mjs';
 const scene={location:'A roof',start:'They meet',end:'They leave',tone:'Drama',length:'short',characters:[{name:'A',voice:'Quiet',want:'Leave',obstacle:'B'},{name:'B',voice:'Loud',want:'Stay',obstacle:'A'}]};
 test('rejects invalid input and duplicate characters before AI calls',async()=>{
  assert.throws(()=>validate({...scene,characters:[scene.characters[0]]}));assert.throws(()=>validate({...scene,characters:[scene.characters[0],scene.characters[0]]}));
@@ -10,6 +11,25 @@ test('rejects invalid input and duplicate characters before AI calls',async()=>{
 test('rejects malformed model output and unrequested speakers',()=>{
  assert.throws(()=>parseScene('{"blocks":[]}',scene.characters));
  assert.throws(()=>parseScene(JSON.stringify({blocks:[{type:'action',text:'Hi'},{type:'dialogue',speaker:'C',text:'Hi'},{type:'dialogue',speaker:'B',text:'Hi'}]}),scene.characters));
+});
+
+test('generates an ending when omitted or blank and follows a supplied ending', async () => {
+ const blocks = [{type: 'action', text: 'Rain.'}, {type: 'dialogue', speaker: 'A', text: 'Go.'}, {type: 'dialogue', speaker: 'B', text: 'No.'}];
+ for (const end of [undefined, '', ' \n ', ' They leave ']) {
+  const setup = validate({...scene, end});
+  assert.equal(setup.end, end?.trim() ?? '');
+  const result = await generateScene(setup, {key: 'test-secret', fetchProvider: async (_, options) => {
+   const request = JSON.parse(options.body);
+   const prompt = request.systemInstruction.parts[0].text;
+   assert.match(prompt, setup.end ? /Reach the supplied ending/ : /Invent a surprising ending/);
+   assert.doesNotMatch(prompt, setup.end ? /Invent a surprising ending/ : /Reach the supplied ending/);
+   assert.equal(JSON.parse(request.contents[0].parts[0].text).end, setup.end);
+   return Response.json({candidates: [{finishReason: 'STOP', content: {parts: [{text: JSON.stringify({blocks})}]}}]});
+  }});
+  assert.deepEqual(result.blocks, blocks);
+ }
+ assert.throws(() => validate({...scene, end: 'x'.repeat(701)}), /Check the end field/);
+ assert.throws(() => validate({...scene, end: 42}), /Check the end field/);
 });
 
 test('requires a spoken line from each selected character for every cast size', () => {

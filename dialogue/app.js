@@ -271,7 +271,7 @@ $('generate').onclick = async () => {
   for (const key of sceneFields) {
     const input = $(key);
     payload[key] = input.value.trim();
-    if (!payload[key]) {
+    if (key !== 'end' && !payload[key]) {
       $('setup-dialog').showModal();
       input.value = '';
       input.reportValidity();
