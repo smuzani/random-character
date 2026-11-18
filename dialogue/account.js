@@ -51,7 +51,7 @@
     const amount=model?.[$('length').value+'Price'];
     const remaining=catalog?.guestRemaining;
     let message='Generation is unavailable.';
-    if(model && catalog.enabled && session) message=`${amount} credits per scene`;
+    if(model && catalog.enabled && session) message=`${amount} ${amount===1 ? 'credit' : 'credits'} per scene`;
     if(model && !session && catalog.enabled) {
       if(remaining===0) message='0 guest scenes left. Sign in to continue.';
       else if(Number.isInteger(remaining)) message=`${remaining} guest ${remaining===1 ? 'scene' : 'scenes'} left`;
