@@ -19,6 +19,8 @@
   <script src="../js/generator7.js" defer></script>
   <script src="../js/character-library.js" defer></script>
   <script src="character-rolls.js" defer></script>
+  <script src="fountain-parser.js" defer></script>
+  <script src="samples.js" defer></script>
   <script src="app.js" defer></script>
   <script src="public-config.js" defer></script>
   <script src="vendor/supabase-2.119.0.js" defer></script>
@@ -48,7 +50,11 @@
       <div class="preview-toolbar">
         <div>
           <button id="copy" type="button">Copy</button>
-          <button id="download" type="button">Download .txt</button>
+          <select id="download" aria-label="Download as">
+            <option value="" selected disabled>Download as…</option>
+            <option value="txt">.txt</option>
+            <option value="fountain">.fountain</option>
+          </select>
         </div>
       </div>
       <article id="screenplay"></article>

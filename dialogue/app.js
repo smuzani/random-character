@@ -1,18 +1,14 @@
 const $ = id => document.getElementById(id);
-const scenes = [
- {location:'EXT. HIGH-RISE ROOFTOP — RAINY NIGHT',start:'Vance corners Marcus on the roof, convinced he leaked confidential files.',end:'Marcus hands over his passkey and reveals that he was protecting his sister.',tone:'Standoff',characters:[{name:'Agent Vance',voice:'Controlled, precise. Asks questions already knowing the answer.',want:'Recover the files before anyone else sees them.',obstacle:'Marcus is the only person who knows where the backup is.',active:true},{name:'Marcus',voice:'Defensive humor that cracks under pressure.',want:'Get his sister safely out of the city.',obstacle:'Vance is blocking the only exit.',active:true}]},
- {location:'INT. ALL-NIGHT LAUNDROMAT — 3 A.M.',start:'Two strangers discover that each has one half of a torn winning lottery ticket.',end:'They agree to split the prize, then notice the draw date is tomorrow.',tone:'Sitcom',characters:[{name:'Nora',voice:'Dry, practical, suspicious of good luck.',want:'Finish the laundry and avoid getting involved.',obstacle:'The stranger will not give back her half of the ticket.',active:true},{name:'Eli',voice:'Overconfident, chatty; bargains when nervous.',want:'Convince Nora they are destined to win.',obstacle:'He has been wrong about every prediction tonight.',active:true}]},
- {location:'INT. STATION CAFÉ — LAST TRAIN',start:'An estranged father arrives to return a borrowed book before his daughter leaves the country.',end:'She misses her train deliberately, but makes him ask her to stay.',tone:'Drama',characters:[{name:'June',voice:'Quick, guarded; uses logistics to avoid emotion.',want:'Leave without another argument.',obstacle:'Her father has brought the book her mother annotated.',active:true},{name:'Arthur',voice:'Careful, indirect; repairs things instead of apologizing.',want:'Find a reason for June to stay another hour.',obstacle:'He cannot admit that he is lonely.',active:true}]},
- {location:'EXT. ROYAL GARDEN — BEFORE DAWN',start:'A palace gardener catches a disgraced knight burying a crown in the flowerbed.',end:'They decide to give the crown to the person least interested in wearing it.',tone:'Drama',characters:[{name:'Fen',voice:'Blunt, unhurried, unimpressed by rank.',want:'Keep the palace soldiers away from the garden.',obstacle:'The knight has left a trail of blood through the roses.',active:true},{name:'Sera',voice:'Formal until frightened; painfully literal.',want:'Make sure the prince never finds the crown.',obstacle:'She swore an oath to return it before sunrise.',active:true}]}
-];
-let script=[{type:'action',text:'Rain ticks against a ventilation duct. MARCUS keeps one hand in his coat. VANCE watches that hand.'},{type:'dialogue',speaker:'Agent Vance',text:'The lift is locked.'},{type:'dialogue',speaker:'Marcus',text:'I noticed. Very welcoming building.'},{type:'dialogue',speaker:'Agent Vance',text:'Take your hand out. Slowly.'},{type:'action',text:'Marcus produces a small plastic passkey. He holds it over the edge.'},{type:'dialogue',speaker:'Marcus',text:'There’s a car downstairs. Blue. Engine running.'},{type:'dialogue',speaker:'Agent Vance',text:'Your driver can wait.'},{type:'dialogue',speaker:'Marcus',text:'She’s fourteen. She can’t drive.'},{type:'action',text:'Vance lowers the radio without switching it on.'},{type:'dialogue',speaker:'Agent Vance',text:'Who else knows she’s there?'},{type:'dialogue',speaker:'Marcus',text:'Everyone I stole those files from.'},{type:'action',text:'He sets the passkey on the duct between them. Neither reaches for it.'}];
+const scenes = [];
+let script = [];
+let scriptScene;
 
 const sceneFields = ['location', 'start', 'end', 'tone', 'length'];
 const characterFields = ['name', 'voice', 'want', 'obstacle'];
 const maxCastSize = 6;
 const selected = new Set();
 let sceneIndex = 0;
-let scriptLocation = scenes[0].location;
+let scriptLocation = '';
 let editing;
 const rolledDescriptions = new Map();
 const genderOptions = document.querySelectorAll('[name="character-gender"]');
@@ -167,8 +163,7 @@ $('scene-form').onsubmit = event => {
 
 $('randomize').onclick = () => {
   sceneIndex = (sceneIndex + 1 + Math.floor(Math.random() * (scenes.length - 1))) % scenes.length;
-  fillSetup();
-  renderCast();
+  applySample();
 };
 
 function rollEditorField(field) {
@@ -300,6 +295,7 @@ $('generate').onclick = async () => {
     }));
     if (!response.ok || !Array.isArray(data.blocks)) throw new Error(data.error || 'Generation failed. Please try again.');
     }
+    scriptScene = payload;
     script = data.blocks;
     scriptLocation = payload.location;
     renderScript();
@@ -324,19 +320,75 @@ $('copy').onclick = async () => {
     await navigator.clipboard.writeText(plainText());
     $('status').textContent = 'Screenplay copied.';
   } catch (_) {
-    $('status').textContent = 'Clipboard unavailable. Use Download .txt instead.';
+    $('status').textContent = 'Clipboard unavailable. Use Download as… instead.';
   }
 };
 
-$('download').onclick = () => {
-  const url = URL.createObjectURL(new Blob([plainText()], { type: 'text/plain' }));
+function fountainText() {
+  const noteText = value => String(value ?? '').replace(/\]\]/g, '] ]');
+  const setup = ['[[rdg', ...['tone', 'start', 'end'].map(key =>
+    key[0].toUpperCase() + key.slice(1) + ': ' + noteText(scriptScene[key])), ']]'].join('\n');
+  const cast = scriptScene.characters.map(character => [
+    '[[character: ' + noteText(character.name),
+    ...['voice', 'want', 'obstacle'].map(key => key[0].toUpperCase() + key.slice(1) + ': ' + noteText(character[key])),
+    ']]'
+  ].join('\n'));
+  const blocks = script.map(block => block.type === 'dialogue'
+    ? '@' + block.speaker + '\n' + block.text : block.text);
+  return [setup, ...cast, '.' + scriptLocation, ...blocks].join('\n\n') + '\n';
+}
+
+$('download').onchange = () => {
+  const format = $('download').value;
+  if (format !== 'txt' && format !== 'fountain') return;
+  const content = format === 'fountain' ? fountainText() : plainText();
+  const url = URL.createObjectURL(new Blob([content], { type: 'text/plain;charset=utf-8' }));
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'dialogue-scene.txt';
+  link.download = 'dialogue-scene.' + format;
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+  $('download').value = '';
 };
 
-fillSetup();
-renderCast();
-renderScript();
+function applySample() {
+  const scene = scenes[sceneIndex];
+  fillSetup();
+  selected.clear();
+  scene.characters.forEach((_, index) => selected.add('sample-' + sceneIndex + '-' + index));
+  scriptScene = scene;
+  script = scene.blocks;
+  scriptLocation = scene.location;
+  renderCast();
+  renderScript();
+  $('randomize').disabled = scenes.length < 2;
+}
+
+function loadSamples() {
+  const controls = ['open-setup', 'generate', 'randomize', 'copy', 'download'];
+  controls.forEach(id => $(id).disabled = true);
+  $('status').textContent = 'Loading sample scenes…';
+  try {
+    const entries = window.DIALOGUE_SAMPLES;
+    if (!Array.isArray(entries) || !entries.length) throw new Error('The sample bundle is missing or empty.');
+    const results = entries.map(entry => {
+      try {
+        const {file, source} = entry;
+        if (!/^[a-z0-9-]+\.fountain$/i.test(file)) throw new Error('Invalid sample filename');
+        return {status: 'fulfilled', value: {...FountainParser.parse(source), file}};
+      } catch (error) {
+        return {status: 'rejected', reason: new Error((entry?.file || 'Sample') + ': ' + error.message)};
+      }
+    });
+    const errors = results.filter(result => result.status === 'rejected');
+    scenes.push(...results.filter(result => result.status === 'fulfilled').map(result => result.value));
+    if (!scenes.length) throw new Error(errors.map(result => result.reason.message).join(' '));
+    controls.forEach(id => $(id).disabled = false);
+    applySample();
+    $('status').textContent = errors.length ? errors.map(result => result.reason.message).join(' ') : '';
+  } catch (error) {
+    $('status').textContent = 'Samples could not be loaded. ' + error.message + ' Reload to try again.';
+  }
+}
+
+loadSamples();

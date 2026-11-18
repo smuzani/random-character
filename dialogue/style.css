@@ -370,3 +370,21 @@ dialog::backdrop { background: rgb(17 24 39 / 45%); }
 @media (prefers-reduced-motion: reduce) {
   #model[aria-busy="true"] { animation: none; }
 }
+
+.preview-toolbar #download {
+  width: auto;
+  min-height: 44px;
+  margin: 0;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--text-muted);
+  background-color: transparent;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.preview-toolbar #download:hover:not(:disabled) {
+  color: var(--text-main);
+  background-color: #f3f4f6;
+}
