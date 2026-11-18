@@ -305,23 +305,36 @@ textarea {
 
 .preview-toolbar > div { display: flex; flex-wrap: wrap; gap: 0.25rem; }
 
+/* A standard six-inch text area: action starts at the page's 1.5-inch
+   margin, dialogue at 2.5 inches, and character cues at 3.7 inches.
+   Percentages retain those proportions when the preview is narrower. */
 #screenplay {
-  max-width: 66ch;
+  max-width: 6in;
   margin: 0 auto;
-  font: 1rem/1.6 var(--font-script);
-  overflow-wrap: anywhere;
+  color: #000;
+  font: 400 12pt/16pt var(--font-script);
+  letter-spacing: normal;
+  overflow-wrap: break-word;
 }
 
 .scene-heading {
-  margin-bottom: 1.5rem;
-  font: 700 1em/1.6 var(--font-script);
+  margin: 0 0 16pt;
+  font: inherit;
   text-transform: uppercase;
 }
 
-.action { margin: 1.25rem 0; }
-.speech { width: min(38ch, 85%); margin: 1.5rem auto; }
-.speaker { margin-bottom: 0.125rem; text-align: center; font-weight: 700; text-transform: uppercase; }
-.speech p { margin: 0; }
+.action { margin: 16pt 0; white-space: pre-line; }
+.speech {
+  width: 58.333333%;
+  margin: 16pt 0 16pt 16.666667%;
+}
+.speaker {
+  margin: 0 0 0 34.285714%;
+  text-align: left;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+.speech p { margin: 0; white-space: pre-line; }
 
 dialog {
   width: min(32rem, calc(100% - 2rem));
@@ -343,7 +356,9 @@ dialog::backdrop { background: rgb(17 24 39 / 45%); }
 .close-dialog { min-width: 44px; padding: 0; font-size: 1.25rem; }
 
 @media (max-width: 599px) {
-  #screenplay { font-size: 0.9rem; }
+  /* Keep the script at 12pt; relax only the indents on small screens. */
+  .speech { width: 84%; margin-left: 8%; }
+  .speaker { margin-left: 22%; }
 
   dialog {
     inset: auto 0 0;
