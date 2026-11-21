@@ -3,7 +3,7 @@ const scenes = [];
 let script = [];
 let scriptScene;
 
-const sceneFields = ['location', 'start', 'end', 'tone', 'length'];
+const sceneFields = ['location', 'start', 'end', 'tone'];
 const characterFields = ['name', 'voice', 'want', 'obstacle'];
 const maxCastSize = 6;
 const selected = new Set();
@@ -45,7 +45,7 @@ function sceneCharacters() {
 
 function fillSetup() {
   for (const key of sceneFields) {
-    if (key !== 'length') $(key).value = scenes[sceneIndex][key];
+    $(key).value = scenes[sceneIndex][key];
   }
   if (!$('tone').value) $('tone').selectedIndex = 0;
 }

@@ -144,7 +144,6 @@ test('clearing the sample ending allows generation and Fountain export', async (
     requests.push(payload);
     return {blocks: original.blocks};
   }};
-  node('length').value = 'short';
   node('end').value = '';
   await node('generate').onclick();
   assert.equal(requests.length, 1);

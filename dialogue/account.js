@@ -48,7 +48,7 @@
       return;
     }
     const model=catalog?.models.find(m=>m.id===modelSelect.value);
-    const amount=model?.[$('length').value+'Price'];
+    const amount=model?.shortPrice;
     const remaining=catalog?.guestRemaining;
     let message='Generation is unavailable.';
     if(model && catalog.enabled && session) message=`${amount} ${amount===1 ? 'credit' : 'credits'} per scene`;
@@ -59,8 +59,6 @@
     }
     $('scene-price').textContent=message;
     modelSelect.disabled=!session || !canGenerate();
-    $('medium-length').disabled=!model?.mediumPrice || !model?.mediumOutput;
-    if($('medium-length').disabled && $('length').value==='medium') {$('length').value='short';price();}
   }
   async function load() {
     const version=++loadVersion;
@@ -100,7 +98,7 @@
       const model=catalog.models.find(m=>m.id===$('model').value);
       try {
         const current=await readSession();
-        return await call({...payload,model:model?.id,quotedPrice:model?.[payload.length+'Price'],guestToken:current ? undefined : readGuestToken()},current?.access_token);
+        return await call({...payload,model:model?.id,quotedPrice:model?.shortPrice,guestToken:current ? undefined : readGuestToken()},current?.access_token);
       } finally {
         void load();
       }
@@ -109,7 +107,6 @@
   if(modelSelect) {
     $('account-controls').hidden=false;
     modelSelect.onchange=price;
-    $('length').addEventListener('change',price);
   }
   $('open-account').onclick=()=>$('account-dialog').showModal();
   $('close-account').onclick=()=>$('account-dialog').close();

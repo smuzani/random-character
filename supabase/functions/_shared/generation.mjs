@@ -49,13 +49,14 @@ class MissingCastError extends Error {
 export function validate(input){
   if(!input || typeof input!=='object')throw new Error('Enter a scene setup.');
   const result={};
-  for(const [key,max] of Object.entries({location:160,start:700,end:700,tone:40,length:10})){
+  for(const [key,max] of Object.entries({location:160,start:700,end:700,tone:40})){
     const value = key === 'end' && input[key] === undefined ? '' : input[key];
     if(typeof value!=='string'||value.length>max)throw new Error(`Check the ${key} field.`);
     result[key]=value.trim();
     if(key!=='end'&&!result[key])throw new Error(`Check the ${key} field.`);
   }
-  if(!['short','medium'].includes(result.length))throw new Error('Choose a valid scene length.');
+  // Keep the ledger's existing output-limit slot while scene lengths are disabled.
+  result.length='short';
   if(!Array.isArray(input.characters)||input.characters.length<2||input.characters.length>6)throw new Error('Include between two and six characters.');
   result.characters = input.characters.map(c => {
     const character = {};
@@ -121,14 +122,14 @@ export async function generateScene(scene, {
                   : 'Invent a surprising ending that follows from what the characters want and what they choose to do. Let the final beat show what has changed.',
                 'Only use supplied characters on screen. If the setup names someone outside the cast, adapt the setup to the cast while keeping its key events.',
                 'Return only the Fountain scene body as plain text. Begin each action block with ! immediately followed by its text. Begin each dialogue block with @ followed by the exact supplied character name on its own line, then the spoken text on the next line. Separate blocks with one blank line. Omit headings, metadata, and code fences.',
-                'Write 8–12 dialogue turns for short, 14–20 for medium. Finish the scene within 500 words.',
+                'Finish the scene within 500 words.',
                 'Play the tone through the scene without naming or explaining it.',
                 direction,
                 missingSpeakers && 'A previous attempt omitted the speakers listed in missingSpeakers. Write a complete new scene and give them spoken lines too.'
               ].filter(Boolean).join('\n\n')
             }]
           },
-          contents: [{ role: 'user', parts: [{ text: JSON.stringify({ ...scene, missingSpeakers }) }] }],
+          contents: [{ role: 'user', parts: [{ text: JSON.stringify({ ...scene, length: undefined, missingSpeakers }) }] }],
           generationConfig: { temperature: 1, maxOutputTokens, responseMimeType: 'text/plain' }
         })
       });
