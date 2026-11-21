@@ -7,7 +7,7 @@ Establish a tight clothesline: make their intentions, obstacles, and stakes unmi
 
 Let the characters surprise us.
 
-Write in screenplay format with expressive, cinematic action. Keep descriptions brief, visual, and full of personality. Use selective ALL CAPS to punch up actions, objects, and revelations. Let the narration be playful, conversational, or dramatic when it suits the moment. Vary the rhythm with fragments, sharp observations, and kinetic movement.`;
+Write action so the shot reads at a glance. Tell us plainly what we see and hear, even when the characters speak in poetry. Put the detail that draws the eye or ear in CAPS. When someone else’s reaction changes the moment, let us see it.`;
 
 const toneDirections = new Map([
   ['Verbal Combat', `Characters speak to get a result. Their words are actions, whether they're trying to obtain something, conceal it, provoke a reaction, resist pressure, or take control.
@@ -24,13 +24,9 @@ Dialogue is music. Cadence, rhythm, tone, and the sound of words matter as much 
 Be poetic rather than realistic. Be elliptical. Trust the audience to understand what's left unsaid.
 
 Write for actors, not readers. Give them something wonderful to perform.`],
-  ['Blood and Thunder', `Dialogue is poetry, fierce and extravagant. Characters speak in vivid images, transforming ordinary thoughts into visions of blood, fire, beasts, kingdoms, and the terrible wonders of the world.
+  ['Blood and Thunder', `Play Blood and Thunder with conviction. Give the great boast, the bitter accusation or the oath its full theatrical sweep. Find the image in what this character loves or stands to lose. Let the reply land in the other actor’s own voice. A blunt character speaks bluntly, even at the height of the storm.
 
-Let them be bombastic, passionate, and gloriously theatrical! They boast, proclaim, lament, threaten, and curse. Their insults are colourful and inventive; their oaths invoke gods, ancestors, and forgotten powers. They need no vulgarity when they can call a man a swine fattened upon the suffering of his people.
-
-Rarely let a thought emerge naked. Weave its meaning into metaphor, imagery, rhythm, and grand declarations. Let even simple exchanges possess the splendour of storytelling.
-
-Let their words thunder with conviction, yet allow sudden moments of brutal simplicity. Above all, they mean every magnificent word.`],
+Write the stage directions in spare, literal screenplay prose. Find the one detail the audience needs now. A dropped gaze, the scrape of a chair. Put that sight or sound in CAPS and let the actor supply the feeling.`],
   ['Strong Opinions on the Mundane', `Treat ordinary subjects as worthy of extraordinary attention.
 
 One character may be fascinated by something trivial, explaining it with genuine enthusiasm, conviction, or peculiar logic. Another listens actively, probing assumptions, offering counterexamples, or following the argument somewhere unexpected.
@@ -118,7 +114,7 @@ export async function generateScene(scene, {
                 scene.characters.length > 2 && 'Let each character affect what another character says or does. Shift who speaks to whom as interests collide. If the setup or tone centers on a pair, give the rest a stake and let their choices change the exchange.',
                 'Start at the supplied starting point.',
                 scene.end
-                  ? 'Reach the supplied ending through a credible change.'
+                  ? 'Reach the supplied ending through a credible change the audience can witness. Set up its reveals so the details add up.'
                   : 'Invent a surprising ending that follows from what the characters want and what they choose to do. Let the final beat show what has changed.',
                 'Only use supplied characters on screen. If the setup names someone outside the cast, adapt the setup to the cast while keeping its key events.',
                 'Return only the Fountain scene body as plain text. Begin each action block with ! immediately followed by its text. Begin each dialogue block with @ followed by the exact supplied character name on its own line, then the spoken text on the next line. Separate blocks with one blank line. Omit headings, metadata, and code fences.',

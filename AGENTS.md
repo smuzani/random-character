@@ -175,3 +175,7 @@ aspects.push(new Aspect("Trope Name", weight, "Description text",
 - `doc/` contains H5BP boilerplate docs, not project-specific documentation
 - The `tags.html` page uses Vue.js (CDN) for a CRUD interface
 - Background texture: `img/cream_texture.png`
+
+## Dialogue generator screenplay action
+
+Across models and tones, action should make the shot clear at a glance. Use selective CAPS for what draws our attention, including a sound. Give other characters room to react when their behavior matters to the shot.
